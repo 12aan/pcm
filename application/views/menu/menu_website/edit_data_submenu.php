@@ -7,14 +7,14 @@
                 <h4 class="card-title">Edit Data Submenu</h4>
             </div>
             <div class="card-body">
-                <form action="" method="post">
+                <form action="<?php echo base_url('menu/edit_data_submenu/' . $submenu['idsubmenu']); ?>" method="post">
                     <div class="form-group">
                         <label for="judul_submenu">Judul Submenu</label>
-                        <input type="text" class="form-control" id="judul_submenu" name="judul_submenu" value="" required>
+                        <input type="text" class="form-control" id="judul_submenu" name="judul_submenu" value="<?php echo $submenu['judul']; ?>" required>
                     </div>
                     <div class="form-group">
                         <label for="url_submenu">URL Submenu</label>
-                        <input type="text" class="form-control" id="url_submenu" name="url_submenu" value="">
+                        <input type="text" class="form-control" id="url_submenu" name="url_submenu" value="<?php echo $submenu['url']; ?>">
                     </div>
                     <div class="form-group">
                         <label for="idmenu">Menu</label>

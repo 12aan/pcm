@@ -66,10 +66,16 @@ class Menu extends CI_Controller
         }
     }
 
+
+
     public function menu_website()
     {
         $data['title'] = 'Menu Website';
         $data['user'] = $this->db->get_where('user', ['email' => $this->session->userdata('email')])->row_array();
+        // Get all menus
+        $data['menu'] = $this->db->get('menu')->result_array();
+        // Get all submenus
+        $data['submenu'] = $this->db->get('submenu')->result_array();
 
 
         $this->load->view('templates/header', $data);
@@ -81,9 +87,39 @@ class Menu extends CI_Controller
 
     public function tambah_data_menu()
     {
+        if ($this->input->post()) {
+            $data = array(
+                'judul' => $this->input->post('judul_menu'),
+                'url' => $this->input->post('url_menu'),
+                'aktif' => $this->input->post('aktif_menu')
+            );
+
+            $this->db->insert('menu', $data); // Insert into menu table
+            $id_menu = $this->db->insert_id(); // Get the ID of the inserted menu
+
+            // Check if submenus were added
+            $submenus = $this->input->post('submenujudul');
+            if (!empty($submenus)) {
+                foreach ($submenus as $index => $judul) {
+                    if (!empty($judul)) {
+                        $submenu_data = array(
+                            'judul' => $judul,
+                            'url' => $this->input->post('submenuurl')[$index],
+                            'idmenu' => $id_menu,
+                            'aktif' => $this->input->post('submenuaktif')[$index]
+                        );
+                        $this->db->insert('submenu', $submenu_data);
+                    }
+                }
+            }
+
+
+
+            redirect('menu/menu_website/menu_website');
+        }
+
         $data['title'] = 'Tambah Data Menu';
         $data['user'] = $this->db->get_where('user', ['email' => $this->session->userdata('email')])->row_array();
-
 
         $this->load->view('templates/header', $data);
         $this->load->view('templates/sidebar', $data);
@@ -92,16 +128,103 @@ class Menu extends CI_Controller
         $this->load->view('templates/footer');
     }
 
-    public function edit_data_menu()
+    // Add a new submenu
+    public function tambah_data_submenu()
     {
-        $data['title'] = 'Edit Data Menu';
+        if ($this->input->post()) {
+            $data = array(
+                'judul' => $this->input->post('judul_submenu'),
+                'url' => $this->input->post('url_submenu'),
+                'idmenu' => $this->input->post('idmenu'),
+                'aktif' => $this->input->post('aktif_submenu')
+            );
+
+            $this->db->insert('submenu', $data); // Insert into submenu table
+            redirect('menu/menu_website/menu_website');
+        }
+
+
+        $data['title'] = 'Tambah Data Menu';
         $data['user'] = $this->db->get_where('user', ['email' => $this->session->userdata('email')])->row_array();
 
+        $data['menu'] = $this->db->get('menu')->result_array(); // Get all menus for dropdown
+
+        $this->load->view('templates/header', $data);
+        $this->load->view('templates/sidebar', $data);
+        $this->load->view('templates/topbar', $data);
+        $this->load->view('menu/menu_website/tambah_data_submenu', $data);
+        $this->load->view('templates/footer');
+    }
+
+    // Edit menu
+    public function edit_data_menu($id_menu)
+    {
+        $data['menu'] = $this->db->get_where('menu', array('idmenu' => $id_menu))->row_array();
+
+        if ($this->input->post()) {
+            $update_data = array(
+                'judul' => $this->input->post('judul_menu'),
+                'url' => $this->input->post('url_menu'),
+                'aktif' => $this->input->post('aktif_menu')
+            );
+
+            $this->db->where('idmenu', $id_menu);
+            $this->db->update('menu', $update_data);
+            redirect('menu/menu_website/menu_website');
+        }
+
+
+        $data['title'] = 'Tambah Data Menu';
+        $data['user'] = $this->db->get_where('user', ['email' => $this->session->userdata('email')])->row_array();
 
         $this->load->view('templates/header', $data);
         $this->load->view('templates/sidebar', $data);
         $this->load->view('templates/topbar', $data);
         $this->load->view('menu/menu_website/edit_data_menu', $data);
         $this->load->view('templates/footer');
+    }
+
+    // Edit submenu
+    public function edit_data_submenu($id_submenu)
+    {
+        $data['submenu'] = $this->db->get_where('submenu', array('idsubmenu' => $id_submenu))->row_array();
+        $data['menu'] = $this->db->get('menu')->result_array(); // Get all menus for dropdown
+
+        if ($this->input->post()) {
+            $update_data = array(
+                'judul' => $this->input->post('judul_submenu'),
+                'url' => $this->input->post('url_submenu'),
+                'idmenu' => $this->input->post('idmenu'),
+                'aktif' => $this->input->post('aktif_submenu')
+            );
+
+            $this->db->where('idsubmenu', $id_submenu);
+            $this->db->update('submenu', $update_data);
+            redirect('menu/menu_website/menu_website');
+        }
+
+        $data['title'] = 'Tambah Data Menu';
+        $data['user'] = $this->db->get_where('user', ['email' => $this->session->userdata('email')])->row_array();
+
+        $this->load->view('templates/header', $data);
+        $this->load->view('templates/sidebar', $data);
+        $this->load->view('templates/topbar', $data);
+        $this->load->view('menu/menu_website/edit_data_submenu', $data);
+        $this->load->view('templates/footer');
+    }
+
+    // Delete menu
+    public function hapus_data_menu($id_menu)
+    {
+        $this->db->delete('menu', array('idmenu' => $id_menu));
+        $this->db->delete('submenu', array('idmenu' => $id_menu)); // Delete related submenus
+        redirect('menu/menu_website/menu_website');
+    }
+
+    // Delete submenu
+    public function hapus_data_submenu($id_submenu)
+    {
+        $this->db->delete('submenu', array('idsubmenu' => $id_submenu));
+        redirect('menu/menu_website/menu_website');
     }
 }
