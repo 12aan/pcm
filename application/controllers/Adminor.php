@@ -311,7 +311,7 @@ class Adminor extends CI_Controller
     public function wakaf()
     {
 
-        $data['title'] = 'Wakaf Sertifikat Wakaf';
+        $data['title'] = 'Daftar Dan Sertifikat Wakaf';
         $data['user'] = $this->db->get_where('user', ['email' => $this->session->userdata('email')])->row_array();
         $data['sertifikat_wakaf'] = $this->SuratMasuk_model->get_surat_wakaf();
 
@@ -434,7 +434,7 @@ class Adminor extends CI_Controller
         $this->load->view('templates/header', $data);
         $this->load->view('templates/sidebar', $data);
         $this->load->view('templates/topbar', $data);
-        $this->load->view('admin/adminor/surat_aktif_organisasi', $data);
+        $this->load->view('admin/adminor/surat_organisasi/surat_aktif_organisasi', $data);
         $this->load->view('templates/footer');
         // Load data surat_masuk from the backend
     }

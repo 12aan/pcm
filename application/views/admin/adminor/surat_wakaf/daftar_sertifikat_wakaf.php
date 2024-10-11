@@ -15,31 +15,51 @@
           <thead>
             <tr>
               <th>No</th>
-              <th>Nama Surat Wakaf</th>
+              <th style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">Nama Surat Wakaf</th>
               <th>Nama Masjid</th>
+              <th>File Path Sertifikat Wakaf</th>
               <th>Tanggal</th>
-              <th>Action</th>
+              <th class="text-center">Action</th>
             </tr>
           </thead>
           <tbody>
-            <tr>
-              <td>Tiger Nixon</td>
-              <td>System Architect</td>
-              <td>Edinburgh</td>
-              <td>61</td>
-              <td>2011/04/25</td>
+            <!-- Data Rows Go Here -->
+            <?php if (!empty($sertifikat_wakaf)) : ?>
+              <?php $nomor = 1; // Inisialisasi nomor 
+              ?>
+              <?php foreach ($sertifikat_wakaf as $row) : ?>
+                <tr>
+                  <td><?php echo $nomor++; ?></td>
+                  <td style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis;"><?php echo $row['nama_surat_wakaf']; ?></td>
+                  <td style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis;"><?php echo $row['nama_masjid']; ?></td>
+                  <td>
+                    <?php if (!empty($row['file_path_sertifikat_wakaf'])) : ?>
+                      <?php
+                      $path_parts = pathinfo($row['file_path_sertifikat_wakaf']);
+                      echo $path_parts['basename']; // Menampilkan nama file saja
+                      ?>
+                    <?php else : ?>
+                      <span>No Avatar</span>
+                    <?php endif; ?>
+                  </td>
+                  <!-- <i class="fas fa-plus"></i> -->
+                  <td style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis;"><?php echo $row['tanggal']; ?></td>
 
-            </tr>
-            <tr>
-              <td>Garrett Winters</td>
-              <td>Accountant</td>
-              <td>Tokyo</td>
-              <td>63</td>
-              <td class="text-center">
-                <a href="<?php echo base_url('adminor/edit_surat_wakaf') ?>" style="color: #3498db; margin-right: 10px;"><i class="fas fa-edit" data-toggle="tooltip" title="Edit Data"></i></a>
-                <a href="" onclick="return confirm('Are you sure you want to delete this item?');" style="color: #e74c3c; "><i class=" fas fa-trash" data-toggle="tooltip" title="Hapus data"></i></a>
-              </td>
-            </tr>
+                  <td class="text-center">
+                    <a href="<?php echo base_url('adminor/edit_data_wakaf/' . $row['id_wakaf']); ?>" style="color: #3498db; margin-right: 10px;"><i class="fas fa-edit" data-toggle="tooltip" title="Edit Data"></i></a>
+                    <a href="<?php echo base_url('adminor/hapus_data_wakaf/' . $row['id_wakaf']); ?>" onclick="return confirm('Are you sure you want to delete this item?');" style="color: #e74c3c; "><i class=" fas fa-trash" data-toggle="tooltip" title="Hapus Data"></i></a>
+                  </td>
+
+
+                </tr>
+              <?php endforeach; ?>
+            <?php else : ?>
+              <tr>
+                <td colspan=" 6">Tidak ada data surat masuk.</td>
+              </tr>
+            <?php endif; ?>
+            <!-- End Data Rows -->
+
 
           </tbody>
         </table>
