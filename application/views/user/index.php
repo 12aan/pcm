@@ -14,10 +14,7 @@
         <div class="row no-gutters">
             <div class="col-md-4">
                 <div class="col-sm-9">
-                    <div class="custom-file">
-                        <input type="file" class="custom-file-input" id="image" name="image">
-                        <label class="custom-file-label" for="image">Choose file</label>
-                    </div>
+
                     <img src="<?= base_url('assets12/img/profile/') . $user['image']; ?>" class="card-img">
                 </div>
                 <div class="col-sm-9">
