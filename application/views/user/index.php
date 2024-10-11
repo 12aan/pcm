@@ -13,27 +13,20 @@
     <div class="card mb-3 col-lg-8">
         <div class="row no-gutters">
             <div class="col-md-4">
-                <div class="col-sm-9">
-
-                    <img src="<?= base_url('assets12/img/profile/') . $user['image']; ?>" class="card-img">
-                </div>
-                <div class="col-sm-9">
-                    <div class="custom-file">
-                        <input type="file" class="custom-file-input" id="image" name="image">
-                        <label class="custom-file-label" for="image">Choose file</label>
-                    </div>
-                    <div class="col-md-8">
-                        <div class="card-body">
-                            <h5 class="card-title"><?= $user['name']; ?></h5>
-                            <p class="card-text"><?= $user['email']; ?></p>
-                            <p class="card-text"><small class="text-muted">Member since <?= date('d F Y', $user['date_created']); ?></small></p>
-                        </div>
-                    </div>
+                <img src="<?= base_url('assets12/img/profile/') . $user['image']; ?>" class="card-img">
+            </div>
+            <div class="col-md-8">
+                <div class="card-body">
+                    <h5 class="card-title"><?= $user['name']; ?></h5>
+                    <p class="card-text"><?= $user['email']; ?></p>
+                    <p class="card-text"><small class="text-muted">Member since <?= date('d F Y', $user['date_created']); ?></small></p>
                 </div>
             </div>
-
         </div>
-        <!-- /.container-fluid -->
-
     </div>
-    <!-- End of Main Content -->
+
+</div>
+<!-- /.container-fluid -->
+
+</div>
+<!-- End of Main Content -->
