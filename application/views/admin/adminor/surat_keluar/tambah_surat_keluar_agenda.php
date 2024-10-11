@@ -1,0 +1,58 @@
+<!-- Begin Page Content -->
+<div class="container-fluid">
+
+    <section class="section">
+        <div class="card">
+            <div class="card-header">
+                <h4 class="card-title">Tambah Surat Keluar Agenda</h4>
+            </div>
+            <div class="card-body">
+                <?php if ($this->session->flashdata('success')) { ?>
+                    <div class="alert alert-success">
+                        <?php echo $this->session->flashdata('success'); ?>
+                    </div>
+                <?php } ?>
+
+                <?php if ($this->session->flashdata('error')) { ?>
+                    <div class="alert alert-danger">
+                        <?php echo $this->session->flashdata('error'); ?>
+                    </div>
+                <?php } ?>
+
+                <form enctype="multipart/form-data" action="<?php echo site_url('adminor/tambah_surat_keluar'); ?>" method="post">
+                    <div class="mb-3">
+                        <label for="agenda" class="form-label">Agenda</label>
+                        <input type="text" class="form-control" id="agenda" name="agenda" required>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="nama_surat" class="form-label">Nama Surat</label>
+                        <input type="text" class="form-control" id="nama_surat" name="nama_surat">
+                    </div>
+                    <div class="mb-3">
+                        <label for="file_path_surat" class="form-label">Upload Surat</label>
+                        <input type="file" class="form-control" id="file_path_surat" name="file_path_surat">
+                        <small id="gambarHelp" class="form-text text-muted">Pilih file (format: jpg, jpeg, png, pdf, dll).</small>
+                    </div>
+                    <!-- Tampilkan berkas yang diunggah sebelumnya -->
+                    <div class="mb-3">
+                        <label for="file_path_undangan" class="form-label">Upload Undangan</label>
+                        <input type="file" class="form-control" id="file_path_undangan" name="file_path_undangan">
+                        <small id="gambarHelp" class="form-text text-muted">Pilih file (format: jpg, jpeg, png, pdf, dll).</small>
+                    </div>
+                    <div class="mb-3">
+                        <label for="file_path_photo" class="form-label">Upload File Photo</label>
+                        <input type="file" class="form-control" id="file_path_photo" name="file_path_photo">
+                        <small id="gambarHelp" class="form-text text-muted">Pilih file (format: jpg, jpeg, png, pdf, dll).</small>
+                    </div>
+                    <button type="submit" class="btn btn-primary btn-sm">Unggah Berkas</button>
+                </form>
+            </div>
+        </div>
+    </section>
+
+</div>
+<!-- /.container-fluid -->
+
+</div>
+<!-- End of Main Content -->

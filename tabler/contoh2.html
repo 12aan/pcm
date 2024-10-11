@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Slide Pindah Halaman</title>
+<style>
+  body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+  }
+
+  .container {
+    width: 80%;
+    margin: 50px auto;
+    position: relative;
+  }
+
+  .slides {
+    display: flex;
+    transition: transform 0.5s ease;
+    border-radius: 10px;
+    overflow: hidden;
+  }
+
+  .slide {
+    width: 300px;
+    margin-right: 20px;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+    border-radius: 10px;
+    overflow: hidden;
+  }
+
+  .slide img {
+    width: 100%;
+    height: auto;
+    border-radius: 10px 10px 0 0;
+    display: block;
+  }
+
+  .slide-content {
+    padding: 10px;
+  }
+
+  .slide-content h3 {
+    margin-top: 0;
+  }
+
+  .slide-content ul {
+    list-style-type: none;
+    padding: 0;
+  }
+
+  .slide-content li {
+    margin-bottom: 5px;
+  }
+
+  .navigation {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    z-index: 100;
+  }
+
+  .prev, .next {
+    background-color: rgba(255, 255, 255, 0.5);
+    padding: 10px;
+    border: none;
+    cursor: pointer;
+    border-radius: 50%;
+  }
+</style>
+</head>
+<body>
+<div class="container">
+  <div class="slides">
+    <!-- Tidak ada slide di awal, data akan dimasukkan ke dalam slide saat pertama kali ditambahkan -->
+    <div class="slide">
+      <img src="slide1.jpg" alt="Slide 1">
+      <div class="slide-content">
+        <h3>Slide 1</h3>
+        <ul>
+          <li>Data 1</li>
+          <li>Data 2</li>
+          <li>Data 3</li>
+          <li>Data 4</li>
+          <li>Data 5</li>
+          <li>Data 6</li>
+          <li>Data 7</li>
+          <li>Data </li>
+          <li>Data 4</li>
+          <li>Data 5</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+  <div class="navigation">
+    <button class="prev" onclick="prevSlide()">&#10094;</button>
+    <button class="next" onclick="nextSlide()">&#10095;</button>
+  </div>
+</div>
+
+<script>
+  let slideIndex = 1;
+
+  function showSlide(n) {
+    const slides = document.getElementsByClassName("slide");
+    if (n > slides.length) {slideIndex = 1}    
+    if (n < 1) {slideIndex = slides.length}
+    for (let i = 0; i < slides.length; i++) {
+      slides[i].style.display = "none";  
+    }
+    slides[slideIndex - 1].style.display = "block";  
+  }
+
+  function prevSlide() {
+    showSlide(slideIndex -= 1);
+  }
+
+  function nextSlide() {
+    showSlide(slideIndex += 1);
+  }
+
+  // Memanggil fungsi showSlide untuk menampilkan slide saat pertama kali dijalankan
+  showSlide(slideIndex);
+</script>
+</body>
+</html>

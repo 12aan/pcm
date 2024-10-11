@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Slide Pindah Halaman</title>
+<style>
+  body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+  }
+
+  .container {
+    width: 80%;
+    margin: 50px auto;
+    position: relative;
+  }
+
+  .slides {
+    display: flex;
+    transition: transform 0.5s ease;
+    border-radius: 10px;
+    overflow: hidden;
+  }
+
+  .slide {
+    width: 300px;
+    margin-right: 20px;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+    border-radius: 10px;
+    overflow: hidden;
+    position: relative; /* Menjadikan posisi relatif untuk menempatkan ikon */
+  }
+
+  .slide img {
+    width: 100%;
+    height: auto;
+    border-radius: 10px 10px 0 0;
+    display: block;
+  }
+
+  .slide-content {
+    padding: 10px;
+  }
+
+  .slide-content h3 {
+    margin-top: 0;
+  }
+
+  .slide-content ul {
+    list-style-type: none;
+    padding: 0;
+  }
+
+  .slide-content li {
+    margin-bottom: 5px;
+  }
+
+  .navigation {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    z-index: 100;
+  }
+
+  .prev, .next {
+    background-color: rgba(255, 255, 255, 0.5);
+    padding: 10px;
+    border: none;
+    cursor: pointer;
+    border-radius: 50%;
+    position: absolute; /* Menjadikan posisi absolut untuk menempatkan ikon di dalam slide */
+    top: 50%; /* Menempatkan ikon di tengah vertikal slide */
+    transform: translateY(-50%);
+    z-index: 1; /* Mengatur ikon agar tetap berada di atas konten slide */
+  }
+
+  .prev {
+    left: 0; /* Menempatkan ikon prev di sebelah kiri slide */
+  }
+
+  .next {
+    right: 0; /* Menempatkan ikon next di sebelah kanan slide */
+  }
+</style>
+</head>
+<body>
+<div class="container">
+  <div class="slides">
+    <div class="slide">
+      <button class="prev" onclick="prevSlide()">&#10094;</button> <!-- Menempatkan ikon prev di dalam slide -->
+      <img src="slide1.jpg" alt="Slide 1">
+      <div class="slide-content">
+        <h3>Slide 1</h3>
+        <ul>
+          <li>Data 1</li>
+          <li>Data 2</li>
+          <li>Data 3</li>
+          <li>Data 4</li>
+          <li>Data 5</li>
+         
+          <!-- Tambahkan data-data tambahan di sini -->
+        </ul>
+      </div>
+      <button class="next" onclick="nextSlide()">&#10095;</button> <!-- Menempatkan ikon next di dalam slide -->
+    </div>
+    <div class="slide">
+      <button class="prev" onclick="prevSlide()">&#10094;</button>
+      <img src="slide2.jpg" alt="Slide 2">
+      <div class="slide-content">
+        <h3>Slide 2</h3>
+        <ul>
+          <!-- Data untuk slide 2 -->
+          <li>Data 1</li>
+          <li>Data 2</li>
+        </ul>
+      </div>
+      <button class="next" onclick="nextSlide()">&#10095;</button>
+    </div>
+    <!-- Tambahkan slide dan datanya di sini -->
+  </div>
+  <div class="navigation">
+    <!-- Hapus tombol prev dan next di luar elemen slides -->
+  </div>
+</div>
+
+<script>
+  let slideIndex = 1;
+
+  function showSlide(n) {
+    const slides = document.getElementsByClassName("slide");
+    if (n > slides.length) {slideIndex = 1}    
+    if (n < 1) {slideIndex = slides.length}
+    for (let i = 0; i < slides.length; i++) {
+      slides[i].style.display = "none";  
+    }
+    slides[slideIndex - 1].style.display = "block";  
+
+    // Periksa apakah jumlah data lebih dari 5, jika ya, pindah ke slide berikutnya
+    const slideContents = slides[slideIndex - 1].getElementsByClassName("slide-content");
+    const dataList = slideContents[0].getElementsByTagName("li");
+    if (dataList.length > 5) {
+      nextSlide();
+    }
+  }
+
+  function prevSlide() {
+    showSlide(slideIndex -= 1);
+  }
+
+  function nextSlide() {
+    showSlide(slideIndex += 1);
+  }
+
+  showSlide(slideIndex);
+</script>
+</body>
+</html>

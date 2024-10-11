@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Profil Facebook</title>
+</head>
+<body>
+    <div id="profile">
+        <img id="profile-picture" src="" alt="Foto Profil">
+        <h1 id="profile-name"></h1>
+        <p id="profile-email"></p>
+        <!-- Tambahkan elemen lainnya seperti detail lainnya -->
+    </div>
+
+    <script>
+        // Anda bisa menambahkan script JavaScript di sini untuk mengambil dan menampilkan data profil dari Facebook
+        // Misalnya, dengan menggunakan SDK JavaScript Facebook atau API lainnya.
+        // Berikut contoh penggunaan JavaScript sederhana:
+        window.onload = function() {
+            // Ambil data profil dari Facebook dan isi elemen HTML dengan data yang diperoleh
+            // Misalnya, dengan menggunakan SDK JavaScript Facebook:
+            FB.api('/me', {fields: 'name,email,picture'}, function(response) {
+                document.getElementById('profile-name').innerText = response.name;
+                document.getElementById('profile-email').innerText = response.email;
+                document.getElementById('profile-picture').src = response.picture.data.url;
+                // Anda bisa menambahkan elemen lainnya atau mengubah cara menampilkan data sesuai kebutuhan.
+            });
+        };
+    </script>
+
+    <!-- Sertakan SDK JavaScript Facebook jika Anda menggunakannya -->
+    <script async defer crossorigin="anonymous" src="https://connect.facebook.net/en_US/sdk.js"></script>
+</body>
+</html>

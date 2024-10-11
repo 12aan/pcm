@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Editor Teks</title>
+<style>
+    textarea {
+        width: 100%;
+        height: 200px;
+        resize: none;
+    }
+</style>
+</head>
+<body>
+
+<label for="editor">Editor Teks:</label><br>
+<textarea id="editor" name="editor"></textarea><br>
+<button onclick="makeBold()">Bold</button>
+<button onclick="makeNormal()">Normal</button>
+<button onclick="addParagraph()">Tambah Paragraf</button>
+
+<script>
+function makeBold() {
+    var textarea = document.getElementById("editor");
+    var selectedText = textarea.value.substring(textarea.selectionStart, textarea.selectionEnd);
+    var newText = "<b>" + selectedText + "</b>";
+    var beforeText = textarea.value.substring(0, textarea.selectionStart);
+    var afterText = textarea.value.substring(textarea.selectionEnd, textarea.value.length);
+    textarea.value = beforeText + newText + afterText;
+}
+
+function makeNormal() {
+    var textarea = document.getElementById("editor");
+    var selectedText = textarea.value.substring(textarea.selectionStart, textarea.selectionEnd);
+    var newText = selectedText.replace(/<[^>]+>/g, ''); // Remove existing HTML tags
+    var beforeText = textarea.value.substring(0, textarea.selectionStart);
+    var afterText = textarea.value.substring(textarea.selectionEnd, textarea.value.length);
+    textarea.value = beforeText + newText + afterText;
+}
+
+function addParagraph() {
+    var textarea = document.getElementById("editor");
+    var beforeText = textarea.value.substring(0, textarea.selectionStart);
+    var afterText = textarea.value.substring(textarea.selectionEnd, textarea.value.length);
+    textarea.value = beforeText + "\n\n" + afterText;
+}
+</script>
+
+</body>
+</html>
