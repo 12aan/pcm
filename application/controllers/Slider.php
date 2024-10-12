@@ -35,7 +35,7 @@ class Slider extends CI_Controller
 		$this->load->view('templates/header', $data);
 		$this->load->view('templates/sidebar', $data);
 		$this->load->view('templates/topbar', $data);
-		$this->load->view('admin/berita/slider', $data);
+		$this->load->view('admin/berita/slider/slider', $data);
 		$this->load->view('templates/footer');
 	}
 
@@ -50,7 +50,7 @@ class Slider extends CI_Controller
 		$this->load->view('templates/header', $data);
 		$this->load->view('templates/sidebar', $data);
 		$this->load->view('templates/topbar', $data);
-		$this->load->view('admin/berita/tambah_data_slider', $data);
+		$this->load->view('admin/berita/slider/tambah_data_slider', $data);
 		$this->load->view('templates/footer');
 	}
 
@@ -65,7 +65,7 @@ class Slider extends CI_Controller
 		$this->load->view('templates/header', $data);
 		$this->load->view('templates/sidebar', $data);
 		$this->load->view('templates/topbar', $data);
-		$this->load->view('admin/berita/edit_data_slider', $data);
+		$this->load->view('admin/berita/slider/edit_data_slider', $data);
 		$this->load->view('templates/footer');
 	}
 

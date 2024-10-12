@@ -7,7 +7,7 @@
   <!-- DataTales Example -->
   <div class="card shadow mb-4">
     <div class="card-header py-3">
-      <a href="<?php echo base_url('adminor/tambah_surat_aktif_organisasi') ?>" class="m-0 font-weight-bold text-primary">Tambah Data</a>
+      <a href="<?php echo base_url('adminor/tambah_surat_aktif_organisasi') ?>" class="btn btn-primary mt-2">Tambah Data</a>
     </div>
     <div class="card-body">
       <div class="table-responsive">

@@ -25,10 +25,20 @@
                             <textarea id='editor1' class='form-control' name='isi_content' style='height:1000px' required></textarea>
                             <!-- <input type="text" class="form-control" id="isi_berita" name="isi_berita" required> -->
                         </div>
-                        <div class="mb-3">
-                            <label for="avatar" class="form-label">Upload Berkas</label>
-                            <input type="file" class="form-control" id="avatar" name="avatar">
-                            <small id="gambarHelp" class="form-text text-muted">Pilih file (format: jpg, jpeg, png, pdf, dll).</small>
+                        <div class="form-group row">
+                            <div class="col-sm-10">
+                                <div class="row">
+                                    <div class="col-sm-3">
+                                        <img src="<?= base_url('assets12/img/profile/dokumen.jpg'); ?>" class="img-thumbnail">
+                                    </div>
+                                    <div class="col-sm-9">
+                                        <div class="custom-file">
+                                            <input type="file" class="custom-file-input" id="image" name="image">
+                                            <label class="custom-file-label" for="image">Choose file</label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                         <button type="submit" class="btn btn-primary btn-sm">Unggah Berkas</button>
                     </form>

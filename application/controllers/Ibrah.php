@@ -37,7 +37,7 @@ class Ibrah extends CI_Controller
 		$this->load->view('templates/header', $data);
 		$this->load->view('templates/sidebar', $data);
 		$this->load->view('templates/topbar', $data);
-		$this->load->view('admin/berita/ibrah', $data);
+		$this->load->view('admin/berita/ibrah/ibrah', $data);
 		$this->load->view('templates/footer');
 	}
 
@@ -51,7 +51,7 @@ class Ibrah extends CI_Controller
 		$this->load->view('templates/header', $data);
 		$this->load->view('templates/sidebar', $data);
 		$this->load->view('templates/topbar', $data);
-		$this->load->view('admin/berita/tambah_data_ibrah', $data);
+		$this->load->view('admin/berita/ibrah/tambah_data_ibrah', $data);
 		$this->load->view('templates/footer');
 	}
 
@@ -65,7 +65,7 @@ class Ibrah extends CI_Controller
 		$this->load->view('templates/header', $data);
 		$this->load->view('templates/sidebar', $data);
 		$this->load->view('templates/topbar', $data);
-		$this->load->view('admin/berita/edit_data_ibrah', $data);
+		$this->load->view('admin/berita/ibrah/edit_data_ibrah', $data);
 		$this->load->view('templates/footer');
 	}
 

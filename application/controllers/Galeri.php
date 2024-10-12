@@ -35,7 +35,7 @@ class Galeri extends CI_Controller
 		$this->load->view('templates/header', $data);
 		$this->load->view('templates/sidebar', $data);
 		$this->load->view('templates/topbar', $data);
-		$this->load->view('admin/berita/galeri', $data);
+		$this->load->view('admin/berita/galeri/galeri', $data);
 		$this->load->view('templates/footer');
 	}
 
@@ -49,7 +49,7 @@ class Galeri extends CI_Controller
 		$this->load->view('templates/header', $data);
 		$this->load->view('templates/sidebar', $data);
 		$this->load->view('templates/topbar', $data);
-		$this->load->view('admin/berita/tambah_data_galeri', $data);
+		$this->load->view('admin/berita/galeri/tambah_data_galeri', $data);
 		$this->load->view('templates/footer');
 	}
 
@@ -63,7 +63,7 @@ class Galeri extends CI_Controller
 		$this->load->view('templates/header', $data);
 		$this->load->view('templates/sidebar', $data);
 		$this->load->view('templates/topbar', $data);
-		$this->load->view('admin/berita/edit_data_galeri', $data);
+		$this->load->view('admin/berita/galeri/edit_data_galeri', $data);
 		$this->load->view('templates/footer');
 	}
 

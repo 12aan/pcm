@@ -35,7 +35,7 @@ class Kabar_ranting extends CI_Controller
 		$this->load->view('templates/header', $data);
 		$this->load->view('templates/sidebar', $data);
 		$this->load->view('templates/topbar', $data);
-		$this->load->view('admin/berita/kabar_ranting', $data);
+		$this->load->view('admin/berita/kabar_ranting/kabar_ranting', $data);
 		$this->load->view('templates/footer');
 	}
 
@@ -49,7 +49,7 @@ class Kabar_ranting extends CI_Controller
 		$this->load->view('templates/header', $data);
 		$this->load->view('templates/sidebar', $data);
 		$this->load->view('templates/topbar', $data);
-		$this->load->view('admin/berita/tambah_data_kabar_ranting', $data);
+		$this->load->view('admin/berita/kabar_ranting/tambah_data_kabar_ranting', $data);
 		$this->load->view('templates/footer');
 	}
 
@@ -63,7 +63,7 @@ class Kabar_ranting extends CI_Controller
 		$this->load->view('templates/header', $data);
 		$this->load->view('templates/sidebar', $data);
 		$this->load->view('templates/topbar', $data);
-		$this->load->view('admin/berita/edit_data_kabar_ranting', $data);
+		$this->load->view('admin/berita/kabar_ranting/edit_data_kabar_ranting', $data);
 		$this->load->view('templates/footer');
 	}
 

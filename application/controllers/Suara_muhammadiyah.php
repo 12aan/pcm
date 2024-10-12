@@ -35,7 +35,7 @@ class Suara_muhammadiyah extends CI_Controller
 		$this->load->view('templates/header', $data);
 		$this->load->view('templates/sidebar', $data);
 		$this->load->view('templates/topbar', $data);
-		$this->load->view('admin/berita/suara_muhammadiyah', $data);
+		$this->load->view('admin/berita/suara_muhammadiyah/suara_muhammadiyah', $data);
 		$this->load->view('templates/footer');
 	}
 
@@ -49,7 +49,7 @@ class Suara_muhammadiyah extends CI_Controller
 		$this->load->view('templates/header', $data);
 		$this->load->view('templates/sidebar', $data);
 		$this->load->view('templates/topbar', $data);
-		$this->load->view('admin/berita/tambah_data_suara_muhammadiyah', $data);
+		$this->load->view('admin/berita/suara_muhammadiyah/tambah_data_suara_muhammadiyah', $data);
 		$this->load->view('templates/footer');
 	}
 
@@ -63,7 +63,7 @@ class Suara_muhammadiyah extends CI_Controller
 		$this->load->view('templates/header', $data);
 		$this->load->view('templates/sidebar', $data);
 		$this->load->view('templates/topbar', $data);
-		$this->load->view('admin/berita/edit_data_suara_muhammadiyah', $data);
+		$this->load->view('admin/berita/suara_muhammadiyah/edit_data_suara_muhammadiyah', $data);
 		$this->load->view('templates/footer');
 	}
 

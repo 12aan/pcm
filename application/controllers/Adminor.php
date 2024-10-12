@@ -449,7 +449,7 @@ class Adminor extends CI_Controller
         $this->load->view('templates/header', $data);
         $this->load->view('templates/sidebar', $data);
         $this->load->view('templates/topbar', $data);
-        $this->load->view('admin/adminor/tambah_surat_aktif_organisasi', $data);
+        $this->load->view('admin/adminor/surat_organisasi/tambah_surat_aktif_organisasi', $data);
         $this->load->view('templates/footer');
         // Load data surat_masuk from the backend
     }
@@ -464,7 +464,7 @@ class Adminor extends CI_Controller
         $this->load->view('templates/header', $data);
         $this->load->view('templates/sidebar', $data);
         $this->load->view('templates/topbar', $data);
-        $this->load->view('admin/adminor/lihat_data_anggota_organisasi', $data);
+        $this->load->view('admin/adminor/surat_organisasi/lihat_data_anggota_organisasi', $data);
         $this->load->view('templates/footer');
         // Load data surat_masuk from the backend
     }

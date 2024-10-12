@@ -66,17 +66,40 @@
                         <input type="tel" class="form-control" id="telepon_kantor_kerja" name="telepon_kantor_kerja" required>
                     </div>
 
-                    <div class="mb-3">
-                        <label for="file_path_kartu_tanda_anggota" class="form-label">Upload Karu Tanda Anggota Muhammadiyah/Aisyiyah</label>
-                        <input type="file" class="form-control" id="file_path_kartu_tanda_anggota" name="file_path_kartu_tanda_anggota">
-                        <small id="gambarHelp" class="form-text text-muted">Pilih file (format: jpg, jpeg, png, pdf, dll).</small>
+                    <h6 class="card-title">Upload Karu Tanda Anggota Muhammadiyah/Aisyiyah</h6>
+                    <div class="form-group row">
+                        <div class="col-sm-10">
+                            <div class="row">
+                                <div class="col-sm-3">
+                                    <img src="<?= base_url('assets12/img/profile/avatar.jpg'); ?>" class="img-thumbnail">
+                                </div>
+                                <div class="col-sm-9">
+                                    <div class="custom-file">
+                                        <input type="file" class="custom-file-input" id="image" name="image">
+                                        <label class="custom-file-label" for="image">Pilih file surat</label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
-                    <div class="mb-3">
-                        <label for="file_path_bukti_keaktifan" class="form-label">Foto Bukti Keaktifan atau Surat Rekomendasi/Keterangan Takmir atau Surat Rekomendasi/Keterangan Lembaga/Majlis dimana yang bersangkutan (ybs) aktif
-                        </label>
-                        <input type="file" class="form-control" id="file_path_bukti_keaktifan" name="file_path_bukti_keaktifan" value="Not Avatar">
-                        <small id="gambarHelp" class="form-text text-muted">Pilih file (format: jpg, jpeg, png, pdf, dll).</small>
+
+                    <h6 class="card-title">Foto Bukti Keaktifan atau Surat Rekomendasi/Keterangan Takmir atau Surat Rekomendasi/Keterangan Lembaga/Majlis dimana yang bersangkutan (ybs) aktif</h6>
+                    <div class="form-group row">
+                        <div class="col-sm-10">
+                            <div class="row">
+                                <div class="col-sm-3">
+                                    <img src="<?= base_url('assets12/img/profile/dokumen.jpg'); ?>" class="img-thumbnail">
+                                </div>
+                                <div class="col-sm-9">
+                                    <div class="custom-file">
+                                        <input type="file" class="custom-file-input" id="image" name="image">
+                                        <label class="custom-file-label" for="image">Pilih file surat</label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
+
                     <button type="submit" class="btn btn-primary btn-sm">Unggah Berkas</button>
                 </form>
             </div>

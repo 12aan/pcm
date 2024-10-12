@@ -25,6 +25,17 @@
         </div>
     </div>
 
+    <div class="mb-3 col-lg-8">
+        <a href="<?= base_url('user/edit'); ?>">
+            <button type="button" class="btn btn-primary">Edit Profile</button>
+        </a>
+
+        <a href="<?= base_url('user/changepassword'); ?>">
+            <button type="button" class="btn btn-primary">Change Password</button>
+        </a>
+
+    </div>
+
 </div>
 <!-- /.container-fluid -->
 

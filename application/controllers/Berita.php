@@ -38,7 +38,7 @@ class Berita extends CI_Controller
         $this->load->view('templates/header', $data);
         $this->load->view('templates/sidebar', $data);
         $this->load->view('templates/topbar', $data);
-        $this->load->view('admin/berita/berita', $data);
+        $this->load->view('admin/berita/berita/berita', $data);
         $this->load->view('templates/footer');
     }
 
@@ -52,7 +52,7 @@ class Berita extends CI_Controller
         $this->load->view('templates/header', $data);
         $this->load->view('templates/sidebar', $data);
         $this->load->view('templates/topbar', $data);
-        $this->load->view('admin/berita/tambah_data_berita', $data);
+        $this->load->view('admin/berita/berita/tambah_data_berita', $data);
         $this->load->view('templates/footer');
     }
 
@@ -66,7 +66,7 @@ class Berita extends CI_Controller
         $this->load->view('templates/header', $data);
         $this->load->view('templates/sidebar', $data);
         $this->load->view('templates/topbar', $data);
-        $this->load->view('admin/berita/edit_data_berita', $data);
+        $this->load->view('admin/berita/berita/edit_data_berita', $data);
         $this->load->view('templates/footer');
     }
 }

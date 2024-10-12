@@ -38,7 +38,7 @@ class Breaking_news extends CI_Controller
 		$this->load->view('templates/header', $data);
 		$this->load->view('templates/sidebar', $data);
 		$this->load->view('templates/topbar', $data);
-		$this->load->view('admin/berita/breaking_news', $data);
+		$this->load->view('admin/berita/breaking_news/breaking_news', $data);
 		$this->load->view('templates/footer');
 	}
 
@@ -51,7 +51,7 @@ class Breaking_news extends CI_Controller
 		$this->load->view('templates/header', $data);
 		$this->load->view('templates/sidebar', $data);
 		$this->load->view('templates/topbar', $data);
-		$this->load->view('admin/berita/tambah_data_breaking_news', $data);
+		$this->load->view('admin/berita/breaking_news/tambah_data_breaking_news', $data);
 		$this->load->view('templates/footer');
 	}
 
@@ -64,7 +64,7 @@ class Breaking_news extends CI_Controller
 		$this->load->view('templates/header', $data);
 		$this->load->view('templates/sidebar', $data);
 		$this->load->view('templates/topbar', $data);
-		$this->load->view('admin/berita/edit_data_breaking_news', $data);
+		$this->load->view('admin/berita/breaking_news/edit_data_breaking_news', $data);
 		$this->load->view('templates/footer');
 	}
 

@@ -2,12 +2,12 @@
 <div class="container-fluid">
 
   <!-- Page Heading -->
-  <h1 class="h3 mb-2 text-gray-800">Galeri</h1>
+  <h1 class="h3 mb-2 text-gray-800">Berita masa Kini</h1>
 
   <!-- DataTales Example -->
   <div class="card shadow mb-4">
     <div class="card-header py-3">
-      <a href="<?php echo base_url('galeri/tambah_data_galeri') ?>" class="m-0 font-weight-bold text-primary">Tambah Data</a>
+      <a href="<?php echo base_url('berita/tambah_data_berita') ?>" class="btn btn-primary mt-2">Tambah Data</a>
     </div>
     <div class="card-body">
       <div class="table-responsive">
@@ -36,7 +36,7 @@
               <td>Tokyo</td>
               <td>63</td>
               <td class="text-center">
-                <a href="<?php echo base_url('galeri/edit_data_galeri') ?>" style="color: #3498db; margin-right: 10px;"><i class="fas fa-edit" data-toggle="tooltip" title="Edit Data"></i></a>
+                <a href="<?php echo base_url('berita/edit_data_berita') ?>" style="color: #3498db; margin-right: 10px;"><i class="fas fa-edit" data-toggle="tooltip" title="Edit Data"></i></a>
                 <a href="" onclick="return confirm('Are you sure you want to delete this item?');" style="color: #e74c3c; "><i class=" fas fa-trash" data-toggle="tooltip" title="Hapus data"></i></a>
               </td>
             </tr>
