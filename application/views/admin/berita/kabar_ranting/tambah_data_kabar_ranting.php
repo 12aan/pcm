@@ -1,20 +1,12 @@
 <!-- Begin Page Content -->
 <div class="container-fluid">
-
-
-    <body>
-        <script src="<?php echo base_url('assets/static/js/initTheme.js') ?>"></script>
-
-
-
-
         <section class="section">
             <div class="card">
                 <div class="card-header">
                     <h4 class="card-title">Tambah Data Kabar Ranting</h4>
                 </div>
                 <div class="card-body">
-                    <form enctype="multipart/form-data" action="<?php echo site_url('breaking_news/tambah_data_braking_news'); ?>" method="post">
+                    <form enctype="multipart/form-data" action="<?php echo site_url('berita/tambah_data_kabar_ranting'); ?>" method="post">
                         <div class="mb-3">
                             <label for="judul_berita" class="form-label">Judul Berita</label>
                             <input type="text" class="form-control" id="judul_berita" name="judul_berita" required>
@@ -33,7 +25,7 @@
                                     </div>
                                     <div class="col-sm-9">
                                         <div class="custom-file">
-                                            <input type="file" class="custom-file-input" id="image" name="image">
+                                            <input type="file" class="custom-file-input" id="avatar" name="avatar">
                                             <label class="custom-file-label" for="image">Choose file</label>
                                         </div>
                                     </div>
@@ -58,10 +50,6 @@
         <script src="<?php echo base_url('/assets/extensions/perfect-scrollbar/perfect-scrollbar.min.js') ?>"></script>
 
         <script src="<?php echo base_url('/assets/compiled/js/app.js') ?>"></script>
-
-
-    </body>
-
 </div>
 <!-- /.container-fluid -->
 

@@ -8,18 +8,6 @@
                 <h4 class="card-title">Tambah Surat Aktif Organisasi</h4>
             </div>
             <div class="card-body">
-                <?php if ($this->session->flashdata('success')) { ?>
-                    <div class="alert alert-success">
-                        <?php echo $this->session->flashdata('success'); ?>
-                    </div>
-                <?php } ?>
-
-                <?php if ($this->session->flashdata('error')) { ?>
-                    <div class="alert alert-danger">
-                        <?php echo $this->session->flashdata('error'); ?>
-                    </div>
-                <?php } ?>
-
                 <form enctype="multipart/form-data" action="<?php echo site_url('adminor/tambah_surat_aktif_organisasi'); ?>" method="post">
                     <div class="mb-3">
                         <label for="email" class="form-label">Email Anda</label>
@@ -75,7 +63,7 @@
                                 </div>
                                 <div class="col-sm-9">
                                     <div class="custom-file">
-                                        <input type="file" class="custom-file-input" id="image" name="image">
+                                        <input type="file" class="custom-file-input" id="file_path_kartu_tanda_anggota" name="file_path_kartu_tanda_anggota">
                                         <label class="custom-file-label" for="image">Pilih file surat</label>
                                     </div>
                                 </div>
@@ -92,7 +80,7 @@
                                 </div>
                                 <div class="col-sm-9">
                                     <div class="custom-file">
-                                        <input type="file" class="custom-file-input" id="image" name="image">
+                                        <input type="file" class="custom-file-input" id="file_path_bukti_keaktifan" name="file_path_bukti_keaktifan">
                                         <label class="custom-file-label" for="image">Pilih file surat</label>
                                     </div>
                                 </div>

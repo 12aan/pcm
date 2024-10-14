@@ -9,19 +9,34 @@
                 <h4 class="card-title">Edit Surat Sertifikat Wakaf</h4>
             </div>
             <div class="card-body">
-                <form action="" method="post" enctype="multipart/form-data">
+                <form action="<?php echo site_url('adminor/edit_data_wakaf/' . $sertifikat_wakaf['id_wakaf']); ?>" method="post" enctype="multipart/form-data">
                     <div class="mb-3">
                         <label for="nama_surat_wakaf" class="form-label">Nama Surat Wakaf</label>
-                        <input type="text" class="form-control" id="nama_surat_wakaf" name="nama_surat_wakaf" value="" required>
+                        <input type="text" class="form-control" id="nama_surat_wakaf" name="nama_surat_wakaf" value="<?php echo isset($sertifikat_wakaf['nama_surat_wakaf']) ? $sertifikat_wakaf['nama_surat_wakaf'] : ''; ?>" required>
                     </div>
 
                     <div class="mb-3">
                         <label for="nama_masjid" class="form-label">Nama Masjid</label>
-                        <input type="text" class="form-control" id="nama_masjid" name="nama_masjid" value="" required>
+                        <input type="text" class="form-control" id="nama_masjid" name="nama_masjid" value="<?php echo isset($sertifikat_wakaf['nama_masjid']) ? $sertifikat_wakaf['nama_masjid'] : ''; ?>" required>
                     </div>
                     <div class="mb-3">
                         <label for="gambarBerita" class="form-label">Avatar Saat Ini</label><br>
-
+                        <?php
+                        $file_path_sertifikat_wakaf = $sertifikat_wakaf['file_path_sertifikat_wakaf'];
+                        $file_extension = pathinfo($file_path_sertifikat_wakaf, PATHINFO_EXTENSION);
+                        if (in_array($file_extension, ['jpg', 'jpeg', 'png', 'gif'])) {
+                            // Jika file adalah gambar
+                            echo '<img src="' . base_url('./uploads/' . $file_path_sertifikat_wakaf) . '" alt="file_path_sertifikat_wakaf" width="100">';
+                        } elseif ($file_extension === 'pdf') {
+                            // Jika file adalah PDF
+                            echo '<embed src="' . base_url('./uploads/' . $file_path_sertifikat_wakaf) . '" type="application/pdf" width="500" height="600" />';
+                        } elseif (!empty($file_path_sertifikat_wakaf)) {
+                            // Jika file bukan gambar atau PDF
+                            echo '<a href="' . base_url('./uploads/' . $file_path_sertifikat_wakaf) . '" target="_blank">' . $file_path_sertifikat_wakaf . '</a>';
+                        } else {
+                            echo 'Not File';
+                        }
+                        ?>
                     </div>
 
                     <div class="mb-3">

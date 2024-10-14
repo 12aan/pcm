@@ -16,24 +16,23 @@
                 <img src="<?= base_url('assets12/img/profile/') . $user['image']; ?>" class="card-img">
             </div>
             <div class="col-md-8">
-                <div class="card-body">
+                <div class="card-body mt-4">
                     <h5 class="card-title"><?= $user['name']; ?></h5>
                     <p class="card-text"><?= $user['email']; ?></p>
                     <p class="card-text"><small class="text-muted">Member since <?= date('d F Y', $user['date_created']); ?></small></p>
                 </div>
+                <div class="mt-4 col-lg-8">
+                    <a href="<?= base_url('user/edit'); ?>">
+                        <button type="button" class="btn btn-primary">Edit Profile</button>
+                    </a>
+
+                    <a href="<?= base_url('user/changepassword'); ?>">
+                        <button type="button" class="btn btn-primary">Change Password</button>
+                    </a>
+
+                </div>
             </div>
         </div>
-    </div>
-
-    <div class="mb-3 col-lg-8">
-        <a href="<?= base_url('user/edit'); ?>">
-            <button type="button" class="btn btn-primary">Edit Profile</button>
-        </a>
-
-        <a href="<?= base_url('user/changepassword'); ?>">
-            <button type="button" class="btn btn-primary">Change Password</button>
-        </a>
-
     </div>
 
 </div>

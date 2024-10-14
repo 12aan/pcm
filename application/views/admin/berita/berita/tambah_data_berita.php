@@ -1,13 +1,6 @@
 <!-- Begin Page Content -->
 <div class="container-fluid">
 
-
-    <body>
-        <script src="<?php echo base_url('assets/static/js/initTheme.js') ?>"></script>
-
-
-
-
         <section class="section">
             <div class="card">
                 <div class="card-header">
@@ -33,7 +26,7 @@
                                     </div>
                                     <div class="col-sm-9">
                                         <div class="custom-file">
-                                            <input type="file" class="custom-file-input" id="image" name="image">
+                                            <input type="file" class="custom-file-input" id="avatar" name="avatar">
                                             <label class="custom-file-label" for="image">Choose file</label>
                                         </div>
                                     </div>
@@ -58,9 +51,6 @@
         <script src="<?php echo base_url('/assets/extensions/perfect-scrollbar/perfect-scrollbar.min.js') ?>"></script>
 
         <script src="<?php echo base_url('/assets/compiled/js/app.js') ?>"></script>
-
-
-    </body>
 
 </div>
 <!-- /.container-fluid -->

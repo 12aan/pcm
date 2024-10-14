@@ -7,26 +7,10 @@
                 <h4 class="card-title">Tambah Surat Notulensi</h4>
             </div>
             <div class="card-body">
-                <?php if ($this->session->flashdata('success')) { ?>
-                    <div class="alert alert-success">
-                        <?php echo $this->session->flashdata('success'); ?>
-                    </div>
-                <?php } ?>
-
-                <?php if ($this->session->flashdata('error')) { ?>
-                    <div class="alert alert-danger">
-                        <?php echo $this->session->flashdata('error'); ?>
-                    </div>
-                <?php } ?>
-
-                <form enctype="multipart/form-data" action="<?php echo site_url('adminor/tambah_surat_notulensi_agenda'); ?>" method="post">
+                <form enctype="multipart/form-data" action="<?php echo site_url('adminor/tambah_surat_notulensi'); ?>" method="post">
                     <div class="mb-3">
                         <label for="agenda" class="form-label">Agenda</label>
-                        <!-- Menampilkan dropdown untuk memilih agenda -->
-                        <select class="form-control" id="agenda" name="agenda" required>
-                            <option value="">Pilih Agenda</option>
-
-                        </select>
+                        <input type="text" class="form-control" id="agenda" name="agenda" required>
                     </div>
 
                     <div class="mb-3">
@@ -44,7 +28,7 @@
                     </div>
 
                     <div id="fileUploads" style="display: none;">
-                        <h6 class="card-title">Upload Undangan</h6>
+                        <h6 class="card-title">Upload Undangnan</h6>
                         <div class="form-group row">
                             <div class="col-sm-10">
                                 <div class="row">
@@ -53,8 +37,8 @@
                                     </div>
                                     <div class="col-sm-9">
                                         <div class="custom-file">
-                                            <input type="file" class="custom-file-input" id="uploadSurat" name="uploadSurat">
-                                            <label class="custom-file-label" for="uploadSurat">Pilih fIle undangnan</label>
+                                            <input type="file" class="custom-file-input" id="file_path_undangan" name="file_path_undangan">
+                                            <label class="custom-file-label" for="uploadSurat">Pilih fIle undangan</label>
                                         </div>
                                     </div>
                                 </div>
@@ -70,7 +54,7 @@
                                     </div>
                                     <div class="col-sm-9">
                                         <div class="custom-file">
-                                            <input type="file" class="custom-file-input" id="uploadUndangan" name="uploadUndangan">
+                                            <input type="file" class="custom-file-input" id="file_path_notulensi" name="file_path_notulensi">
                                             <label class="custom-file-label" for="uploadUndangan">Pilih file notulensi</label>
                                         </div>
                                     </div>

@@ -7,24 +7,19 @@
                 <h4 class="card-title">Tambah Surat Keluar Agenda</h4>
             </div>
             <div class="card-body">
-                <?php if ($this->session->flashdata('success')) { ?>
-                    <div class="alert alert-success">
-                        <?php echo $this->session->flashdata('success'); ?>
-                    </div>
-                <?php } ?>
-
-                <?php if ($this->session->flashdata('error')) { ?>
-                    <div class="alert alert-danger">
-                        <?php echo $this->session->flashdata('error'); ?>
-                    </div>
-                <?php } ?>
-
-                <form enctype="multipart/form-data" action="<?php echo site_url('adminor/tambah_surat_keluar'); ?>" method="post">
+                <form enctype="multipart/form-data" action="<?php echo site_url('adminor/tambah_surat_keluar_agenda'); ?>" method="post">
                     <div class="mb-3">
                         <label for="agenda" class="form-label">Agenda</label>
-                        <input type="text" class="form-control" id="agenda" name="agenda" required>
+                        <select class="form-control" id="agenda" name="agenda" required>
+                            <option value="">Pilih Agenda</option>
+                            <?php
+                            // Mengambil hanya nilai unik dari kolom 'agenda'
+                            $unique_agendas = array_unique(array_column($agenda_list, 'agenda'));
+                            foreach ($unique_agendas as $agenda) : ?>
+                                <option value="<?php echo $agenda; ?>"><?php echo $agenda; ?></option>
+                            <?php endforeach; ?>
+                        </select>
                     </div>
-
                     <div class="mb-3">
                         <label for="nama_surat" class="form-label">Nama Surat</label>
                         <input type="text" class="form-control" id="nama_surat" name="nama_surat">
@@ -49,8 +44,8 @@
                                     </div>
                                     <div class="col-sm-9">
                                         <div class="custom-file">
-                                            <input type="file" class="custom-file-input" id="uploadSurat" name="uploadSurat">
-                                            <label class="custom-file-label" for="uploadSurat">Pilih fIle suret</label>
+                                            <input type="file" class="custom-file-input" id="file_path_surat" name="file_path_surat">
+                                            <label class="custom-file-label" for="uploadSurat">Pilih fIle surat</label>
                                         </div>
                                     </div>
                                 </div>
@@ -66,7 +61,7 @@
                                     </div>
                                     <div class="col-sm-9">
                                         <div class="custom-file">
-                                            <input type="file" class="custom-file-input" id="uploadUndangan" name="uploadUndangan">
+                                            <input type="file" class="custom-file-input" id="file_path_undangan" name="file_path_undangan">
                                             <label class="custom-file-label" for="uploadUndangan">Pilih file undangan</label>
                                         </div>
                                     </div>
@@ -83,7 +78,7 @@
                                     </div>
                                     <div class="col-sm-9">
                                         <div class="custom-file">
-                                            <input type="file" class="custom-file-input" id="uploadFoto" name="uploadFoto">
+                                            <input type="file" class="custom-file-input" id="file_path_photo" name="file_path_photo">
                                             <label class="custom-file-label" for="uploadFoto">Pilih file foto</label>
                                         </div>
                                     </div>

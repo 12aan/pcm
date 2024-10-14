@@ -19,10 +19,19 @@
                     </div>
                 <?php } ?>
 
-                <form enctype="multipart/form-data" action="<?php echo site_url('adminor/tambah_surat_notulensi'); ?>" method="post">
+                <form enctype="multipart/form-data" action="<?php echo site_url('adminor/tambah_surat_notulensi_agenda'); ?>" method="post">
                     <div class="mb-3">
                         <label for="agenda" class="form-label">Agenda</label>
-                        <input type="text" class="form-control" id="agenda" name="agenda" required>
+                        <!-- Menampilkan dropdown untuk memilih agenda -->
+                        <select class="form-control" id="agenda" name="agenda" required>
+                            <option value="">Pilih Agenda</option>
+                            <?php
+                            // Filter array untuk menghapus entri yang duplikat berdasarkan nilai 'agenda'
+                            $unique_agendas = array_unique(array_column($agenda_list, 'agenda'));
+                            foreach ($unique_agendas as $agenda) : ?>
+                                <option value="<?php echo $agenda; ?>"><?php echo $agenda; ?></option>
+                            <?php endforeach; ?>
+                        </select>
                     </div>
 
                     <div class="mb-3">
@@ -49,7 +58,7 @@
                                     </div>
                                     <div class="col-sm-9">
                                         <div class="custom-file">
-                                            <input type="file" class="custom-file-input" id="uploadSurat" name="uploadSurat">
+                                            <input type="file" class="custom-file-input" id="file_path_undangan" name="file_path_undangan">
                                             <label class="custom-file-label" for="uploadSurat">Pilih fIle undangan</label>
                                         </div>
                                     </div>
@@ -66,7 +75,7 @@
                                     </div>
                                     <div class="col-sm-9">
                                         <div class="custom-file">
-                                            <input type="file" class="custom-file-input" id="uploadUndangan" name="uploadUndangan">
+                                            <input type="file" class="custom-file-input" id="file_path_notulensi" name="file_path_notulensi">
                                             <label class="custom-file-label" for="uploadUndangan">Pilih file notulensi</label>
                                         </div>
                                     </div>

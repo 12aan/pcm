@@ -4,24 +4,19 @@
     <section class="section">
         <div class="card">
             <div class="card-header">
-                <h4 class="card-title">Tambah Surat Keluar</h4>
+                <h4 class="card-title">Tambah Surat Keluar Agenda</h4>
             </div>
             <div class="card-body">
-                <form enctype="multipart/form-data" action="<?php echo site_url('adminor/tambah_surat_keputusan_agenda'); ?>" method="post">
+                <form enctype="multipart/form-data" action="<?php echo site_url('adminor/tambah_surat_keluar'); ?>" method="post">
                     <div class="mb-3">
                         <label for="agenda" class="form-label">Agenda</label>
-                        <!-- Menampilkan dropdown untuk memilih agenda -->
-                        <select class="form-control" id="agenda" name="agenda" required>
-                            <option value="">Pilih Agenda</option>
-
-                        </select>
+                        <input type="text" class="form-control" id="agenda" name="agenda" required>
                     </div>
 
                     <div class="mb-3">
                         <label for="nama_surat" class="form-label">Nama Surat</label>
-                        <input type="text" class="form-control" id="nama_surat" name="nama_surat" required>
+                        <input type="text" class="form-control" id="nama_surat" name="nama_surat">
                     </div>
-
 
                     <!-- Input select tambahan -->
                     <div class="mb-3">
@@ -42,7 +37,7 @@
                                     </div>
                                     <div class="col-sm-9">
                                         <div class="custom-file">
-                                            <input type="file" class="custom-file-input" id="uploadSurat" name="uploadSurat">
+                                            <input type="file" class="custom-file-input" id="file_path_surat" name="file_path_surat">
                                             <label class="custom-file-label" for="uploadSurat">Pilih fIle suret</label>
                                         </div>
                                     </div>
@@ -59,7 +54,7 @@
                                     </div>
                                     <div class="col-sm-9">
                                         <div class="custom-file">
-                                            <input type="file" class="custom-file-input" id="uploadUndangan" name="uploadUndangan">
+                                            <input type="file" class="custom-file-input" id="file_path_undangan" name="file_path_undangan">
                                             <label class="custom-file-label" for="uploadUndangan">Pilih file undangan</label>
                                         </div>
                                     </div>
@@ -76,7 +71,7 @@
                                     </div>
                                     <div class="col-sm-9">
                                         <div class="custom-file">
-                                            <input type="file" class="custom-file-input" id="uploadFoto" name="uploadFoto">
+                                            <input type="file" class="custom-file-input" id="file_path_photo" name="file_path_photo">
                                             <label class="custom-file-label" for="uploadFoto">Pilih file foto</label>
                                         </div>
                                     </div>
@@ -105,7 +100,6 @@
                     <button type="submit" class="btn btn-primary btn-sm">Unggah Berkas</button>
                 </form>
             </div>
-
         </div>
     </section>
 

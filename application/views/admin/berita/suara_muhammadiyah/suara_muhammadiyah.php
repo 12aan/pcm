@@ -7,7 +7,12 @@
   <!-- DataTales Example -->
   <div class="card shadow mb-4">
     <div class="card-header py-3">
-      <a href="<?php echo base_url('suara_muhammadiyah/tambah_data_suara_muhammadiyah') ?>" class="btn btn-primary mt-2">Tambah Data</a>
+      <a href="<?php echo base_url('berita/tambah_data_suara_muhammadiyah') ?>" class="btn btn-primary mt-2">Tambah Data</a>
+      <div class=" row">
+        <div class="col-lg-8 mt-3">
+          <?= $this->session->flashdata('message'); ?>
+        </div>
+      </div>
     </div>
     <div class="card-body">
       <div class="table-responsive">
@@ -18,28 +23,48 @@
               <th>Tanggal</th>
               <th>Judul</th>
               <th>Avatar</th>
-              <th>Action</th>
+              <th class="text-center">Action</th>
+
             </tr>
           </thead>
           <tbody>
-            <tr>
-              <td>Tiger Nixon</td>
-              <td>System Architect</td>
-              <td>Edinburgh</td>
-              <td>61</td>
-              <td>2011/04/25</td>
+            <!-- Data Rows Go Here -->
+            <?php if (!empty($suara_muhammadiyah)) : ?>
+              <?php $nomor = 1; // Inisialisasi nomor 
+              ?>
+              <?php foreach ($suara_muhammadiyah as $row) : ?>
+                <tr>
+                  <td><?php echo $nomor++; ?></td>
+                  <td><?php echo date('d-m-Y', strtotime($row['tanggal_upload'])); ?></td>
+                  <td><?php echo $row['judul_berita']; ?></td>
+                  <td>
+                    <?php if (!empty($row['avatar'])) : ?>
+                      <?php $file_extension = pathinfo($row['avatar'], PATHINFO_EXTENSION); ?>
+                      <?php if (in_array($file_extension, ['jpg', 'jpeg', 'png', 'gif'])) : ?>
+                        <img src="<?php echo base_url('uploads/' . $row['avatar']); ?>" alt="avatar" width="50">
+                      <?php elseif ($file_extension === 'pdf') : ?>
+                        <embed src="<?php echo base_url('uploads/' . $row['avatar']); ?>" type="application/pdf" width="50" height="50">
+                      <?php else : ?>
+                        <a href="<?php echo base_url('uploads/' . $row['avatar']); ?>" target="_blank"><?php echo $row['avatar']; ?></a>
+                      <?php endif; ?>
+                    <?php else : ?>
+                      <span>No Avatar</span>
+                    <?php endif; ?>
+                  </td>
 
-            </tr>
-            <tr>
-              <td>Garrett Winters</td>
-              <td>Accountant</td>
-              <td>Tokyo</td>
-              <td>63</td>
-              <td class="text-center">
-                <a href="<?php echo base_url('suara_muhammadiyah/edit_data_suara_muhammadiyah') ?>" style="color: #3498db; margin-right: 10px;"><i class="fas fa-edit" data-toggle="tooltip" title="Edit Data"></i></a>
-                <a href="" onclick="return confirm('Are you sure you want to delete this item?');" style="color: #e74c3c; "><i class=" fas fa-trash" data-toggle="tooltip" title="Hapus data"></i></a>
-              </td>
-            </tr>
+                  <td class="text-center">
+                    <a href="<?php echo base_url('berita/edit_data_suara_muhammadiyah/' . $row['id_suara']); ?>" style="color: #3498db; margin-right: 10px;"><i class="fas fa-edit" data-toggle="tooltip" title="Edit Data"></i></a>
+                    <a href="<?php echo base_url('berita/hapus_data_suaramuhammadiyah/' . $row['id_suara']); ?>" onclick="return confirm('Are you sure you want to delete this item?');" style="color: #e74c3c; "><i class=" fas fa-trash" data-toggle="tooltip" title="Hapus Data"></i></a>
+                  </td>
+                </tr>
+              <?php endforeach; ?>
+            <?php else : ?>
+              <tr>
+                <td colspan=" 6">Tidak ada data surat masuk.</td>
+              </tr>
+            <?php endif; ?>
+            <!-- End Data Rows -->
+
 
           </tbody>
         </table>

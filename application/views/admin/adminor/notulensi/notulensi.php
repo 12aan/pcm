@@ -1,18 +1,23 @@
 <!-- Begin Page Content -->
 <div class="container-fluid">
 
-  <!-- Page Heading -->
-  <h1 class="h3 mb-2 text-gray-800">Notulensi</h1>
-
   <!-- DataTales Example -->
   <div class="card shadow mb-4">
     <div class="card-header py-3">
+      <h1 class="h3 mb-2 text-gray-800 border-bottom pb-2">Surat Notulensi</h1>
+
       <!-- <button class="btn btn-primary"> -->
-      <a href="<?php echo base_url('adminor/tambah_notulensi_agenda') ?>" class=" btn btn-primary mt-2">Tambah Data Agenda</a>
+      <a href="<?php echo base_url('adminor/tambah_surat_notulensi') ?>" class=" btn btn-primary mt-2">Tambah Data Agenda</a>
       <!-- </button> -->
       <!-- <button class="btn btn-secondary"> -->
-      <a href="<?php echo base_url('adminor/tambah_notulensi') ?>" class=" btn btn-primary mt-2">Tambah Data Surat</a>
+      <a href="<?php echo base_url('adminor/tambah_surat_notulensi_agenda') ?>" class=" btn btn-primary mt-2">Tambah Data Surat</a>
       <!-- </button> -->
+      <div class=" row">
+        <div class="col-lg-8 mt-3">
+          <?= $this->session->flashdata('message'); ?>
+        </div>
+      </div>
+      
       <div class="card-body">
         <div class="table-responsive">
           <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">

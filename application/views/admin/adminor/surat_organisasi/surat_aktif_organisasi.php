@@ -2,12 +2,19 @@
 <div class="container-fluid">
 
   <!-- Page Heading -->
-  <h1 class="h3 mb-2 text-gray-800">Surat Keluar</h1>
 
   <!-- DataTales Example -->
   <div class="card shadow mb-4">
     <div class="card-header py-3">
+      <h1 class="h3 mb-2 text-gray-800 border-bottom pb-2">Surat Aktif Organisasi</h1>
+
       <a href="<?php echo base_url('adminor/tambah_surat_aktif_organisasi') ?>" class="btn btn-primary mt-2">Tambah Data</a>
+      <div class=" row">
+        <div class="col-lg-8 mt-3">
+          <?= $this->session->flashdata('message'); ?>
+        </div>
+      </div>
+
     </div>
     <div class="card-body">
       <div class="table-responsive">
@@ -21,8 +28,6 @@
               <th style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">Alamat Tinggal</th>
               <th>No Hp</th>
               <th style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">Instansi Kerja</th>
-              <th style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">Alamat Instansi Kerja</th>
-              <th style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">Telepon Kantor Kerja</th>
               <th class="text-center">Action</th>
             </tr>
           </thead>
@@ -38,8 +43,6 @@
                   <td><?php echo $row['alamat_tinggal']; ?></td>
                   <td style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis;"><?php echo $row['no_hp']; ?></td>
                   <td><?php echo $row['instansi_kerja']; ?></td>
-                  <td><?php echo $row['alamat_instansi_kerja']; ?></td>
-                  <td><?php echo $row['telepon_kantor_kerja']; ?></td>
                   <td class="text-center">
                     <a href="<?php echo base_url('adminor/lihat_data_anggota_organisasi/' . $row['id_aktif']); ?>">
                       <i class="fas fa-key" data-toggle="tooltip" title="Lihat Data" style="color: #3498db; margin-right: 5px;"></i>

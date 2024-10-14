@@ -2,7 +2,7 @@
             <footer class="sticky-footer bg-white">
                 <div class="container my-auto">
                     <div class="copyright text-center my-auto">
-                        <span>Copyright &copy; Web Programming UNPAS <?= date('Y'); ?></span>
+                        <span>2024 &copy; PCM Kasihan <?= date('Y'); ?></span>
                     </div>
                 </div>
             </footer>

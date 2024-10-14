@@ -8,40 +8,71 @@
   <div class="card shadow mb-4">
     <div class="card-header py-3">
       <a href="<?php echo base_url('berita/tambah_data_berita') ?>" class="btn btn-primary mt-2">Tambah Data</a>
+      
+      <div class=" row">
+        <div class="col-lg-8 mt-3">
+          <?= $this->session->flashdata('message'); ?>
+        </div>
+      </div>
     </div>
+
+
+
     <div class="card-body">
       <div class="table-responsive">
         <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
           <thead>
             <tr>
               <th>No</th>
-              <th>Tanggal</th>
+              <th style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">Tanggal</th>
               <th>Judul</th>
               <th>Avatar</th>
-              <th>Action</th>
+              <th class="text-center">Action</th>
             </tr>
           </thead>
           <tbody>
-            <tr>
-              <td>Tiger Nixon</td>
-              <td>System Architect</td>
-              <td>Edinburgh</td>
-              <td>61</td>
-              <td>2011/04/25</td>
+            <!-- Data Rows Go Here -->
+            <?php if (!empty($berita)) : ?>
+              <?php $nomor = 1; // Inisialisasi nomor 
+              ?>
+              <?php foreach ($berita as $row) : ?>
+                <tr>
+                  <td><?php echo $nomor++; ?></td>
+                  <td style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis;"><?php echo date('d-m-Y', strtotime($row['tanggal_upload'])); ?></td>
+                  <td>
+                    <span title="<?php echo $row['judul_berita']; ?>">
+                      <?php echo substr($row['judul_berita'], 0, 60); ?><?php echo (strlen($row['judul_berita']) > 30) ? '...' : ''; ?>
+                    </span>
+                  </td>
+                  <td>
+                    <?php if (!empty($row['avatar'])) : ?>
+                      <?php $file_extension = pathinfo($row['avatar'], PATHINFO_EXTENSION); ?>
+                      <?php if (in_array($file_extension, ['jpg', 'jpeg', 'png', 'gif'])) : ?>
+                        <img src="<?php echo base_url('uploads/' . $row['avatar']); ?>" alt="avatar" width="50">
+                      <?php elseif ($file_extension === 'pdf') : ?>
+                        <embed src="<?php echo base_url('uploads/' . $row['avatar']); ?>" type="application/pdf" width="50" height="50">
+                      <?php else : ?>
+                        <a href="<?php echo base_url('uploads/' . $row['avatar']); ?>" target="_blank"><?php echo $row['avatar']; ?></a>
+                      <?php endif; ?>
+                    <?php else : ?>
+                      <span>No Avatar</span>
+                    <?php endif; ?>
+                  </td>
 
-            </tr>
-            <tr>
-              <td>Garrett Winters</td>
-              <td>Accountant</td>
-              <td>Tokyo</td>
-              <td>63</td>
-              <td class="text-center">
-                <a href="<?php echo base_url('berita/edit_data_berita') ?>" style="color: #3498db; margin-right: 10px;"><i class="fas fa-edit" data-toggle="tooltip" title="Edit Data"></i></a>
-                <a href="" onclick="return confirm('Are you sure you want to delete this item?');" style="color: #e74c3c; "><i class=" fas fa-trash" data-toggle="tooltip" title="Hapus data"></i></a>
-              </td>
-            </tr>
-
+                  <td class="text-center">
+                    <a href="<?php echo base_url('berita/edit_data_berita/' . $row['id_berita']); ?>" style="color: #3498db; margin-right: 10px;"><i class="fas fa-edit" data-toggle="tooltip" title="Edit Data"></i></a>
+                    <a href="<?php echo base_url('berita/hapus_data_berita/' . $row['id_berita']); ?>" onclick="return confirm('Are you sure you want to delete this item?');" style="color: #e74c3c; "><i class="fas fa-trash" data-toggle="tooltip" title="Hapus Data"></i></a>
+                  </td>
+                </tr>
+              <?php endforeach; ?>
+            <?php else : ?>
+              <tr>
+                <td colspan="6">Tidak ada data surat masuk.</td>
+              </tr>
+            <?php endif; ?>
+            <!-- End Data Rows -->
           </tbody>
+
         </table>
       </div>
     </div>

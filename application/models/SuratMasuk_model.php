@@ -7,6 +7,8 @@ class SuratMasuk_model extends CI_Model
         $this->load->database();
     }
 
+
+
     // START SURAT MASUK 
     public function get_agenda_list_surat_masuk()
     {
@@ -20,17 +22,14 @@ class SuratMasuk_model extends CI_Model
             return array(); // Mengembalikan array kosong jika tidak ada data
         }
     }
-
     public function get_surat_masuk()
     {
         return $this->db->get('surat_masuk')->result_array();
     }
-
     public function tambah_surat($data)
     {
         return $this->db->insert('surat_masuk', $data);
     }
-
     public function get_data_by_id($id_masuk)
     {
         $this->db->where('id_masuk', $id_masuk);
@@ -45,7 +44,6 @@ class SuratMasuk_model extends CI_Model
         $this->db->where('id_masuk', $id_masuk);
         $this->db->update('surat_masuk', $surat_masuk);
     }
-
     public function update_file_path($id_masuk, $new_file_path, $old_avatar)
     {
         // Jika ada file avatar baru yang diunggah, simpan file avatar baru dan perbarui nama file di database
@@ -70,6 +68,10 @@ class SuratMasuk_model extends CI_Model
         return $this->db->affected_rows() > 0;
     }
     // END SURAT MASUK
+
+
+
+
 
 
 
@@ -238,6 +240,7 @@ class SuratMasuk_model extends CI_Model
     // START DAFTAR DAN SERTIFIKAT WAKAF 
     public function get_surat_wakaf()
     {
+        $this->db->order_by('tanggal', 'DESC'); // Mengurutkan berdasarkan tanggal, dari yang terbaru
         return $this->db->get('sertifikat_wakaf')->result_array();
     }
 
@@ -276,6 +279,8 @@ class SuratMasuk_model extends CI_Model
             $this->db->update('sertifikat_wakaf', $data);
         }
     }
+
+
     public function hapus_data_wakaf($id_wakaf)
     {
         // Lakukan query untuk menghapus data dari database berdasarkan ID
@@ -287,12 +292,15 @@ class SuratMasuk_model extends CI_Model
 
 
     // Surat Organisasi Keaktifan 
-    public function get_surat_aktif_organisasi (){
+    public function get_surat_aktif_organisasi()
+    {
 
+        $this->db->order_by('tanggal_upload', 'DESC');
         return $this->db->get('surat_aktif_organisasi')->result_array();
     }
     public function tambah_surat_aktif_organisasi($data)
     {
+        $data['tanggal_upload'] = date('Y-m-d H:i:s');
         return $this->db->insert('surat_aktif_organisasi', $data);
     }
 
@@ -309,7 +317,7 @@ class SuratMasuk_model extends CI_Model
         $this->db->delete('surat_aktif_organisasi');
         return $this->db->affected_rows() > 0;
     }
-    
+
 
 
     // End Surat Keaktifan Organisasi

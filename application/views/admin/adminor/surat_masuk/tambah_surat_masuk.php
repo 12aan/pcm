@@ -7,14 +7,10 @@
                 <h4 class="card-title">Tambah Surat Masuk</h4>
             </div>
             <div class="card-body">
-                <form enctype="multipart/form-data" action="<?php echo site_url('adminor/tambah_surat'); ?>" method="post">
+                <form enctype="multipart/form-data" action="<?php echo site_url('adminor/tambah_surat_masuk'); ?>" method="post">
                     <div class="mb-3">
                         <label for="agenda" class="form-label">Agenda</label>
-                        <!-- Menampilkan dropdown untuk memilih agenda -->
-                        <select class="form-control" id="agenda" name="agenda" required>
-                            <option value="">Pilih Agenda</option>
-
-                        </select>
+                        <input type="text" class="form-control" id="agenda" name="agenda" required>
                     </div>
 
                     <div class="mb-3">
@@ -31,14 +27,13 @@
                                 </div>
                                 <div class="col-sm-9">
                                     <div class="custom-file">
-                                        <input type="file" class="custom-file-input" id="image" name="image">
+                                        <input type="file" class="custom-file-input" id="file_path" name="file_path">
                                         <label class="custom-file-label" for="image">Pilih file surat</label>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
-
                     <button type="submit" class="btn btn-primary btn-sm">Unggah Berkas</button>
                 </form>
             </div>
