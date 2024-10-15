@@ -2,65 +2,75 @@
 <div class="container-fluid">
 
     <!-- Page Heading -->
-    <h1 class="h3 mb-4 text-gray-800"><?= $title; ?></h1>
+    <h1 class="h3 mb-2 text-gray-800">Submenu</h1>
 
-
-
+    <!-- DataTales Example -->
     <div class="row">
         <div class="col-lg">
             <?php if (validation_errors()) : ?>
-            <div class="alert alert-danger" role="alert">
-                <?= validation_errors(); ?>
-            </div>
+                <div class="alert alert-danger" role="alert">
+                    <?= validation_errors(); ?>
+                </div>
             <?php endif; ?>
 
             <?= $this->session->flashdata('message'); ?>
 
-            <a href="" class="btn btn-primary mb-3" data-toggle="modal" data-target="#newSubMenuModal">Add New Submenu</a>
-
-            <table class="table table-hover">
-                <thead>
-                    <tr>
-                        <th scope="col">#</th>
-                        <th scope="col">Title</th>
-                        <th scope="col">Menu</th>
-                        <th scope="col">Url</th>
-                        <th scope="col">Icon</th>
-                        <th scope="col">Active</th>
-                        <th scope="col">Action</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <?php $i = 1; ?>
-                    <?php foreach ($subMenu as $sm) : ?>
-                    <tr>
-                        <th scope="row"><?= $i; ?></th>
-                        <td><?= $sm['title']; ?></td>
-                        <td><?= $sm['menu']; ?></td>
-                        <td><?= $sm['url']; ?></td>
-                        <td><?= $sm['icon']; ?></td>
-                        <td><?= $sm['is_active']; ?></td>
-                        <td>
-                            <a href="" class="badge badge-success">edit</a>
-                            <a href="" class="badge badge-danger">delete</a>
-                        </td>
-                    </tr>
-                    <?php $i++; ?>
-                    <?php endforeach; ?>
-                </tbody>
-            </table>
 
 
+            <div class="card shadow mb-4">
+                <div class="card-header py-3">
+                    <a href="" class="btn btn-primary mb-3" data-toggle="modal" data-target="#newSubMenuModal">Add New Submenu</a>
+
+                </div>
+                <div class="card-body">
+                    <div class="table-responsive">
+                        <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                            <thead>
+                                <tr>
+                                    <th scope="col">#</th>
+                                    <th scope="col">Title</th>
+                                    <th scope="col">Menu</th>
+                                    <th scope="col">Url</th>
+                                    <th scope="col">Icon</th>
+                                    <th scope="col">Active</th>
+                                    <th scope="col">Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <?php $i = 1; ?>
+                                <?php foreach ($subMenu as $sm) : ?>
+                                    <tr>
+                                        <th scope="row"><?= $i; ?></th>
+                                        <td><?= $sm['title']; ?></td>
+                                        <td><?= $sm['menu']; ?></td>
+                                        <td><?= $sm['url']; ?></td>
+                                        <td><?= $sm['icon']; ?></td>
+                                        <td><?= $sm['is_active']; ?></td>
+                                        <td>
+
+
+                                            <a href="<?php echo base_url('admin/'); ?>" class="text-info mr-3">
+                                                <i class="fas fa-edit" data-toggle="tooltip" title="Edit Data"></i>
+                                            </a>
+                                            <a href="<?php echo base_url('admin/'); ?>" onclick="return confirm('Yakin ingin menghapus data ini?');" class="text-danger">
+                                                <i class="fas fa-trash" data-toggle="tooltip" title="Hapus Data"></i>
+                                            </a>
+                                        </td>
+                                    </tr>
+                                    <?php $i++; ?>
+                                <?php endforeach; ?>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
-
-
 
 </div>
 <!-- /.container-fluid -->
 
-</div>
-<!-- End of Main Content -->
+
 
 <!-- Modal -->
 
@@ -83,7 +93,7 @@
                         <select name="menu_id" id="menu_id" class="form-control">
                             <option value="">Select Menu</option>
                             <?php foreach ($menu as $m) : ?>
-                            <option value="<?= $m['id']; ?>"><?= $m['menu']; ?></option>
+                                <option value="<?= $m['id']; ?>"><?= $m['menu']; ?></option>
                             <?php endforeach; ?>
                         </select>
                     </div>
@@ -109,4 +119,4 @@
             </form>
         </div>
     </div>
-</div> 
+</div>

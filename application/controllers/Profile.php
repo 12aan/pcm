@@ -36,4 +36,34 @@ class Profile extends CI_Controller
 		$this->load->view('admin/profile/profile', $data);
 		$this->load->view('templates/footer');
 	}
+
+	public function kajian_hadist()
+	{
+
+		$data['title'] = 'Kajian Hadist';
+		$data['user'] = $this->db->get_where('user', ['email' => $this->session->userdata('email')])->row_array();
+
+
+
+		$this->load->view('templates/header', $data);
+		$this->load->view('templates/sidebar', $data);
+		$this->load->view('templates/topbar', $data);
+		$this->load->view('admin/profile/kajian_hadist', $data);
+		$this->load->view('templates/footer');
+	}
+
+	public function artikel()
+	{
+
+		$data['title'] = 'Artikel';
+		$data['user'] = $this->db->get_where('user', ['email' => $this->session->userdata('email')])->row_array();
+
+
+
+		$this->load->view('templates/header', $data);
+		$this->load->view('templates/sidebar', $data);
+		$this->load->view('templates/topbar', $data);
+		$this->load->view('admin/profile/artikel', $data);
+		$this->load->view('templates/footer');
+	}
 }

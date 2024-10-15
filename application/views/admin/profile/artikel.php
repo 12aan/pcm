@@ -18,11 +18,7 @@
                         <textarea id='editor1' class='form-control' name='isi_berita' style='height:1000px' required></textarea>
                         <!-- <input type="text" class="form-control" id="isi_berita" name="isi_berita" required> -->
                     </div>
-                    <div class="mb-3">
-                        <label for="avatar" class="form-label">Upload Berkas</label>
-                        <input type="file" class="form-control" id="avatar" name="avatar">
-                        <small id="gambarHelp" class="form-text text-muted">Pilih file (format: jpg, jpeg, png, pdf, dll).</small>
-                    </div>
+
                     <button type="submit" class="btn btn-primary btn-sm">Unggah Berkas</button>
                 </form>
             </div>
