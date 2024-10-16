@@ -1,6 +1,5 @@
 <!-- Begin Page Content -->
 <div class="container-fluid">
-
     <section class="section">
         <div class="card">
             <div class="card-header">

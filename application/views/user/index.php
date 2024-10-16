@@ -10,30 +10,37 @@
         </div>
     </div>
 
-    <div class="card mb-3 col-lg-8">
+    <div class="card mb-3 col-lg-8 shadow-sm">
         <div class="row no-gutters">
-            <div class="col-md-4">
-                <img src="<?= base_url('assets12/img/profile/') . $user['image']; ?>" class="card-img">
+            <div class="col-md-4 d-flex align-items-center justify-content-center">
+                <!-- Menambahkan class img-fluid dan style untuk pengaturan posisi gambar -->
+                <img src="<?= base_url('assets12/img/profile/') . $user['image']; ?>"
+                    class="img-fluid rounded-circle border border-light"
+                    alt="User Image"
+                    style="object-fit: cover; width: 150px; height: 150px;">
             </div>
             <div class="col-md-8">
-                <div class="card-body mt-4">
-                    <h5 class="card-title"><?= $user['name']; ?></h5>
-                    <p class="card-text"><?= $user['email']; ?></p>
-                    <p class="card-text"><small class="text-muted">Member since <?= date('d F Y', $user['date_created']); ?></small></p>
-                </div>
-                <div class="mt-4 col-lg-8">
-                    <a href="<?= base_url('user/edit'); ?>">
-                        <button type="button" class="btn btn-primary">Edit Profile</button>
-                    </a>
-
-                    <a href="<?= base_url('user/changepassword'); ?>">
-                        <button type="button" class="btn btn-primary">Change Password</button>
-                    </a>
-
+                <div class="card-body d-flex flex-column justify-content-center">
+                    <h5 class="card-title font-weight-bold"><?= $user['name']; ?></h5>
+                    <p class="card-text text-muted"><?= $user['email']; ?></p>
+                    <p class="card-text">
+                        <small class="text-muted">Member since <?= date('d F Y', $user['date_created']); ?></small>
+                    </p>
+                    <div class="d-flex justify-content-start align-items-center mt-3">
+                        <a href="<?= base_url('user/edit'); ?>" class="btn btn-primary mr-2">
+                            Edit Profile
+                        </a>
+                        <a href="<?= base_url('user/changepassword'); ?>" class="btn btn-outline-secondary">
+                            Change Password
+                        </a>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
+
+
+
 
 
 
