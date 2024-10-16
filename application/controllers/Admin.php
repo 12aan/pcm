@@ -29,6 +29,7 @@
             }
 
             $this->load->model('Data_Admin');
+            $this->load->model('Statistics_Model'); // Load model statistik
         }
 
 
@@ -37,6 +38,8 @@
         {
             $data['title'] = 'Dashboard';
             $data['user'] = $this->db->get_where('user', ['email' => $this->session->userdata('email')])->row_array();
+            $data['total_visitors'] = $this->Statistics_Model->get_total_visitors(); // Ambil total pengunjung
+            $data['total_comments'] = $this->Statistics_Model->get_total_comments();
 
             $this->load->view('templates/header', $data);
             $this->load->view('templates/sidebar', $data);
@@ -50,28 +53,28 @@
         {
             $data['title'] = 'Role';
             $data['user'] = $this->db->get_where('user', ['email' => $this->session->userdata('email')])->row_array();
-
             $data['role'] = $this->db->get('user_role')->result_array();
 
-            $this->load->view('templates/header', $data);
-            $this->load->view('templates/sidebar', $data);
-            $this->load->view('templates/topbar', $data);
-            $this->load->view('admin/role', $data);
-            $this->load->view('templates/footer');
-        }
+            $this->form_validation->set_rules('role', 'Role', 'required');
 
-        public function edit_role()
-        {
-            $data['title'] = 'Role';
-            $data['user'] = $this->db->get_where('user', ['email' => $this->session->userdata('email')])->row_array();
+            if ($this->form_validation->run() == false) {
+                $this->load->view('templates/header', $data);
+                $this->load->view('templates/sidebar', $data);
+                $this->load->view('templates/topbar', $data);
+                $this->load->view('admin/role', $data);
+                $this->load->view('templates/footer');
+            } else {
+                $roleId = $this->input->post('id');
+                $roleName = $this->input->post('role');
 
-            $data['role'] = $this->db->get('user_role')->result_array();
+                // Update role name
+                $this->db->set('role', $roleName);
+                $this->db->where('id', $roleId);
+                $this->db->update('user_role');
 
-            $this->load->view('templates/header', $data);
-            $this->load->view('templates/sidebar', $data);
-            $this->load->view('templates/topbar', $data);
-            $this->load->view('admin/edit_role', $data);
-            $this->load->view('templates/footer');
+                $this->session->set_flashdata('message', '<div class="alert alert-success" role="alert">Role updated successfully!</div>');
+                redirect('admin/role');
+            }
         }
 
 

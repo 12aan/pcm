@@ -22,8 +22,9 @@
     <link href="<?= base_url('assets12/'); ?>vendor/datatables/dataTables.bootstrap4.min.css" rel="stylesheet">
 
     <script src="<?php echo base_url('/assets/ckeditor1/ckeditor.js'); ?>"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
-    
+
 
 
 
@@ -32,4 +33,4 @@
 <body id="page-top">
 
     <!-- Page Wrapper -->
-    <div id="wrapper"> 
+    <div id="wrapper">
