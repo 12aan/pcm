@@ -9,7 +9,7 @@
       <h4 class="card-title">Menu Website</h4>
     </div>
     <div class="card-header py-3">
-      <a href="<?php echo base_url('menu/tambah_data_menu') ?>" class="m-0 font-weight-bold text-primary">Tambah Data</a>
+      <a href="<?php echo base_url('menu/tambah_data_menu') ?>" class="btn btn-primary mt-2">Tambah Data</a>
     </div>
     <div class="card-body">
       <div class="table-responsive">

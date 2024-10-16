@@ -52,6 +52,22 @@ class Profile extends CI_Controller
 		$this->load->view('templates/footer');
 	}
 
+	public function edit_kajian_hadist()
+	{
+		$data['title'] = 'Edit Kajian Hadist';
+		$data['user'] = $this->db->get_where('user', ['email' => $this->session->userdata('email')])->row_array();
+
+		// Ambil data kajian yang sudah ada di database
+		$data['kajian_hadist'] = $this->Profile_Model->get_kajian_hadist();
+
+		$this->load->view('templates/header', $data);
+		$this->load->view('templates/sidebar', $data);
+		$this->load->view('templates/topbar', $data);
+		$this->load->view('admin/profile/edit_kajian_hadist', $data);
+		$this->load->view('templates/footer');
+	}
+
+
 	public function upload_kajian()
 	{
 		$judul_kajian = $this->input->post('judul_kajian');
@@ -83,10 +99,27 @@ class Profile extends CI_Controller
 		$data['title'] = 'Artikel';
 		$data['user'] = $this->db->get_where('user', ['email' => $this->session->userdata('email')])->row_array();
 
+		//$data['artikel'] = $this->Profile_Model->get_artikel();
+
 		$this->load->view('templates/header', $data);
 		$this->load->view('templates/sidebar', $data);
 		$this->load->view('templates/topbar', $data);
 		$this->load->view('admin/profile/artikel', $data);
+		$this->load->view('templates/footer');
+	}
+
+	public function edit_artikel()
+	{
+
+		$data['title'] = 'Edit Artikel';
+		$data['user'] = $this->db->get_where('user', ['email' => $this->session->userdata('email')])->row_array();
+
+		$data['artikel'] = $this->Profile_Model->get_artikel();
+
+		$this->load->view('templates/header', $data);
+		$this->load->view('templates/sidebar', $data);
+		$this->load->view('templates/topbar', $data);
+		$this->load->view('admin/profile/edit_artikel', $data);
 		$this->load->view('templates/footer');
 	}
 }

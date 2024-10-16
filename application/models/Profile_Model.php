@@ -27,4 +27,8 @@ class Profile_Model extends CI_Model
         return $this->db->get_where('Kajian_hadist', ['id_kajian' => $id_kajian])->row_array();
     }
 
+    public function get_artikel()
+    {
+        return $this->db->get('artikel')->result_array();
+    }
 }

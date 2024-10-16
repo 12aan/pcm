@@ -237,7 +237,7 @@
                 $this->load->view('admin/data_admin/edit_data_admin', $data);
                 $this->load->view('templates/footer');
             } else {
-                // Data yang akan diupdate
+                // Data baru yang akan diupdate
                 $update_data = [
                     'name' => $this->input->post('name'),
                     'email' => $this->input->post('email'),
@@ -259,42 +259,48 @@
                     $config['upload_path'] = './assets12/img/profile/';
                     $config['allowed_types'] = 'gif|jpg|png';
                     $config['max_size'] = '2048';
-                    $config['file_name'] = $upload_image; // Gunakan nama file yang sama
+                    $config['file_name'] = $upload_image;
 
                     $this->load->library('upload', $config);
 
-                    // Cek apakah file dengan nama yang sama sudah ada
                     if (file_exists(FCPATH . 'assets12/img/profile/' . $upload_image)) {
-                        // Hapus file lama dengan nama yang sama
                         unlink(FCPATH . 'assets12/img/profile/' . $upload_image);
                     }
 
                     if ($this->upload->do_upload('image')) {
-                        // Hapus gambar lama jika ada
                         $old_image = $data['admin']['image'];
                         if ($old_image != 'default.jpg') {
                             unlink(FCPATH . 'assets12/img/profile/' . $old_image);
                         }
 
-                        // Simpan gambar baru
                         $update_data['image'] = $this->upload->data('file_name');
                     } else {
-                        echo $this->upload->display_errors(); // Tampilkan error upload jika gagal
+                        echo $this->upload->display_errors();
                     }
                 }
 
-                // Update data admin melalui model
-                $this->Data_Admin->update_admin($admin_id, $update_data);
+                // Cek apakah data yang diinput sama dengan data lama
+                $is_changed = false;
+                foreach ($update_data as $key => $value) {
+                    if ($value != $data['admin'][$key]) {
+                        $is_changed = true;
+                        break;
+                    }
+                }
 
-                // Set pesan flashdata untuk menandakan sukses
-                $this->session->set_flashdata('message', '<div class="alert alert-success" role="alert">Data Admin berhasil diupdate!</div>');
+                // Jika ada perubahan, lakukan update
+                if ($is_changed) {
+                    $this->Data_Admin->update_admin($admin_id, $update_data);
+                    $this->session->set_flashdata('message', '<div class="alert alert-success" role="alert">Data Admin berhasil diupdate!</div>');
+                } else {
+                    // Jika tidak ada perubahan, beri pesan
+                    $this->session->set_flashdata('message', '<div class="alert alert-info" role="alert">Tidak ada perubahan data!</div>');
+                }
 
                 // Redirect kembali ke halaman admin
                 redirect('admin/data_admin');
             }
         }
-
-
 
 
         public function hapus_admin($id)

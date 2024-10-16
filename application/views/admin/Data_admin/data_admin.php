@@ -7,7 +7,12 @@
   <!-- DataTales Example -->
   <div class="card shadow mb-4">
     <div class="card-header py-3">
-      <a href="<?php echo base_url('admin/tambah_data_admin') ?>" class="m-0 font-weight-bold text-primary">Tambah Data</a>
+      <a href="<?php echo base_url('admin/tambah_data_admin') ?>" class="btn btn-primary mt-2">Tambah Data</a>
+      <div class=" row">
+        <div class="col-lg-8 mt-3">
+          <?= $this->session->flashdata('message'); ?>
+        </div>
+      </div>
     </div>
     <div class="card-body">
       <div class="table-responsive">
