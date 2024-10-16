@@ -29,10 +29,21 @@
                         <input type="text" class="form-control" id="nama_pejabat" name="nama_pejabat" required>
                     </div>
 
-                    <div class="mb-3">
-                        <label for="gambar" class="form-label">Upload Gambar</label>
-                        <input type="file" class="form-control" id="gambar" name="gambar" accept="image/*" required>
-                        <small id="gambarHelp" class="form-text text-muted">Pilih file gambar (format: jpg, jpeg, png).</small>
+                    <h6 class="card-title">Upload Foto</h6>
+                    <div class="form-group row">
+                        <div class="col-sm-10">
+                            <div class="row">
+                                <div class="col-sm-3">
+                                    <img src="<?= base_url('assets12/img/profile/avatar.jpg'); ?>" class="img-thumbnail">
+                                </div>
+                                <div class="col-sm-9">
+                                    <div class="custom-file">
+                                        <input type="file" class="custom-file-input" id="file_path_kartu_tanda_anggota" name="file_path_kartu_tanda_anggota">
+                                        <label class="custom-file-label" for="image">Pilih file gambar</label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                     <button type="submit" class="btn btn-primary btn-sm">Unggah Data</button>
                 </form>
