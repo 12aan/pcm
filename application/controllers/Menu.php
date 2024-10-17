@@ -22,7 +22,7 @@ class Menu extends CI_Controller
             $this->load->view('templates/header', $data);
             $this->load->view('templates/sidebar', $data);
             $this->load->view('templates/topbar', $data);
-            $this->load->view('menu/index', $data);
+            $this->load->view('admin/menu/index', $data);
             $this->load->view('templates/footer');
         } else {
             $this->db->insert('user_menu', ['menu' => $this->input->post('menu')]);
@@ -81,7 +81,7 @@ class Menu extends CI_Controller
             $this->load->view('templates/header', $data);
             $this->load->view('templates/sidebar', $data);
             $this->load->view('templates/topbar', $data);
-            $this->load->view('menu/submenu', $data);
+            $this->load->view('admin/menu/submenu', $data);
             $this->load->view('templates/footer');
         } else {
             $data = [
@@ -123,7 +123,7 @@ class Menu extends CI_Controller
             $this->load->view('templates/header', $data);
             $this->load->view('templates/sidebar', $data);
             $this->load->view('templates/topbar', $data);
-            $this->load->view('menu/submenu', $data);
+            $this->load->view('admin/menu/submenu', $data);
             $this->load->view('templates/footer');
         } else {
             // Ambil data dari input form
@@ -176,7 +176,7 @@ class Menu extends CI_Controller
         $this->load->view('templates/header', $data);
         $this->load->view('templates/sidebar', $data);
         $this->load->view('templates/topbar', $data);
-        $this->load->view('menu/menu_website/menu_website', $data);
+        $this->load->view('admin/menu/menu_website/menu_website', $data);
         $this->load->view('templates/footer');
     }
 
@@ -220,7 +220,7 @@ class Menu extends CI_Controller
         $this->load->view('templates/header', $data);
         $this->load->view('templates/sidebar', $data);
         $this->load->view('templates/topbar', $data);
-        $this->load->view('menu/menu_website/tambah_data_menu', $data);
+        $this->load->view('admin/menu/menu_website/tambah_data_menu', $data);
         $this->load->view('templates/footer');
     }
 
@@ -252,7 +252,7 @@ class Menu extends CI_Controller
         $this->load->view('templates/header', $data);
         $this->load->view('templates/sidebar', $data);
         $this->load->view('templates/topbar', $data);
-        $this->load->view('menu/menu_website/tambah_data_submenu', $data);
+        $this->load->view('admin/menu/menu_website/tambah_data_submenu', $data);
         $this->load->view('templates/footer');
     }
 
@@ -294,7 +294,7 @@ class Menu extends CI_Controller
         $this->load->view('templates/header', $data);
         $this->load->view('templates/sidebar', $data);
         $this->load->view('templates/topbar', $data);
-        $this->load->view('menu/menu_website/edit_data_menu', $data);
+        $this->load->view('admin/menu/menu_website/edit_data_menu', $data);
         $this->load->view('templates/footer');
     }
 
@@ -332,7 +332,7 @@ class Menu extends CI_Controller
                 $this->session->set_flashdata('message', '<div class="alert alert-info" role="alert">Tidak ada perubahan data!</div>');
             }
 
-            redirect('menu/menu_website/menu_website');
+            redirect('menu/menu_website');
         }
 
         $data['title'] = 'Edit Data Submenu'; // Update title
@@ -341,7 +341,7 @@ class Menu extends CI_Controller
         $this->load->view('templates/header', $data);
         $this->load->view('templates/sidebar', $data);
         $this->load->view('templates/topbar', $data);
-        $this->load->view('menu/menu_website/edit_data_submenu', $data);
+        $this->load->view('admin/menu/menu_website/edit_data_submenu', $data);
         $this->load->view('templates/footer');
     }
 
@@ -373,5 +373,4 @@ class Menu extends CI_Controller
         }
         redirect('menu/menu_website');
     }
-
 }

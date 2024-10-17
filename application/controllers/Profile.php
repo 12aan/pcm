@@ -227,13 +227,13 @@ class Profile extends CI_Controller
 
 		// Cek apakah ada data POST
 		if ($this->input->post()) {
-			$judul_artikel = $this->input->post('judul_artikel');
+			$judul_kajian = $this->input->post('judul_kajian');
 			$isi_kajian = $this->input->post('isi_kajian');
 
 			// Cek apakah ada perubahan data
-			if ($kajian_lama['judul_artikel'] != $judul_artikel || $kajian_lama['isi_kajian'] != $isi_kajian) {
+			if ($kajian_lama['judul_kajian'] != $judul_kajian || $kajian_lama['isi_kajian'] != $isi_kajian) {
 				$data = [
-					'judul_artikel' => $judul_artikel,
+					'judul_kajian' => $judul_kajian,
 					'isi_kajian' => $isi_kajian,
 					'date_created' => date('Y-m-d H:i:s')
 				];

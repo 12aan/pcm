@@ -17,11 +17,11 @@ class User extends CI_Controller
         $this->load->view('templates/header', $data);
         $this->load->view('templates/sidebar', $data);
         $this->load->view('templates/topbar', $data);
-        $this->load->view('user/index', $data);
+        $this->load->view('admin/user_admin/index', $data);
         $this->load->view('templates/footer');
     }
 
-    
+
 
     public function edit()
     {
@@ -34,7 +34,7 @@ class User extends CI_Controller
             $this->load->view('templates/header', $data);
             $this->load->view('templates/sidebar', $data);
             $this->load->view('templates/topbar', $data);
-            $this->load->view('user/edit', $data);
+            $this->load->view('admin/user_admin/edit', $data);
             $this->load->view('templates/footer');
         } else {
             $name = $this->input->post('name');
@@ -85,7 +85,7 @@ class User extends CI_Controller
             $this->load->view('templates/header', $data);
             $this->load->view('templates/sidebar', $data);
             $this->load->view('templates/topbar', $data);
-            $this->load->view('user/changepassword', $data);
+            $this->load->view('admin/user_admin/changepassword', $data);
             $this->load->view('templates/footer');
         } else {
             $current_password = $this->input->post('current_password');
