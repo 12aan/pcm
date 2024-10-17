@@ -7,7 +7,12 @@
   <!-- DataTales Example -->
   <div class="card shadow mb-4">
     <div class="card-header py-3">
-      <a href="<?php echo base_url('pustaka/tambah_data_pustaka') ?>" class="btn btn-primary mt-2">Tambah Data</a>
+      <a href="<?php echo base_url('pustaka/tambah_pustaka') ?>" class="btn btn-primary mt-2">Tambah Data</a>
+      <div class=" row">
+        <div class="col-lg-8 mt-3">
+          <?= $this->session->flashdata('message'); ?>
+        </div>
+      </div>
     </div>
     <div class="card-body">
       <div class="table-responsive">
@@ -18,7 +23,6 @@
               <th>Tanggal</th>
               <th>Judul</th>
               <th class="text-center">Action</th>
-
             </tr>
           </thead>
           <tbody>
@@ -35,7 +39,7 @@
 
 
                   <td class="text-center">
-                    <a href="<?php echo base_url('pustaka/edit_data_pustaka/' . $row['id_pustaka']); ?>" style="color: #3498db; margin-right: 10px;"><i class="fas fa-edit" data-toggle="tooltip" title="Edit Data"></i></a>
+                    <a href="<?php echo base_url('pustaka/edit_pustaka/' . $row['id_pustaka']); ?>" style="color: #3498db; margin-right: 10px;"><i class="fas fa-edit" data-toggle="tooltip" title="Edit Data"></i></a>
                     <a href="<?php echo base_url('pustaka/hapus_data_pustaka/' . $row['id_pustaka']); ?>" onclick="return confirm('Are you sure you want to delete this item?');" style="color: #e74c3c; "><i class=" fas fa-trash" data-toggle="tooltip" title="Hapus Data"></i></a>
                   </td>
 

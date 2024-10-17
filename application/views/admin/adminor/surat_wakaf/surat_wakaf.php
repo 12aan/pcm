@@ -8,7 +8,7 @@
     <div class="card-header py-3">
       <h1 class="h3 mb-2 text-gray-800 border-bottom pb-2">Daftar Sertifikat Wakaf</h1>
 
-      <a href="<?php echo base_url('adminor/tambah_surat_wakaf') ?>" class="m-0 font-weight-bold text-primary">Tambah Data</a>
+      <a href="<?php echo base_url('adminor/tambah_surat_wakaf') ?>" class="btn btn-primary mt-2">Tambah Data</a>
       <div class=" row">
         <div class="col-lg-8 mt-3">
           <?= $this->session->flashdata('message'); ?>

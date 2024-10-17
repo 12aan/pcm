@@ -10,7 +10,7 @@
     </div>
     <div class="card-header py-3">
       <a href="<?php echo base_url('menu/tambah_data_menu') ?>" class="m-0 font-weight-bold text-primary">Tambah Data</a>
-      <div class=" row">
+       <div class=" row">
         <div class="col-lg-8 mt-3">
           <?= $this->session->flashdata('message'); ?>
         </div>
