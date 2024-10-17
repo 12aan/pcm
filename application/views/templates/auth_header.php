@@ -1,25 +1,33 @@
-<!DOCTYPE html>
-<html lang="en">
+<body class="bg-gradient-primary">
 
-<head>
+    <!doctype html>
+    <html lang="en">
 
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <meta name="description" content="">
-    <meta name="author" content="">
+    <head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+        <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+        <title>
+            <?= $title; ?>
+        </title>
+        <!-- CSS files -->
+        <link href="<?php echo base_url('./assets/dist/css/tabler.min.css?1684106062') ?>" rel="stylesheet" />
+        <link href="<?php echo base_url('./assets/dist/css/tabler-flags.min.css?1684106062') ?>" rel="stylesheet" />
+        <link href="<?php echo base_url('./assets/dist/css/tabler-payments.min.css?1684106062') ?>" rel="stylesheet" />
+        <link href="<?php echo base_url('./assets/dist/css/tabler-vendors.min.css?1684106062') ?>" rel="stylesheet" />
+        <link href="<?php echo base_url('./assets/dist/css/demo.min.css?1684106062') ?>" rel="stylesheet" />
+        <style>
+            @import url('https://rsms.me/inter/inter.css');
 
-    <title>
-        <?= $title; ?>
-    </title>
+            :root {
+                --tblr-font-sans-serif: 'Inter Var', -apple-system, BlinkMacSystemFont, San Francisco, Segoe UI, Roboto, Helvetica Neue, sans-serif;
+            }
 
-    <!-- Custom fonts for this template-->
-    <link href="<?= base_url('assets12/'); ?>vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
-    <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
+            body {
+                font-feature-settings: "cv03", "cv04", "cv11";
+            }
+        </style>
+    </head>
 
-    <!-- Custom styles for this template-->
-    <link href="<?= base_url('assets12/'); ?>css/sb-admin-2.min.css" rel="stylesheet">
-
-</head>
-
-<body class="bg-gradient-primary"> 
+    <body class="d-flex flex-column">
+        <script src="<?php echo base_url('./assets/dist/js/demo-theme.min.js?1684106062') ?>"></script>

@@ -24,6 +24,7 @@ class SuratMasuk_model extends CI_Model
     }
     public function get_surat_masuk()
     {
+        $this->db->order_by('tanggal', 'DESC');
         return $this->db->get('surat_masuk')->result_array();
     }
     public function tambah_surat($data)
@@ -91,6 +92,7 @@ class SuratMasuk_model extends CI_Model
     }
     public function get_surat_keluar()
     {
+        $this->db->order_by('tanggal', 'DESC');
         return $this->db->get('surat_keluar')->result_array();
     }
     public function tambah_surat_keluar($data)
@@ -139,9 +141,9 @@ class SuratMasuk_model extends CI_Model
             return array(); // Mengembalikan array kosong jika tidak ada data
         }
     }
-
     public function get_surat_keputusan()
     {
+        $this->db->order_by('tanggal', 'DESC');
         return $this->db->get('surat_keputusan')->result_array();
     }
     public function tambah_surat_keputusan($data)
@@ -205,6 +207,7 @@ class SuratMasuk_model extends CI_Model
     }
     public function get_surat_notulensi()
     {
+        $this->db->order_by('tanggal', 'DESC');
         return $this->db->get('notulensi')->result_array();
     }
 
@@ -294,7 +297,6 @@ class SuratMasuk_model extends CI_Model
     // Surat Organisasi Keaktifan 
     public function get_surat_aktif_organisasi()
     {
-
         $this->db->order_by('tanggal_upload', 'DESC');
         return $this->db->get('surat_aktif_organisasi')->result_array();
     }
@@ -303,7 +305,6 @@ class SuratMasuk_model extends CI_Model
         $data['tanggal_upload'] = date('Y-m-d H:i:s');
         return $this->db->insert('surat_aktif_organisasi', $data);
     }
-
 
     public function data_aktif_organisasi_by_id($id)
     {

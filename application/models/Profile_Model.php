@@ -43,6 +43,7 @@ class Profile_Model extends CI_Model
 
     public function get_artikel()
     {
+        $this->db->order_by('date_created', 'DESC');
         return $this->db->get('artikel')->result_array();
     }
     public function get_artikel_by_id($id_artikel)
