@@ -7,6 +7,7 @@ class Adminor extends CI_Controller
     {
         parent::__construct();
         is_logged_in();
+        
         // Cek session expiration secara manual
         $last_activity = $this->session->userdata('last_activity');
         $timeout_duration = 43200; // 12 jam dalam detik

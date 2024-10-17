@@ -7,6 +7,23 @@ class User extends CI_Controller
     {
         parent::__construct();
         is_logged_in();
+        // Cek session expiration secara manual
+        $last_activity = $this->session->userdata('last_activity');
+        $timeout_duration = 43200; // 12 jam dalam detik
+
+        if ($last_activity && (time() - $last_activity > $timeout_duration)) {
+            $this->session->sess_destroy(); // Hapus session jika expired
+            redirect('auth/login'); // Redirect ke halaman login
+        } else {
+            // Update waktu aktivitas terakhir jika belum expired
+            $this->session->set_userdata('last_activity', time());
+        }
+
+        // Cek apakah pengguna aktif
+        $user = $this->db->get_where('user', ['email' => $this->session->userdata('email')])->row_array();
+        if (!$user || !$user['is_active']) {
+            redirect('auth/blocked'); // Redirect ke halaman blocked jika tidak aktif
+        }
     }
 
     public function index()
@@ -20,8 +37,6 @@ class User extends CI_Controller
         $this->load->view('admin/user_admin/index', $data);
         $this->load->view('templates/footer');
     }
-
-
 
     public function edit()
     {

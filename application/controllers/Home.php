@@ -20,8 +20,6 @@ class Home extends CI_Controller
         
 	}
 
-
-
 	public function index()
 	{
 		$data['berita'] = $this->Berita_Model->get_berita();
