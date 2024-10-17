@@ -163,9 +163,6 @@ class Menu extends CI_Controller
         redirect('menu/submenu');
     }
 
-   
-
-
     public function menu_website()
     {
         $data['title'] = 'Menu Website';
@@ -211,7 +208,8 @@ class Menu extends CI_Controller
                 }
             }
 
-
+            // Set flashdata message
+            $this->session->set_flashdata('message', '<div class="alert alert-success" role="alert">Berhasil Menambahkan Data</div>');
 
             redirect('menu/menu_website/menu_website');
         }
@@ -226,6 +224,7 @@ class Menu extends CI_Controller
         $this->load->view('templates/footer');
     }
 
+
     // Add a new submenu
     public function tambah_data_submenu()
     {
@@ -238,6 +237,9 @@ class Menu extends CI_Controller
             );
 
             $this->db->insert('submenu', $data); // Insert into submenu table
+
+            // Set flashdata message
+            $this->session->set_flashdata('message', '<div class="alert alert-success" role="alert">Berhasil Menambahkan Data</div>');
             redirect('menu/menu_website/menu_website');
         }
 
@@ -266,13 +268,27 @@ class Menu extends CI_Controller
                 'aktif' => $this->input->post('aktif_menu')
             );
 
-            $this->db->where('idmenu', $id_menu);
-            $this->db->update('menu', $update_data);
+            // Check if there are changes
+            $current_data = $this->db->where('idmenu', $id_menu)->get('menu')->row_array();
+
+            // Compare the current data with the updated data
+            if (
+                $current_data['judul'] != $update_data['judul'] ||
+                $current_data['url'] != $update_data['url'] ||
+                $current_data['aktif'] != $update_data['aktif']
+            ) {
+
+                $this->db->where('idmenu', $id_menu);
+                $this->db->update('menu', $update_data);
+                $this->session->set_flashdata('message', '<div class="alert alert-success" role="alert">Berhasil Mengedit Data</div>');
+            } else {
+                $this->session->set_flashdata('message', '<div class="alert alert-info" role="alert">Tidak ada perubahan data!</div>');
+            }
+
             redirect('menu/menu_website/menu_website');
         }
 
-
-        $data['title'] = 'Tambah Data Menu';
+        $data['title'] = 'Edit Data Menu'; // Update title
         $data['user'] = $this->db->get_where('user', ['email' => $this->session->userdata('email')])->row_array();
 
         $this->load->view('templates/header', $data);
@@ -281,6 +297,8 @@ class Menu extends CI_Controller
         $this->load->view('menu/menu_website/edit_data_menu', $data);
         $this->load->view('templates/footer');
     }
+
+
 
     // Edit submenu
     public function edit_data_submenu($id_submenu)
@@ -296,12 +314,28 @@ class Menu extends CI_Controller
                 'aktif' => $this->input->post('aktif_submenu')
             );
 
-            $this->db->where('idsubmenu', $id_submenu);
-            $this->db->update('submenu', $update_data);
+            // Get current data for comparison
+            $current_data = $this->db->where('idsubmenu', $id_submenu)->get('submenu')->row_array();
+
+            // Compare the current data with the updated data
+            if (
+                $current_data['judul'] != $update_data['judul'] ||
+                $current_data['url'] != $update_data['url'] ||
+                $current_data['idmenu'] != $update_data['idmenu'] ||
+                $current_data['aktif'] != $update_data['aktif']
+            ) {
+
+                $this->db->where('idsubmenu', $id_submenu);
+                $this->db->update('submenu', $update_data);
+                $this->session->set_flashdata('message', '<div class="alert alert-success" role="alert">Berhasil Mengedit Data</div>');
+            } else {
+                $this->session->set_flashdata('message', '<div class="alert alert-info" role="alert">Tidak ada perubahan data!</div>');
+            }
+
             redirect('menu/menu_website/menu_website');
         }
 
-        $data['title'] = 'Tambah Data Menu';
+        $data['title'] = 'Edit Data Submenu'; // Update title
         $data['user'] = $this->db->get_where('user', ['email' => $this->session->userdata('email')])->row_array();
 
         $this->load->view('templates/header', $data);
@@ -314,15 +348,30 @@ class Menu extends CI_Controller
     // Delete menu
     public function hapus_data_menu($id_menu)
     {
-        $this->db->delete('menu', array('idmenu' => $id_menu));
-        $this->db->delete('submenu', array('idmenu' => $id_menu)); // Delete related submenus
-        redirect('menu/menu_website/menu_website');
+        // Check if the menu exists before deleting
+        $menu = $this->db->get_where('menu', array('idmenu' => $id_menu))->row_array();
+        if ($menu) {
+            $this->db->delete('menu', array('idmenu' => $id_menu));
+            $this->db->delete('submenu', array('idmenu' => $id_menu)); // Delete related submenus
+            $this->session->set_flashdata('message', '<div class="alert alert-success" role="alert">Berhasil Menghapus Data Menu</div>');
+        } else {
+            $this->session->set_flashdata('message', '<div class="alert alert-warning" role="alert">Menu tidak ditemukan!</div>');
+        }
+        redirect('menu/menu_website');
     }
 
     // Delete submenu
     public function hapus_data_submenu($id_submenu)
     {
-        $this->db->delete('submenu', array('idsubmenu' => $id_submenu));
-        redirect('menu/menu_website/menu_website');
+        // Check if the submenu exists before deleting
+        $submenu = $this->db->get_where('submenu', array('idsubmenu' => $id_submenu))->row_array();
+        if ($submenu) {
+            $this->db->delete('submenu', array('idsubmenu' => $id_submenu));
+            $this->session->set_flashdata('message', '<div class="alert alert-success" role="alert">Berhasil Menghapus Data Submenu</div>');
+        } else {
+            $this->session->set_flashdata('message', '<div class="alert alert-warning" role="alert">Submenu tidak ditemukan!</div>');
+        }
+        redirect('menu/menu_website');
     }
+
 }

@@ -24,7 +24,7 @@ class Pustaka extends CI_Controller
     public function pustaka()
     {
 
-        $data['title'] = 'Notulensi';
+        $data['title'] = 'Pustaka';
         $data['user'] = $this->db->get_where('user', ['email' => $this->session->userdata('email')])->row_array();
         $data['pustaka'] = $this->Pustaka_Model->get_pustaka();
 

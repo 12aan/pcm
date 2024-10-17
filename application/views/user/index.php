@@ -7,7 +7,7 @@
     </div>
 
     <!-- Flash message -->
-    <div class="row justify-content-center">
+    <div class="row justify-content-center mb-3">
         <div class="col-12 col-md-10 col-lg-8">
             <?= $this->session->flashdata('message'); ?>
         </div>
@@ -35,13 +35,13 @@
                     <!-- Action Buttons -->
                     <div class="d-flex justify-content-center justify-content-md-start align-items-center mt-4 flex-wrap">
                         <a href="<?= base_url('user/edit'); ?>"
-                            class="btn btn-lg btn-gradient-primary text-white mr-md-3 mb-2"
-                            style="border-radius: 50px; padding: 10px 30px; background: linear-gradient(to right, #6a11cb, #2575fc); transition: all 0.3s ease;">
+                            class="btn btn-lg btn-gradient-primary text-white mr-3"
+                            style="border-radius: 50px; padding: 10px 30px; background: linear-gradient(to right, #6a11cb, #2575fc); transition: all 0.3s ease; min-width: 150px;">
                             <i class="fas fa-user-edit mr-2"></i> Edit Profile
                         </a>
                         <a href="<?= base_url('user/changepassword'); ?>"
-                            class="btn btn-lg btn-outline-secondary mb-2"
-                            style="border-radius: 50px; padding: 10px 30px; transition: all 0.3s ease;">
+                            class="btn btn-lg btn-outline-secondary"
+                            style="border-radius: 50px; padding: 10px 30px; transition: all 0.3s ease; min-width: 150px;">
                             <i class="fas fa-key mr-2"></i> Change Password
                         </a>
                     </div>
