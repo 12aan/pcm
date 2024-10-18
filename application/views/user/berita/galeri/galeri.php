@@ -1,3 +1,45 @@
+<style>
+	.galeri-container .row {
+		display: flex;
+		align-items: start;
+		/* Menyelaraskan elemen di bagian atas */
+		margin-bottom: 1rem;
+	}
+
+
+	.galeri-container .col-auto img {
+		width: 100px;
+		height: 100px;
+		/* Tetap tinggi gambar */
+		object-fit: cover;
+		/* Memastikan gambar dipotong agar pas */
+	}
+
+
+	.galeri-container .col {
+		flex: 1;
+		/* Kolom ini akan mengambil ruang yang tersedia */
+		margin-left: 1rem;
+		overflow: hidden;
+		/* Memastikan konten tidak melebihi batas */
+	}
+
+	.card-text {
+		margin-bottom: 0;
+		color: white;
+		text-align: justify;
+		font-size: auto;
+		line-height: 1.5;
+		/* Memastikan ada jarak antar baris teks */
+		overflow: hidden;
+		text-overflow: ellipsis;
+		/* Menambahkan titik-titik jika teks terlalu panjang */
+		display: -webkit-box;
+		-webkit-line-clamp: 3;
+		/* Batas jumlah baris teks, ubah sesuai kebutuhan */
+		-webkit-box-orient: vertical;
+	}
+</style>
 <div class="page-body">
 	<div class="container-xl">
 		<div class="row row-deck row-cards">
@@ -71,14 +113,14 @@
 
 		galeriPage.forEach(item => {
 			container.innerHTML += `
-            <div class="row mb-6 align-items-center">
-                <a href="<?php echo site_url('home/galeridetail/'); ?>${item.id_galeri}" class="text-decoration-none text-dark d-flex align-items-center">
-                    <div class="col-auto">
+            <div class="row mb-4 align-items-start">
+                <a href="<?php echo site_url('home/galeridetail/'); ?>${item.id_galeri}" class="text-decoration-none text-dark d-flex align-items-start">
+                    <div class="col-auto mb-4">
                         <img src="<?php echo base_url('./uploads/'); ?>${item.avatar}" alt="Avatar ${item.id_galeri}" class="avatar" style="width: 100px; height: 100px;">
                     </div>
-                    <div class="col ms-4">
-                        <h3 class="card-text">${item.judul_berita}</h3>
-                        <ul class="list-unstyled mt-4">
+                    <div class="col ms-3">
+                        <h4 class="card-text text-muted">${item.judul_berita}</h4>
+                        <ul class="list-unstyled mt-2">
                             <li class="d-inline-block me-2">
                                 <small class="text-danger">&square;</small>
                                 <small class="text-muted">Galeri</small>

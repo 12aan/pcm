@@ -1,3 +1,45 @@
+<style>
+	.pengumuman-container .row {
+		display: flex;
+		align-items: start;
+		/* Menyelaraskan elemen di bagian atas */
+		margin-bottom: 1rem;
+	}
+
+
+	.pengumuman-container .col-auto img {
+		width: 100px;
+		height: 100px;
+		/* Tetap tinggi gambar */
+		object-fit: cover;
+		/* Memastikan gambar dipotong agar pas */
+	}
+
+
+	.pengumuman-container .col {
+		flex: 1;
+		/* Kolom ini akan mengambil ruang yang tersedia */
+		margin-left: 1rem;
+		overflow: hidden;
+		/* Memastikan konten tidak melebihi batas */
+	}
+
+	.card-text {
+		margin-bottom: 0;
+		color: white;
+		text-align: justify;
+		font-size: auto;
+		line-height: 1.5;
+		/* Memastikan ada jarak antar baris teks */
+		overflow: hidden;
+		text-overflow: ellipsis;
+		/* Menambahkan titik-titik jika teks terlalu panjang */
+		display: -webkit-box;
+		-webkit-line-clamp: 3;
+		/* Batas jumlah baris teks, ubah sesuai kebutuhan */
+		-webkit-box-orient: vertical;
+	}
+</style>
 <div class="page-body">
 	<div class="container-xl">
 		<div class="row row-deck row-cards">
@@ -23,7 +65,7 @@
 			<div class="col-lg-3">
 				<div class="row row-cards">
 					<div class="col-100">
-						<div class="card" style="position: sticky; top: auto;">
+						<div class="card" style="position: sticky; top: 20px;">
 							<div class="card-body d-flex justify-content-between align-items-center">
 								<h2 class="m-0">Latepost</h2>
 								<div class="d-flex align-items-center">
@@ -77,14 +119,14 @@
 
 		pengumumanPage.forEach(item => {
 			container.innerHTML += `
-				<div class="row mb-6">
-					<a href="<?php echo site_url('home/pengumumandetail/'); ?>${item.id_pengumuman}" class="text-decoration-none text-dark d-flex align-items-center"">
-						<div class="col-auto">
+				<div class="row mb-3 align-items-start">
+					<a href="<?php echo site_url('home/pengumumandetail/'); ?>${item.id_pengumuman}" class="text-decoration-none text-dark d-flex align-items-start">
+						<div class="col-auto mb-4">
 							<img src="<?php echo base_url('./uploads/'); ?>${item.avatar}" alt="Avatar ${item.id_pengumuman}" class="avatar" style="width: 100px; height: 100px;">
 						</div>
-						<div class="col ms-4">
-							<h5 class="card-text">${item.judul_berita}</h5>
-							<ul class="list-unstyled mt-6">
+						<div class="col ms-3">
+							<h3 class="card-text text-muted">${item.judul_berita}</h3>
+							<ul class="list-unstyled mt-2">
 								<li class="d-inline-block me-2">
 									<small class="text-danger">&square;</small>
 									<small class="text-muted">Pengumuman</small>

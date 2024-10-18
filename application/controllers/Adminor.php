@@ -7,7 +7,7 @@ class Adminor extends CI_Controller
     {
         parent::__construct();
         is_logged_in();
-        
+
         // Cek session expiration secara manual
         $last_activity = $this->session->userdata('last_activity');
         $timeout_duration = 43200; // 12 jam dalam detik
@@ -292,7 +292,7 @@ class Adminor extends CI_Controller
         // Kirim data ke view
         $data['surat_keluar_by_agenda'] = $surat_keluar_by_agenda;
         $this->load->view('templates/navbar');
-        $this->load->view('adminor/surat_keluar', $data); // Ubah nama view dengan halaman user Anda
+        $this->load->view('admin/adminor/surat_keluar/surat_keluar', $data); // Ubah nama view dengan halaman user Anda
         $this->load->view('templates/footer');
     }
     //surat keluar untuk admin
@@ -1592,5 +1592,4 @@ class Adminor extends CI_Controller
             $this->session->set_flashdata('message', '<div class="alert alert-danger" role="alert">ID tidak Valid!!</div>');
         }
     }
-
 }

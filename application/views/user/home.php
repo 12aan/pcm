@@ -1,4 +1,22 @@
 <!-- Page body -->
+<style>
+	.card-text {
+		margin-bottom: 0;
+		color: white;
+		text-align: justify;
+		font-size: auto;
+		line-height: 1.5;
+		/* Memastikan ada jarak antar baris teks */
+		overflow: hidden;
+		text-overflow: ellipsis;
+		/* Menambahkan titik-titik jika teks terlalu panjang */
+		display: -webkit-box;
+		-webkit-line-clamp: 3;
+		/* Batas jumlah baris teks, ubah sesuai kebutuhan */
+		-webkit-box-orient: vertical;
+	}
+</style>
+
 <div class="page-body">
 	<div class="container-xl">
 		<div class="row row-deck row-cards">
@@ -43,26 +61,27 @@
 
 					beritaPage.forEach(item => {
 						container.innerHTML += `
-			<div class="row mb-3 align-items-center">
-				<a href="<?php echo site_url('home/beritadetail/'); ?>${item.id_berita}" class="text-decoration-none text-dark d-flex align-items-center">
-					<div class="col-auto">
-						<img src="<?php echo base_url('./uploads/'); ?>${item.avatar}" alt="Avatar ${item.id_berita}" class="avatar" style="width: 100px; height: 100px;">
-					</div>
-					<div class="col ms-3">
-						<h3 class="card-text">${item.judul_berita}</h3>
-						<ul class="list-unstyled mt-2">
-							<li class="d-inline-block me-2">
-								<small class="text-danger">&square;</small>
-								<small class="text-muted">Berita</small>
-							</li>
-							<li class="d-inline-block me-3">
-								<small class="text-muted">${new Date(item.tanggal_upload).toLocaleDateString('id-ID')}</small>
-							</li>
-						</ul>
-					</div>
-				</a>
-			</div>`;
+							<div class="row mb-3 align-items-start">
+								<a href="<?php echo site_url('home/beritadetail/'); ?>${item.id_berita}" class="text-decoration-none text-dark-mode d-flex align-items-start">
+									<div class="col-auto">
+										<img src="<?php echo base_url('./uploads/'); ?>${item.avatar}" alt="Avatar ${item.id_berita}" class="avatar" style="width: 100px; height: 100px;">
+									</div>
+									<div class="col ms-3">
+										<h4 class="card-text text-muted">${item.judul_berita}</h4>
+										<ul class="list-unstyled mt-2">
+											<li class="d-inline-block me-2">
+												<small class="text-danger">&square;</small>
+												<small class="text-muted">Berita</small>
+											</li>
+											<li class="d-inline-block me-3">
+												<small class="text-muted text-dark-mode">${new Date(item.tanggal_upload).toLocaleDateString('id-ID')}</small>
+											</li>
+										</ul>
+									</div>
+								</a>
+							</div>`;
 					});
+
 
 					document.querySelector('.prev-berita').disabled = page === 1;
 					document.querySelector('.next-berita').disabled = page === beritaTotalPages;
@@ -92,7 +111,7 @@
 			<div class="col-lg-4">
 				<div class="row row-cards">
 					<div class="col-100">
-						<div class="card">
+						<div class="card d-flex">
 							<div class="card-body d-flex justify-content-between align-items-center">
 								<h2 class="m-0">Pengumuman</h2>
 								<div class="d-flex align-items-center">
@@ -143,25 +162,34 @@
 					container.innerHTML = ''; // Clear the existing content
 
 					pengumumanPage.forEach(item => {
+						// Pisahkan judul menjadi array kata-kata
+						let words = item.judul_berita.split(' ');
+						// Ambil hanya 5 kata pertama
+						let limitedTitle = words.slice(0, 9).join(' ');
+						// Tambahkan "..." jika ada lebih dari 5 kata
+						if (words.length > 5) {
+							limitedTitle += '......';
+						}
 						container.innerHTML += `
-            <div class="card-body">
-                <a href="home/pengumumandetail/${item.id_pengumuman}" class="text-decoration-none">
-                    <div class="text-truncate">
-                        <h5 class="card-title" data-toggle="tooltip" title="${item.judul_berita}">${item.judul_berita}</h5>
-                    </div>
-                    <ul class="list-unstyled">
-                        <li class="d-inline-block me-2">
-                            <small class="text-danger">&square;</small>
-                            <small class="text-muted">Berita</small>
-                        </li>
-                        <li class="d-inline-block me-3">
-                            <small class="text-muted">${new Date(item.tanggal_upload).toLocaleDateString('id-ID')}</small>
-                        </li>
-                    </ul>
-                </a>
-            </div>`;
+							<div class="card-body">
+								<a href="home/pengumumandetail/${item.id_pengumuman}" class="text-decoration-none">
+									<div class="">
+										<h4 class="card-text text-muted" data-toggle="tooltip" title="${item.judul_berita}">${limitedTitle}</h4>
+									</div>
+									<div class="col">
+										<ul class="list-unstyled mt-2">
+											<li class="d-inline-block me-2">
+												<small class="text-danger">&square;</small>
+												<small class="text-muted">Berita</small>
+											</li>
+											<li class="d-inline-block me-3">
+												<small class="text-muted">${new Date(item.tanggal_upload).toLocaleDateString('id-ID')}</small>
+											</li>
+										</ul>
+									</div>
+								</a>
+							</div>`;
 					});
-
 					// Update the state of pagination buttons
 					document.querySelector('.prev-page').disabled = page === 1;
 					document.querySelector('.next-page').disabled = page === totalPages;
@@ -228,31 +256,25 @@
 
 					kabarPage.forEach(item => {
 						container.innerHTML += `
-        <div>
-            <div class="row">
-                <div class="col-auto">
-                    <img src="<?php echo base_url('./uploads/'); ?>${item.avatar}" alt="Avatar ${item.id_kabar_ranting}" class="avatar" style="width: 100px; height: 100px;">
-                </div>
-                <div class="col">
-                    <div class="text-truncate">
-                        <h5 class="card-title">
-                            <a href="<?php echo base_url('home/kabarrantingdetail/'); ?>${item.id_kabar_ranting}">
-                                ${item.judul_berita}
-                            </a>
-                        </h5>
-                    </div>
-                    <ul class="list-unstyled">
-                        <li class="d-inline-block me-2">
-                            <small class="text-danger">&square;</small>
-                            <small class="text-muted">Berita</small>
-                        </li>
-                        <li class="d-inline-block me-3"><small class="text-muted">${new Date(item.tanggal_upload).toLocaleDateString('id-ID')}</small></li>
-                    </ul>
-                </div>
-            </div>
-        </div>`;
+							<div class="row mb-3 align-items-start">
+								<a href="<?php echo base_url('home/kabarrantingdetail/'); ?>${item.id_kabar_ranting}" class="text-decoration-none text-dark d-flex align-items-start" >
+									<div class="col-auto">
+										<img src="<?php echo base_url('./uploads/'); ?>${item.avatar}" alt="Avatar ${item.id_kabar_ranting}" class="avatar" style="width: 100px; height: 100px;">
+									</div>
+									<div class="col ms-3">
+										<h4 class="card-text text-muted">${item.judul_berita}</h4>
+									
+										<ul class="list-unstyled mt-2">
+											<li class="d-inline-block me-2">
+												<small class="text-danger">&square;</small>
+												<small class="text-muted">Berita</small>
+											</li>
+											<li class="d-inline-block me-3"><small class="text-muted">${new Date(item.tanggal_upload).toLocaleDateString('id-ID')}</small></li>
+										</ul>
+									</div>
+								</a>
+							</div>`;
 					});
-
 					document.querySelector('.prev-kabar').disabled = page === 1;
 					document.querySelector('.next-kabar').disabled = page === kabarTotalPages;
 				}

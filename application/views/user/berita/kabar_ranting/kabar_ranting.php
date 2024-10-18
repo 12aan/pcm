@@ -1,3 +1,45 @@
+<style>
+	.kabar_ranting-container .row {
+		display: flex;
+		align-items: start;
+		/* Menyelaraskan elemen di bagian atas */
+		margin-bottom: 1rem;
+	}
+
+
+	.kabar_ranting-container .col-auto img {
+		width: 100px;
+		height: 100px;
+		/* Tetap tinggi gambar */
+		object-fit: cover;
+		/* Memastikan gambar dipotong agar pas */
+	}
+
+
+	.kabar_ranting-container .col {
+		flex: 1;
+		/* Kolom ini akan mengambil ruang yang tersedia */
+		margin-left: 1rem;
+		overflow: hidden;
+		/* Memastikan konten tidak melebihi batas */
+	}
+
+	.card-text {
+		margin-bottom: 0;
+		color: white;
+		text-align: justify;
+		font-size: auto;
+		line-height: 1.5;
+		/* Memastikan ada jarak antar baris teks */
+		overflow: hidden;
+		text-overflow: ellipsis;
+		/* Menambahkan titik-titik jika teks terlalu panjang */
+		display: -webkit-box;
+		-webkit-line-clamp: 3;
+		/* Batas jumlah baris teks, ubah sesuai kebutuhan */
+		-webkit-box-orient: vertical;
+	}
+</style>
 <div class="page-body">
 	<div class="container-xl">
 		<div class="row row-deck row-cards">
@@ -63,7 +105,7 @@
 <script>
 	// Kabarranting Pagination
 	var kabarrantingData = <?php echo json_encode($kabar_ranting); ?>;
-	var kabarrantingItemsPerPage = 5; // Set the number of kabarranting items per page
+	var kabarrantingItemsPerPage = 4; // Set the number of kabarranting items per page
 	var kabarrantingTotalPages = Math.ceil(kabarrantingData.length / kabarrantingItemsPerPage);
 	var kabarrantingCurrentPage = 1;
 
@@ -77,13 +119,13 @@
 
 		kabarrantingPage.forEach(item => {
 			container.innerHTML += `
-                <div class="row mb-6 align-items-center">
-                    <a href="<?php echo site_url('home/kabarrantingdetail/'); ?>${item.id_kabar_ranting}" class="text-decoration-none text-dark d-flex align-items-center">
-                        <div class="col-auto">
+                <div class="row mb-3 align-items-start">
+                    <a href="<?php echo site_url('home/kabarrantingdetail/'); ?>${item.id_kabar_ranting}" class="text-decoration-none text-dark d-flex align-items-start">
+                        <div class="col-auto mb-4">
                             <img src="<?php echo base_url('./uploads/'); ?>${item.avatar}" alt="Avatar ${item.id_kabar_ranting}" class="avatar" style="width: 100px; height: 100px;">
                         </div>
-                        <div class="col ms-4">
-                            <h3 class="card-text">${item.judul_berita}</h3>
+                        <div class="col ms-3">
+                            <h4 class="card-text text-muted">${item.judul_berita}</h4>
                             <ul class="list-unstyled mt-4">
                                 <li class="d-inline-block me-2">
                                     <small class="text-danger">&square;</small>

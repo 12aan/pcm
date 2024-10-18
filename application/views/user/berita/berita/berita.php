@@ -3,18 +3,24 @@
 		<div class="row row-deck row-cards">
 			<!-- Berita Section -->
 			<div class="col-lg-9">
-				<div class="card">
-					<div class="card-header">
-						<h1 class="">Berita</h1>
-					</div>
-					<div class="card-body row berita-container">
-						<!-- Berita items will be injected here by JavaScript -->
-					</div>
+				<div class="row row-cards">
+					<div class="col-20">
+						<div class="card">
+							<div class="card-body row">
+								<div class="col-auto">
+									<h1 class="">Berita</h1>
+								</div>
+							</div>
+							<div class="card-body row berita-container">
+								<!-- Berita items will be injected here by JavaScript -->
+							</div>
 
-					<!-- Pagination Controls -->
-					<div class="d-flex justify-content-between align-items-center mt-3">
-						<button class="btn btn-outline-secondary prev-berita">&lt;&lt; Previous</button>
-						<button class="btn btn-outline-secondary next-berita">Next &gt;&gt;</button>
+							<!-- Pagination Controls -->
+							<div class="d-flex justify-content-between align-items-center mt-3">
+								<button class="btn btn-outline-secondary prev-berita">&lt;&lt; Previous</button>
+								<button class="btn btn-outline-secondary next-berita">Next &gt;&gt;</button>
+							</div>
+						</div>
 					</div>
 				</div>
 			</div>
@@ -60,6 +66,50 @@
 	</div>
 </div>
 
+<style>
+	.berita-container .row {
+		display: flex;
+		align-items: start;
+		/* Menyelaraskan elemen di bagian atas */
+		margin-bottom: 1rem;
+	}
+
+
+	.berita-container .col-auto img {
+		width: 100px;
+		height: 100px;
+		/* Tetap tinggi gambar */
+		object-fit: cover;
+		/* Memastikan gambar dipotong agar pas */
+	}
+
+
+	.berita-container .col {
+		flex: 1;
+		/* Kolom ini akan mengambil ruang yang tersedia */
+		margin-left: 1rem;
+		overflow: hidden;
+		/* Memastikan konten tidak melebihi batas */
+	}
+
+
+	.card-text {
+		margin-bottom: 0;
+		color: white;
+		text-align: justify;
+		font-size: auto;
+		line-height: 1.5;
+		/* Memastikan ada jarak antar baris teks */
+		overflow: hidden;
+		text-overflow: ellipsis;
+		/* Menambahkan titik-titik jika teks terlalu panjang */
+		display: -webkit-box;
+		-webkit-line-clamp: 3;
+		/* Batas jumlah baris teks, ubah sesuai kebutuhan */
+		-webkit-box-orient: vertical;
+	}
+</style>
+
 <script>
 	// Berita Pagination
 	var beritaData = <?php echo json_encode($berita); ?>;
@@ -68,22 +118,22 @@
 	var beritaCurrentPage = 1;
 
 	function displayBerita(page) {
-	const start = (page - 1) * beritaItemsPerPage;
-	const end = start + beritaItemsPerPage;
-	const beritaPage = beritaData.slice(start, end);
+		const start = (page - 1) * beritaItemsPerPage;
+		const end = start + beritaItemsPerPage;
+		const beritaPage = beritaData.slice(start, end);
 
-	const container = document.querySelector('.berita-container');
-	container.innerHTML = ''; // Clear the existing content
+		const container = document.querySelector('.berita-container');
+		container.innerHTML = ''; // Clear the existing content
 
-	beritaPage.forEach(item => {
-		container.innerHTML += `
-			<div class="row mb-3 align-items-center">
-				<a href="<?php echo site_url('home/beritadetail/'); ?>${item.id_berita}" class="text-decoration-none text-dark d-flex align-items-center">
-					<div class="col-auto">
+		beritaPage.forEach(item => {
+			container.innerHTML += `
+			<div class="row mb-3 align-items-start"> <!-- Ubah align-items-center ke align-items-start -->
+				<a href="<?php echo site_url('home/beritadetail/'); ?>${item.id_berita}" class="text-decoration-none text-dark d-flex align-items-start">
+					<div class="col-auto mb-4">
 						<img src="<?php echo base_url('./uploads/'); ?>${item.avatar}" alt="Avatar ${item.id_berita}" class="avatar" style="width: 100px; height: 100px;">
 					</div>
 					<div class="col ms-3">
-						<h5 class="card-text">${item.judul_berita}</h5>
+						<h4 class="card-text text-muted">${item.judul_berita}</h4>
 						<ul class="list-unstyled mt-2">
 							<li class="d-inline-block me-2">
 								<small class="text-danger">&square;</small>
@@ -96,11 +146,11 @@
 					</div>
 				</a>
 			</div>`;
-	});
+		});
 
-	document.querySelector('.prev-berita').disabled = page === 1;
-	document.querySelector('.next-berita').disabled = page === beritaTotalPages;
-}
+		document.querySelector('.prev-berita').disabled = page === 1;
+		document.querySelector('.next-berita').disabled = page === beritaTotalPages;
+	}
 
 
 	document.querySelector('.prev-berita').addEventListener('click', function() {

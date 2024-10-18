@@ -4,7 +4,7 @@
 			<div class="col-lg-9">
 				<div class="card">
 					<div class="card-header">
-						<h1 class="text-align: justify;"><?php echo $item['judul_berita']; ?></h1>
+						<h1 class=""><?php echo $item['judul_berita']; ?></h1>
 					</div>
 					<!-- Social Media Sharing Buttons -->
 					<div class="mt-4" style="margin-left: 40px;">
@@ -24,43 +24,58 @@
 							</a>
 						</div>
 					</div>
-
 					<div class="card-body">
 						<img src="<?php echo base_url('./uploads/' . $item['avatar']); ?>" alt="Avatar <?php echo $item['id_berita']; ?>" class="img-fluid mb-4">
 						<p class="text-muted"><?= date('d-m-Y', strtotime($item['tanggal_upload'])); ?></p>
 						<div class="card-text" style="line-height: 2; text-align: justify;">
-							<?php echo nl2br($item['isi_berita']); ?>
-					</div>
+							<?php echo $item['isi_berita']; ?>
+						</div>
+
+						<!-- Display Comments -->
+						<div class="mt-4">
+							<h5>Comments:</h5>
+							<?php if (!empty($komen)): ?>
+								<?php foreach ($komen as $comment): ?>
+									<div class="border p-3 mb-3">
+										<p><strong><?php echo htmlspecialchars($comment['name']); ?></strong> (<?php echo htmlspecialchars($comment['email']); ?>):</p>
+										<p><?php echo htmlspecialchars($comment['komentar']); ?></p>
+									</div>
+								<?php endforeach; ?>
+							<?php else: ?>
+								<p>No comments yet.</p>
+							<?php endif; ?>
+						</div>
 
 						<!-- Comment Form -->
-					<div class="mt-4">
-						<h5>Leave a Comment:</h5>
-						<form action="<?php echo site_url('home/post_comment'); ?>" method="post">
-							<div class="mb-3">
-								<label for="comment" class="form-label">Comment</label>
-								<textarea id="comment" name="comment" class="form-control" rows="4" required></textarea>
-							</div>
-							<div class="mb-3">
-								<label for="email" class="form-label">Email</label>
-								<input type="email" id="email" name="email" class="form-control" required>
-							</div>
-							<div class="mb-3">
-								<label for="name" class="form-label">Name</label>
-								<input type="text" id="name" name="name" class="form-control" required>
-							</div>
-							<button type="submit" class="btn btn-primary">Submit Comment</button>
-						</form>
+						<div class="mt-4">
+							<h5>Leave a Comment:</h5>
+							<form action="<?php echo site_url('home/post_berita_comment/' . $item['id_berita']); ?>" method="post">
+								<div class="mb-3">
+									<label for="comment" class="form-label">Comment</label>
+									<textarea id="comment" name="comment" class="form-control" rows="4" required></textarea>
+								</div>
+								<div class="mb-3">
+									<label for="email" class="form-label">Email</label>
+									<input type="email" id="email" name="email" class="form-control" required>
+								</div>
+								<div class="mb-3">
+									<label for="name" class="form-label">Name</label>
+									<input type="text" id="name" name="name" class="form-control" required>
+								</div>
+								<button type="submit" class="btn btn-primary">Submit Comment</button>
+							</form>
+						</div>
 					</div>
 				</div>
 			</div>
-		</div>
+
 
 			<!-- Latepost Section -->
 			<!-- START LATEPOST -->
 			<div class="col-lg-3">
 				<div class="row row-cards">
 					<div class="col-100">
-						<div class="card" style="height: 15rem">
+						<div class="card" style="height: 18rem">
 							<div class="card-body d-flex justify-content-between align-items-center">
 								<h2 class="m-0">Latepost</h2>
 								<div class="d-flex align-items-center">
@@ -100,6 +115,7 @@
 				var latepostItemsPerPage = <?php echo $latepost_items_per_page; ?>;
 				var latepostTotalPages = <?php echo $latepost_total_pages; ?>;
 				var latepostCurrentPage = 1;
+				var latepostInterval;
 
 				function displayLatepost(page) {
 					const start = (page - 1) * latepostItemsPerPage;
@@ -121,6 +137,15 @@
 					document.querySelector('.next-latepost').disabled = page === latepostTotalPages;
 				}
 
+				function nextLatepost() {
+					if (latepostCurrentPage < latepostTotalPages) {
+						latepostCurrentPage++;
+					} else {
+						latepostCurrentPage = 1; // Reset to the first page if we reach the end
+					}
+					displayLatepost(latepostCurrentPage);
+				}
+
 				// Event listeners for pagination buttons
 				document.querySelector('.prev-latepost').addEventListener('click', function() {
 					if (latepostCurrentPage > 1) {
@@ -135,6 +160,9 @@
 						displayLatepost(latepostCurrentPage);
 					}
 				});
+
+				// Start the auto-slide
+				latepostInterval = setInterval(nextLatepost, 5000); // Change slide every 5 seconds
 
 				// Initial call to display the first page
 				displayLatepost(latepostCurrentPage);

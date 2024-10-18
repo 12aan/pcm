@@ -1,3 +1,46 @@
+<style>
+	.ibrah-container .row {
+		display: flex;
+		align-items: start;
+		/* Menyelaraskan elemen di bagian atas */
+		margin-bottom: 1rem;
+	}
+
+
+	.ibrah-container .col-auto img {
+		width: 100px;
+		height: 100px;
+		/* Tetap tinggi gambar */
+		object-fit: cover;
+		/* Memastikan gambar dipotong agar pas */
+	}
+
+
+	.ibrah-container .col {
+		flex: 1;
+		/* Kolom ini akan mengambil ruang yang tersedia */
+		margin-left: 1rem;
+		overflow: hidden;
+		/* Memastikan konten tidak melebihi batas */
+	}
+
+	.card-text {
+		margin-bottom: 0;
+		color: white;
+		text-align: justify;
+		font-size: auto;
+		line-height: 1.5;
+		/* Memastikan ada jarak antar baris teks */
+		overflow: hidden;
+		text-overflow: ellipsis;
+		/* Menambahkan titik-titik jika teks terlalu panjang */
+		display: -webkit-box;
+		-webkit-line-clamp: 3;
+		/* Batas jumlah baris teks, ubah sesuai kebutuhan */
+		-webkit-box-orient: vertical;
+	}
+</style>
+
 <div class="page-body">
 	<div class="container-xl">
 		<div class="row row-deck row-cards">
@@ -22,7 +65,7 @@
 			<div class="col-lg-3">
 				<div class="row row-cards">
 					<div class="col-100">
-						<div class="card" style="position: sticky; top: 20px;">
+						<div class="card" style="height: 15rem; position: sticky; top: 20px;">
 							<div class="card-body d-flex justify-content-between align-items-center">
 								<h2 class="m-0">Latepost</h2>
 								<div class="d-flex align-items-center">
@@ -76,28 +119,24 @@
 
 		ibrahPage.forEach(item => {
 			container.innerHTML += `
-            <div class="row mt-4">
-                <div class="col-auto">
-                    <a href="<?php echo site_url('home/ibrahdetail/'); ?>${item.id_ibrah}" class="text-decoration-none text-dark">
+            <div class="row mb-3 align-items-start">
+				<a href="<?php echo site_url('home/ibrahdetail/'); ?>${item.id_ibrah}" class="text-decoration-none text-dark d-flex align-items-start">
+                    <div class="col-auto mb-4">
                         <img src="<?php echo base_url('./uploads/'); ?>${item.avatar}" alt="Avatar ${item.id_ibrah}" class="avatar" style="width: 100px; height: 100px;">
-                    </a>
-                </div>
-                <div class="col">
-                    <a href="<?php echo site_url('home/ibrahdetail/'); ?>${item.id_ibrah}" class="text-decoration-none text-dark">
-                        <div>
-                            <h3 class="card-text">${item.judul_berita}</h3>
-                        </div>
-                        <ul class="list-unstyled mt-4">
-                            <li class="d-inline-block me-2">
-                                <small class="text-danger">&square;</small>
-                                <small class="text-muted">Berita</small>
-                            </li>/
-                            <li class="d-inline-block me-3">
-                                <small class="text-muted">18 Agustus 2024</small>
-                            </li>
-                        </ul>
-                    </a>
-                </div>
+					</div>
+					<div class="col ms-3">
+						<h4 class="card-text text-muted">${item.judul_berita}</h4>
+						<ul class="list-unstyled mt-2">
+							<li class="d-inline-block me-2">
+								<small class="text-danger">&square;</small>
+								<small class="text-muted">Berita</small>
+							</li>
+							<li class="d-inline-block me-3">
+								<small class="text-muted">${new Date(item.tanggal_upload).toLocaleDateString('id-ID')}</small>
+							</li>
+						</ul>
+					</div>
+				</a>
             </div>`;
 		});
 

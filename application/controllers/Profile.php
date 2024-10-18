@@ -34,9 +34,9 @@ class Profile extends CI_Controller
 	{
 		// Load data surat_masuk from the backend
 		$data['profile'] = $this->Profile_Model->get_profile(); // Gantilah dengan fungsi sesuai kebutuhan
-		$this->load->view('templates/navbar');
-		$this->load->view('profile', $data);
-		$this->load->view('templates/footer');
+		$this->load->view('templates/user_navbar');
+		$this->load->view('user/profile/profile', $data);
+		$this->load->view('templates/user_footer');
 	}
 	// Start Profile Administration
 	public function profile()

@@ -38,7 +38,7 @@ class Berita extends CI_Controller
     }
 
 
-    public function index()
+    public function berita_user()
     {
         // Load data surat_masuk from the backend
         $data['berita'] = $this->Berita_Model->get_berita(); // Gantilah dengan fungsi sesuai kebutuhan
@@ -250,9 +250,9 @@ class Berita extends CI_Controller
             );
             $data['latepost_photos'][] = $latepost_photo;
         }
-        $this->load->view('templates/navbar');
-        $this->load->view('breaking_news', $data);
-        $this->load->view('templates/footer');
+        $this->load->view('templates/user_navbar');
+        $this->load->view('user/berita/breaking_news/breaking_news', $data);
+        $this->load->view('templates/user_footer');
     }
     // TAMPILAN BREAKING NEWS ADMIN
     public function breaking_news()
@@ -652,9 +652,9 @@ class Berita extends CI_Controller
             );
             $data['latepost_photos'][] = $latepost_photo;
         }
-        $this->load->view('templates/navbar');
-        $this->load->view('ibrah', $data);
-        $this->load->view('templates/footer');
+        $this->load->view('templates/user_navbar');
+        $this->load->view('user/berita/ibrah/ibrah', $data);
+        $this->load->view('templates/user_footer');
     }
     // surat masuk admin
     public function ibrah()
@@ -854,9 +854,9 @@ class Berita extends CI_Controller
             );
             $data['latepost_photos'][] = $latepost_photo;
         }
-        $this->load->view('templates/navbar');
-        $this->load->view('kabar_ranting', $data);
-        $this->load->view('templates/footer');
+        $this->load->view('templates/user_navbar');
+        $this->load->view('user/berita/kabar_ranting/kabar_ranting', $data);
+        $this->load->view('templates/user_footer');
     }
     // surat masuk admin
     public function kabar_ranting()
@@ -1054,9 +1054,9 @@ class Berita extends CI_Controller
             );
             $data['latepost_photos'][] = $latepost_photo;
         }
-        $this->load->view('templates/navbar');
-        $this->load->view('pengumuman', $data);
-        $this->load->view('templates/footer');
+        $this->load->view('templates/user_navbar');
+        $this->load->view('user/berita/pengumuman/pengumuman', $data);
+        $this->load->view('templates/user_footer');
     }
     // surat masuk admin
     public function pengumuman()
@@ -1257,9 +1257,9 @@ class Berita extends CI_Controller
             );
             $data['latepost_photos'][] = $latepost_photo;
         }
-        $this->load->view('templates/navbar');
-        $this->load->view('slider', $data);
-        $this->load->view('templates/footer');
+        $this->load->view('templates/user_navbar');
+        $this->load->view('user/berita/slider/slider', $data);
+        $this->load->view('templates/user_footer');
     }
     // surat masuk admin
     public function slider()
@@ -1458,9 +1458,9 @@ class Berita extends CI_Controller
             );
             $data['latepost_photos'][] = $latepost_photo;
         }
-        $this->load->view('templates/navbar');
-        $this->load->view('suara_muhammadiyah', $data);
-        $this->load->view('templates/footer');
+        $this->load->view('templates/user_navbar');
+        $this->load->view('user/berita/suara_muhammadiyah/suara_muhammadiyah', $data);
+        $this->load->view('templates/user_footer');
     }
     // surat masuk admin
     public function suara_muhammadiyah()
