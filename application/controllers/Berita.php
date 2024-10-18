@@ -51,9 +51,9 @@ class Berita extends CI_Controller
             );
             $data['latepost_photos'][] = $latepost_photo;
         }
-        $this->load->view('templates/navbar');
-        $this->load->view('berita', $data);
-        $this->load->view('templates/footer');
+        $this->load->view('templates/user_navbar');
+        $this->load->view('user/berita/berita/berita', $data);
+        $this->load->view('templates/user_footer');
     }
     // surat masuk admin
     public function berita()
@@ -450,9 +450,9 @@ class Berita extends CI_Controller
             );
             $data['latepost_photos'][] = $latepost_photo;
         }
-        $this->load->view('templates/navbar');
-        $this->load->view('galeri', $data);
-        $this->load->view('templates/footer');
+        $this->load->view('templates/user_navbar');
+        $this->load->view('user/berita/galeri/galeri', $data);
+        $this->load->view('templates/user_footer');
     }
     // surat masuk admin
     public function galeri()
@@ -1082,10 +1082,10 @@ class Berita extends CI_Controller
         $this->upload->initialize($config);
 
         $data = array(
-                'judul_berita' => $this->input->post('judul_berita'),
-                'isi_content' => $this->input->post('isi_content'),
-                'avatar' => ''
-            );
+            'judul_berita' => $this->input->post('judul_berita'),
+            'isi_content' => $this->input->post('isi_content'),
+            'avatar' => ''
+        );
 
 
         // Periksa apakah sebuah file dipilih untuk diunggah
@@ -1526,7 +1526,7 @@ class Berita extends CI_Controller
 
         $data['title'] = 'Tambah Suara Muhammadiyah';
         $data['user'] = $this->db->get_where('user', ['email' => $this->session->userdata('email')])->row_array();
-        
+
 
         $this->load->view('templates/header', $data);
         $this->load->view('templates/sidebar', $data);

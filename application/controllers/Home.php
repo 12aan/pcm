@@ -17,7 +17,7 @@ class Home extends CI_Controller
 		$this->load->model('KabarRanting_Model');
 		$this->load->model('Slider_Model');
 		$this->load->model('VisitModel'); // Load model visit
-        
+
 	}
 
 	public function index()
@@ -29,9 +29,9 @@ class Home extends CI_Controller
 		$data['kabar_ranting'] = $this->KabarRanting_Model->get_kabar_ranting(); // Gantilah dengan fungsi sesuai kebutuhan
 
 		$this->VisitModel->record_visit();
-		$this->load->view('templates/navbar');
-		$this->load->view('home', $data);
-		$this->load->view('templates/footer');
+		$this->load->view('templates/user_navbar');
+		$this->load->view('user/home', $data);
+		$this->load->view('templates/user_footer');
 	}
 
 	public function sliderdetail($id)
@@ -49,9 +49,9 @@ class Home extends CI_Controller
 			$data['latepost_photos'][] = $latepost_photo;
 		}
 
-		$this->load->view('templates/navbar');
-		$this->load->view('sliderdetail', $data);
-		$this->load->view('templates/footer');
+		$this->load->view('templates/user_navbar');
+		$this->load->view('user/berita/slider/sliderdetail', $data);
+		$this->load->view('templates/user_footer');
 	}
 
 	public function galeridetail($id)
@@ -69,9 +69,9 @@ class Home extends CI_Controller
 			$data['latepost_photos'][] = $latepost_photo;
 		}
 
-		$this->load->view('templates/navbar');
-		$this->load->view('galeridetail', $data);
-		$this->load->view('templates/footer');
+		$this->load->view('templates/user_navbar');
+		$this->load->view('user/berita/galeri/galeridetail', $data);
+		$this->load->view('templates/user_footer');
 	}
 
 	public function beritadetail($id)
@@ -89,9 +89,9 @@ class Home extends CI_Controller
 			$data['latepost_photos'][] = $latepost_photo;
 		}
 
-		$this->load->view('templates/navbar');
-		$this->load->view('beritadetail', $data);
-		$this->load->view('templates/footer');
+		$this->load->view('templates/user_navbar');
+		$this->load->view('user/berita/berita/beritadetail', $data);
+		$this->load->view('templates/user_footer');
 	}
 
 	public function kabarrantingdetail($id)
@@ -109,9 +109,9 @@ class Home extends CI_Controller
 			$data['latepost_photos'][] = $latepost_photo;
 		}
 
-		$this->load->view('templates/navbar');
-		$this->load->view('kabarrantingdetail', $data);
-		$this->load->view('templates/footer');
+		$this->load->view('templates/user_navbar');
+		$this->load->view('user/berita/kabar_ranting/kabarrantingdetail', $data);
+		$this->load->view('templates/user_footer');
 	}
 
 
@@ -133,9 +133,9 @@ class Home extends CI_Controller
 		}
 
 		// Memuat tampilan dengan data
-		$this->load->view('templates/navbar');
-		$this->load->view('breakingnewsdetail', $data);
-		$this->load->view('templates/footer');
+		$this->load->view('templates/user_navbar');
+		$this->load->view('user/berita/breaking_news/breakingnewsdetail', $data);
+		$this->load->view('templates/user_footer');
 	}
 
 
@@ -155,9 +155,9 @@ class Home extends CI_Controller
 		}
 
 		// Load the necessary views
-		$this->load->view('templates/navbar');
-		$this->load->view('suaramuhammadiyah_detail', $data); // Ensure this view file exists
-		$this->load->view('templates/footer');
+		$this->load->view('templates/user_navbar');
+		$this->load->view('user/berita/suara_muhammadiyah/suaramuhammadiyah_detail', $data); // Ensure this view file exists
+		$this->load->view('templates/user_footer');
 	}
 
 
@@ -182,30 +182,31 @@ class Home extends CI_Controller
 		}
 
 		// Load the views with the data
-		$this->load->view('templates/navbar');
-		$this->load->view('ibrahdetail', $data);
-		$this->load->view('templates/footer');
+		$this->load->view('templates/user_navbar');
+		$this->load->view('user/berita/ibrah/ibrahdetail', $data);
+		$this->load->view('templates/user_footer');
 	}
 
 
-	public function breaking_news_detail($id)
-	{
-		$data['berita'] = $this->Berita_Model->get_berita();
+	// public function breaking_news_detail($id)
+	// {
+	// 	$data['berita'] = $this->Berita_Model->get_berita();
 
-		$data['item'] = $this->BreakingNews_model->get_news_by_id($id);
-		$data['latepost_photos'] = array();
-		foreach ($data['berita'] as $berita) {
-			// Misalnya, URL avatar foto berita disimpan dalam indeks 'avatar'
-			$latepost_photo = array(
-				'url' => base_url('./uploads/' . $berita['avatar'])
-			);
-			$data['latepost_photos'][] = $latepost_photo;
-		}
+	// 	$data['item'] = $this->BreakingNews_model->get_news_by_id($id);
+	// 	$data['latepost_photos'] = array();
+	// 	foreach ($data['berita'] as $berita) {
+	// 		// Misalnya, URL avatar foto berita disimpan dalam indeks 'avatar'
+	// 		$latepost_photo = array(
+	// 			'url' => base_url('./uploads/' . $berita['avatar'])
+	// 		);
+	// 		$data['latepost_photos'][] = $latepost_photo;
+	// 	}
 
-		$this->load->view('templates/navbar');
-		$this->load->view('breaking_news_detail', $data);
-		$this->load->view('templates/footer');
-	}
+	// 	$this->load->view('templates/user_navbar');
+	// 	$this->load->view('user/berita/breaking_news/breaking_news_detail', $data);
+	// 	$this->load->view('templates/user_footer');
+	// }
+
 	public function pengumumandetail($id)
 	{
 		$data['berita'] = $this->Berita_Model->get_berita();
@@ -220,9 +221,9 @@ class Home extends CI_Controller
 			$data['latepost_photos'][] = $latepost_photo;
 		}
 
-		$this->load->view('templates/navbar');
-		$this->load->view('pengumumandetail', $data);
-		$this->load->view('templates/footer');
+		$this->load->view('templates/user_navbar');
+		$this->load->view('user/berita/pengumuman/pengumumandetail', $data);
+		$this->load->view('templates/user_footer');
 	}
 
 
@@ -230,33 +231,33 @@ class Home extends CI_Controller
 	{
 		// Load data surat_masuk from the backend
 		$data['profile'] = $this->Profile_Model->get_profile(); // Gantilah dengan fungsi sesuai kebutuhan
-		$this->load->view('templates/navbar');
-		$this->load->view('profile', $data);
-		$this->load->view('templates/footer');
+		$this->load->view('templates/user_navbar');
+		$this->load->view('user/profile/profile', $data);
+		$this->load->view('templates/user_footer');
 	}
 
 	public function Berita()
 	{
 		$data['berita'] = $this->Berita_Model->get_berita();
-		$this->load->view('templates/navbar');
-		$this->load->view('berita', $data);
-		$this->load->view('templates/footer');
+		$this->load->view('templates/user_navbar');
+		$this->load->view('user/berita/berita/berita', $data);
+		$this->load->view('templates/user_footer');
 	}
 
 
 	public function Kajian()
 	{
-		$this->load->view('templates/navbar');
-		$this->load->view('kajian');
-		$this->load->view('templates/footer');
+		$this->load->view('templates/user_navbar');
+		$this->load->view('user/profile/kajian');
+		$this->load->view('templates/user_footer');
 	}
 
 
 	public function Amal_Usaha_rumah()
 	{
-		$this->load->view('templates/navbar');
+		$this->load->view('templates/user_navbar');
 		$this->load->view('amal_usaha/rumah_yatimduafa');
-		$this->load->view('templates/footer');
+		$this->load->view('templates/user_footer');
 	}
 	public function Amal_Usaha_masjid()
 	{
