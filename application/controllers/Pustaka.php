@@ -30,14 +30,7 @@ class Pustaka extends CI_Controller
         $this->load->library('form_validation');
     }
 
-    public function index()
-    {
-        // Load data surat_masuk from the backend
-        $data['pustaka'] = $this->Pustaka_Model->get_pustaka(); // Gantilah dengan fungsi sesuai kebutuhan
-        $this->load->view('templates/navbar');
-        $this->load->view('user/pustaka/pustaka', $data);
-        $this->load->view('templates/footer');
-    }
+
 
     // surat masuk admin
     public function pustaka()

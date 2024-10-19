@@ -1,109 +1,123 @@
-<!DOCTYPE html>
-<html lang="en">
+<!-- SUB SUB NAVBAR BAWAH -->
+<div class="page-body">
+    <div class="container-xl">
 
-<body>
-    <script src="<?php echo base_url('assets/static/js/initTheme.js') ?>"></script>
-    <div id="app">
+        <div class="card">
+            <div class="card-body">
 
-        <div id="main-content">
-            <!-- <header class="mb-3">
-                <a href="#" class="burger-btn d-block d-xl-none">
-                    <i class="bi bi-justify fs-3"></i>
-                </a>
-            </header> -->
+                <section class="text-justify mt-4">
+                    <div class="container">
+                        <h2 class="text-center mb-4">SURAT AKTIF ORGANISASI</h2>
+                        <hr class="my-4">
 
-            <div class="page-heading">
-                <div class="page-title">
-                    <div class="row">
-                        <div class="col-12 col-md-6 order-md-1 order-last">
-
+                        <div class="row justify-content-center">
+                            <div class="col-md-8">
+                                <p class="text-center">
+                                    Assalamu'alaikum wr wb.<br>
+                                    Disampaikan bagi Bapak/Ibu/Saudara yang memerlukan Surat Keterangan Aktif di Muhammadiyah dapat mengisi form di bawah ini:
+                                </p>
+                                <p class="text-center">
+                                    Demikian, atas perhatiannya diucapkan terima kasih.<br>
+                                    Wassalamu'alaikum wr wb.<br>
+                                    <b>Ketua PCM Kasihan<br>H. Toto Budi Santoso</b>
+                                </p>
+                                <p class="text-center">
+                                    Surat ini hanya diberikan kepada Anggota Muhammadiyah yang berdomisili di wilayah kerja PCM Kasihan.
+                                </p>
+                                <hr class="my-4">
+                            </div>
                         </div>
-                        <div class="col-12 col-md-6 order-md-2 order-first">
-                            <nav aria-label="breadcrumb" class="breadcrumb-header float-start float-lg-end">
-                                <ol class="breadcrumb">
-                                    <li class="breadcrumb-item"><a href="index.html">Dashboard</a></li>
-                                    <li class="breadcrumb-item active" aria-current="page">Layout Default</li>
-                                </ol>
-                            </nav>
-                        </div>
-                    </div>
-                </div>
-                <section class="section">
-                    <div class="card">
-                        <div class="card-header">
-                            <h4 class="card-title">Surat Aktif Organisasi</h4>
 
-                            <?php if ($this->session->flashdata('success')) { ?>
-                                <div class="alert alert-success">
-                                    <?php echo $this->session->flashdata('success'); ?>
-                                </div>
-                            <?php } ?>
-                            <a href="<?php echo base_url('adminor/tambah_surat_aktif_organisasi') ?>" class="btn btn-primary mt-2">Tambah Data</a>
-                        </div>
-                        <div class="card-body">
-                            <div class="table-responsive datatable-minimal">
-                                <table class="table" id="table2">
-                                    <thead>
-                                        <tr>
-                                            <th>No</th>
-                                            <th>Email</th>
-                                            <th style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">Nama Lengkap</th>
-                                            <th style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">Tanggal Lahir</th>
-                                            <th style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">Alamat Tinggal</th>
-                                            <th>No Hp</th>
-                                            <th style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">Instansi Kerja</th>
-                                            <th style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">Alamat Instansi Kerja</th>
-                                            <th style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">Telepon Kantor Kerja</th>
-                                            <th class="text-center">Action</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <?php if (!empty($surat_aktif_organisasi)) : ?>
-                                            <?php $nomor = 1; ?>
-                                            <?php foreach ($surat_aktif_organisasi as $row) : ?>
-                                                <tr>
-                                                    <td><?php echo $nomor++; ?></td>
-                                                    <td style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis;"><?php echo $row['email']; ?></td>
-                                                    <td style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis;"><?php echo $row['nama_lengkap']; ?></td>
-                                                    <td style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis;"><?php echo $row['tanggal_lahir']; ?></td>
-                                                    <td><?php echo $row['alamat_tinggal']; ?></td>
-                                                    <td style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis;"><?php echo $row['no_hp']; ?></td>
-                                                    <td><?php echo $row['instansi_kerja']; ?></td>
-                                                    <td><?php echo $row['alamat_instansi_kerja']; ?></td>
-                                                    <td><?php echo $row['telepon_kantor_kerja']; ?></td>
-                                                    <td class="text-center">
-                                                        <a href="<?php echo base_url('adminor/lihat_data_anggota_organisasi/' . $row['id_aktif']); ?>">
-                                                            <i class="fas fa-key" data-toggle="tooltip" title="Lihat Data" style="color: #3498db; margin-right: 5px;"></i>
-                                                        </a>
+                        <div class="row justify-content-center">
+                            <div class="col-md-8">
+                                <div class="card">
+                                    <div class="card-body">
+                                        <h4 class="text-center">FORMULIR SURAT AKTIF ORGANISASI</h4>
+                                        <hr class="mt-2">
 
-                                                        <a href="<?php echo base_url('adminor/hapus_data_surat_organisasi/' . $row['id_aktif']); ?>" onclick="return confirm('Are you sure you want to delete this item?');" style="color: #e74c3c;">
-                                                            <i class="fas fa-trash" data-toggle="tooltip" title="Hapus data"></i>
-                                                        </a>
-                                                    </td>
-
-                                                </tr>
-                                            <?php endforeach; ?>
-                                        <?php else : ?>
-                                            <tr>
-                                                <td colspan="8">Tidak ada data surat masuk.</td>
-                                            </tr>
+                                        <?php if ($this->session->flashdata('success')): ?>
+                                            <div class="alert alert-success">
+                                                <?php echo $this->session->flashdata('success'); ?>
+                                            </div>
                                         <?php endif; ?>
-                                    </tbody>
-                                </table>
+
+                                        <?php if ($this->session->flashdata('error')): ?>
+                                            <div class="alert alert-danger">
+                                                <?php echo $this->session->flashdata('error'); ?>
+                                            </div>
+                                        <?php endif; ?>
+
+                                        <form enctype="multipart/form-data" action="<?php echo site_url('adminor/surat_aktif_org'); ?>" method="post">
+                                            <!-- Form elements -->
+                                            <div class="mb-3">
+                                                <label for="nama_lengkap" class="form-label">Nama</label>
+                                                <input type="text" class="form-control" id="nama_lengkap" name="nama_lengkap" placeholder="Masukkan nama lengkap anda" required>
+                                            </div>
+                                            <div class="mb-3">
+                                                <label for="email" class="form-label">Email</label>
+                                                <input type="email" class="form-control" id="email" name="email" placeholder="Masukkan email anda" required>
+                                            </div>
+
+                                            <div class="mb-3">
+                                                <label for="tempat_lahir" class="form-label">Tempat Lahir</label>
+                                                <input type="text" class="form-control" id="tempat_lahir" name="tempat_lahir" placeholder="Masukkan Tempat lahir anda" required>
+                                            </div>
+
+                                            <div class="mb-3">
+                                                <label for="tanggal_lahir" class="form-label">Tanggal Lahir</label>
+                                                <input type="date" class="form-control" id="tanggal_lahir" name="tanggal_lahir" required>
+                                            </div>
+
+                                            <div class="mb-3">
+                                                <label for="alamat_tinggal" class="form-label">Alamat Tinggal</label>
+                                                <input type="text" class="form-control" id="alamat_tinggal" name="alamat_tinggal" placeholder="Masukkan alamat tinggal anda sekarang" required>
+                                            </div>
+
+                                            <div class="mb-3">
+                                                <label for="no_hp" class="form-label">No. HP/WA</label>
+                                                <input type="tel" class="form-control" id="no_hp" name="no_hp" placeholder="Masukkan nomer whatsapp/nomer yang dapat dihubungi" required>
+                                            </div>
+
+                                            <div class="mb-3">
+                                                <label for="instansi_kerja" class="form-label">Instansi Kerja</label>
+                                                <input type="text" class="form-control" id="instansi_kerja" name="instansi_kerja" placeholder="Masukkan instansi kerja anda" required>
+                                            </div>
+
+                                            <div class="mb-3">
+                                                <label for="alamat_instansi_kerja" class="form-label">Alamat Instansi Kerja/Kantor</label>
+                                                <input type="text" class="form-control" id="alamat_instansi_kerja" name="alamat_instansi_kerja" placeholder="Masukkan alamat kerja anda sekarang" required>
+                                            </div>
+
+                                            <div class="mb-3">
+                                                <label for="telepon_kantor_kerja" class="form-label">Telepon Kantor/Instansi</label>
+                                                <input type="tel" class="form-control" id="telepon_kantor_kerja" name="telepon_kantor_kerja" placeholder="Masukkan telepon kantor kerja anda" required>
+                                            </div>
+
+                                            <div class="mb-4">
+                                                <label for="file_path_kartu_tanda_anggota" class="form-label">Upload Karu Tanda Anggota Muhammadiyah/Aisyiyah</label>
+                                                <input type="file" class="form-control" id="file_path_kartu_tanda_anggota" name="file_path_kartu_tanda_anggota">
+                                                <small id="gambarHelp" class="form-text text-muted">Pilih file (format: jpg, jpeg, png, pdf, dll).</small>
+                                            </div>
+                                            <div class="mb-4">
+                                                <label for="file_path_bukti_keaktifan" class="form-label">Foto Bukti Keaktifan atau Surat Rekomendasi/Keterangan Takmir atau Surat Rekomendasi/Keterangan Lembaga/Majlis dimana yang bersangkutan (ybs) aktif
+                                                </label>
+                                                <input type="file" class="form-control" id="file_path_bukti_keaktifan" name="file_path_bukti_keaktifan" value="Not Avatar">
+                                                <small id="gambarHelp" class="form-text text-muted">Pilih file (format: jpg, jpeg, png, pdf, dll).</small>
+                                            </div>
+                                            <hr>
+                                            <button type="submit" class="btn btn-primary">KIRIM</button>
+                                        </form>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
                 </section>
+
+
             </div>
-
         </div>
+
     </div>
-    <script src="<?php echo base_url('/assets/static/js/components/dark.js') ?>"></script>
-    <script src="<?php echo base_url('/assets/extensions/perfect-scrollbar/perfect-scrollbar.min.js') ?>"></script>
-
-    <script src="<?php echo base_url('/assets/compiled/js/app.js') ?>"></script>
-
-
-</body>
-
-</html>
+</div>
+<!-- END OF SUB SUB NAVBAR BAWAH -->

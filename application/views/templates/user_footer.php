@@ -7,10 +7,10 @@
                     <h3 class="mb-2">KATEGORI</h3>
                     <div class="">
                         <ul class="list-unstyled">
-                            <li><a class="link-secondary" href="<?php echo base_url('berita/berita_user') ?>" class="link-secondary" rel="noopener">Berita</a></li>
-                            <li><a class="link-secondary" href=" <?php echo base_url('berita/ibrah_user') ?>">Ibrah</a></li>
-                            <li><a class="link-secondary" href=" <?php echo base_url('berita/pengumuman_user') ?>">Pengumuman</a></li>
-                            <li><a class="link-secondary" href=" <?php echo base_url('berita/suaramuhammadiyah_user') ?>">Suara Muhammadiyah</a></li>
+                            <li><a class="link-secondary" href="<?php echo base_url('home/berita_user') ?>" class="link-secondary" rel="noopener">Berita</a></li>
+                            <li><a class="link-secondary" href=" <?php echo base_url('home/ibrah_user') ?>">Ibrah</a></li>
+                            <li><a class="link-secondary" href=" <?php echo base_url('home/pengumuman_user') ?>">Pengumuman</a></li>
+                            <li><a class="link-secondary" href=" <?php echo base_url('home/suaramuhammadiyah_user') ?>">Suara Muhammadiyah</a></li>
                         </ul>
                     </div>
                 </div>
@@ -18,10 +18,10 @@
                 <div class="col-md-4">
                     <h3 class="mb-2">BERITA TERKINI</h3>
                     <ul class="list-unstyled">
-                        <li><a class="link-secondary" href=" <?php echo base_url('berita/breaking_user') ?>">Breaking News</a></li>
-                        <li><a class="link-secondary" href=" <?php echo base_url('berita/kabarranting_user') ?>">Kabar Ranting</a></li>
-                        <li><a class="link-secondary" href=" <?php echo base_url('berita/slider_user') ?>">Slider</a></li>
-                        <li><a class="link-secondary" href=" <?php echo base_url('berita/galeri_user') ?>">Galeri</a></li>
+                        <li><a class="link-secondary" href=" <?php echo base_url('home/breaking_user') ?>">Breaking News</a></li>
+                        <li><a class="link-secondary" href=" <?php echo base_url('home/kabarranting_user') ?>">Kabar Ranting</a></li>
+                        <li><a class="link-secondary" href=" <?php echo base_url('home/slider_user') ?>">Slider</a></li>
+                        <li><a class="link-secondary" href=" <?php echo base_url('home/galeri_user') ?>">Galeri</a></li>
                     </ul>
                 </div>
 

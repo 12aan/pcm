@@ -275,26 +275,6 @@ class Adminor extends CI_Controller
     // END HAPUS DATA
 
 
-
-    // START SURAT KELUAR UNTUK USER
-    public function surat_keluar()
-    {
-        // Ambil semua data surat keputusan dari database
-        $surat_keluar = $this->SuratMasuk_model->get_surat_keluar();
-
-        // Kelompokkan data surat keputusan berdasarkan agenda
-        $surat_keluar_by_agenda = array();
-        foreach ($surat_keluar as $row) {
-            $id_keluar = $row['agenda']; // Ubah ini dengan kolom yang sesuai dalam tabel surat keputusan
-            $surat_keluar_by_agenda[$id_keluar][] = $row;
-        }
-
-        // Kirim data ke view
-        $data['surat_keluar_by_agenda'] = $surat_keluar_by_agenda;
-        $this->load->view('templates/navbar');
-        $this->load->view('admin/adminor/surat_keluar/surat_keluar', $data); // Ubah nama view dengan halaman user Anda
-        $this->load->view('templates/footer');
-    }
     //surat keluar untuk admin
     public function surat_kel()
     {
@@ -630,26 +610,6 @@ class Adminor extends CI_Controller
 
 
 
-    // // START SURAT KEPUTUSAN UNTUK USER
-    // public function surat_keputusan()
-    // {
-    //     // Ambil semua data surat keputusan dari database
-    //     $surat_keputusan = $this->SuratMasuk_model->get_surat_keputusan();
-
-    //     // Kelompokkan data surat keputusan berdasarkan agenda
-    //     $surat_keputusan_by_agenda = array();
-    //     foreach ($surat_keputusan as $row) {
-    //         $id_keputusan = $row['agenda']; // Ubah ini dengan kolom yang sesuai dalam tabel surat keputusan
-    //         $surat_keputusan_by_agenda[$id_keputusan][] = $row;
-    //     }
-
-    //     // Kirim data ke view
-    //     $data['surat_keputusan_by_agenda'] = $surat_keputusan_by_agenda;
-    //     $this->load->view('templates/navbar');
-    //     $this->load->view('adminor/surat_keputusan', $data); // Ubah nama view dengan halaman user Anda
-    //     $this->load->view('templates/footer');
-    // }
-
     //SURAT KEP UNTUK ADMIN
     public function surat_kep()
     {
@@ -897,25 +857,6 @@ class Adminor extends CI_Controller
 
 
 
-    // START NOTULENSI UNTUK USER
-    public function notulen()
-    {
-        // Ambil semua data surat keputusan dari database
-        $notulensi = $this->SuratMasuk_model->get_surat_notulensi();
-
-        // Kelompokkan data surat keputusan berdasarkan agenda
-        $surat_notulensi_by_agenda = array();
-        foreach ($notulensi as $row) {
-            $id_notulensi = $row['agenda']; // Ubah ini dengan kolom yang sesuai dalam tabel surat keputusan
-            $surat_notulensi_by_agenda[$id_notulensi][] = $row;
-        }
-
-        // Kirim data ke view
-        $data['surat_notulensi_by_agenda'] = $surat_notulensi_by_agenda;
-        $this->load->view('templates/navbar');
-        $this->load->view('adminor/notulensi', $data); // Ubah nama view dengan halaman user Anda
-        $this->load->view('templates/footer');
-    }
     //UNTUK ADMIN
     public function notulensi()
     {
@@ -1198,15 +1139,7 @@ class Adminor extends CI_Controller
     // END NOTULENSI
 
 
-    // START DAFTAR DAN SERTIFIKAT WAKAF UNTUK USER
-    public function daftar_sertifikat_wakaf()
-    {
-        // Load data surat_masuk from the backend
-        $data['sertifikat_wakaf'] = $this->SuratMasuk_model->get_surat_wakaf(); // Gantilah dengan fungsi sesuai kebutuhan
-        $this->load->view('templates/navbar');
-        $this->load->view('adminor/daftar_sertifikat_wakaf', $data);
-        $this->load->view('templates/footer');
-    }
+
     //UNTUK ADMIN
     public function wakaf()
     {

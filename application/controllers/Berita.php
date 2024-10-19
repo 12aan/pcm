@@ -37,24 +37,6 @@ class Berita extends CI_Controller
         $this->load->model('Suaramuhammadiyah_Model');
     }
 
-
-    public function berita_user()
-    {
-        // Load data surat_masuk from the backend
-        $data['berita'] = $this->Berita_Model->get_berita(); // Gantilah dengan fungsi sesuai kebutuhan
-        // Persiapkan data latepost, menggunakan foto-foto berita yang sama
-        $data['latepost_photos'] = array();
-        foreach ($data['berita'] as $berita) {
-            // Misalnya, URL avatar foto berita disimpan dalam indeks 'avatar'
-            $latepost_photo = array(
-                'url' => base_url('./uploads/' . $berita['avatar'])
-            );
-            $data['latepost_photos'][] = $latepost_photo;
-        }
-        $this->load->view('templates/user_navbar');
-        $this->load->view('user/berita/berita/berita', $data);
-        $this->load->view('templates/user_footer');
-    }
     // surat masuk admin
     public function berita()
     {
@@ -236,24 +218,6 @@ class Berita extends CI_Controller
         }
     }
 
-
-
-    // Tampilan untuk user 
-    public function breaking_user()
-    {
-        // Load data surat_masuk from the backend
-        $data['breaking_news'] = $this->BreakingNews_model->get_breaking_news(); // Gantilah dengan fungsi sesuai kebutuhan
-        foreach ($data['breaking_news'] as $breaking_news) {
-            // Misalnya, URL avatar foto breaking_news disimpan dalam indeks 'avatar'
-            $latepost_photo = array(
-                'url' => base_url('./uploads/' . $breaking_news['avatar'])
-            );
-            $data['latepost_photos'][] = $latepost_photo;
-        }
-        $this->load->view('templates/user_navbar');
-        $this->load->view('user/berita/breaking_news/breaking_news', $data);
-        $this->load->view('templates/user_footer');
-    }
     // TAMPILAN BREAKING NEWS ADMIN
     public function breaking_news()
     {
@@ -436,24 +400,6 @@ class Berita extends CI_Controller
     }
 
 
-
-
-    // Tampilan USER GALERI
-    public function galeri_user()
-    {
-        // Load data surat_masuk from the backend
-        $data['galeri'] = $this->Galeri_Model->get_galeri(); // Gantilah dengan fungsi sesuai kebutuhan
-        foreach ($data['galeri'] as $galeri) {
-            // Misalnya, URL avatar foto galeri disimpan dalam indeks 'avatar'
-            $latepost_photo = array(
-                'url' => base_url('./uploads/' . $galeri['avatar'])
-            );
-            $data['latepost_photos'][] = $latepost_photo;
-        }
-        $this->load->view('templates/user_navbar');
-        $this->load->view('user/berita/galeri/galeri', $data);
-        $this->load->view('templates/user_footer');
-    }
     // surat masuk admin
     public function galeri()
     {
@@ -638,24 +584,6 @@ class Berita extends CI_Controller
     }
 
 
-
-    // TAMPILAH USER IBRAH
-    public function ibrah_user()
-    {
-        // Load data surat_masuk from the backend
-        $data['ibrah'] = $this->Ibrah_Model->get_ibrah(); // Gantilah dengan fungsi sesuai kebutuhan
-        $data['latepost_photos'] = array();
-        foreach ($data['ibrah'] as $ibrah) {
-            // Misalnya, URL avatar foto ibrah disimpan dalam indeks 'avatar'
-            $latepost_photo = array(
-                'url' => base_url('./uploads/' . $ibrah['avatar'])
-            );
-            $data['latepost_photos'][] = $latepost_photo;
-        }
-        $this->load->view('templates/user_navbar');
-        $this->load->view('user/berita/ibrah/ibrah', $data);
-        $this->load->view('templates/user_footer');
-    }
     // surat masuk admin
     public function ibrah()
     {
@@ -840,24 +768,6 @@ class Berita extends CI_Controller
     }
 
 
-
-
-
-    public function kabarranting_user()
-    {
-        // Load data surat_masuk from the backend
-        $data['kabar_ranting'] = $this->KabarRanting_Model->get_kabar_ranting(); // Gantilah dengan fungsi sesuai kebutuhan
-        foreach ($data['kabar_ranting'] as $kabar_ranting) {
-            // Misalnya, URL avatar foto kabar_ranting disimpan dalam indeks 'avatar'
-            $latepost_photo = array(
-                'url' => base_url('./uploads/' . $kabar_ranting['avatar'])
-            );
-            $data['latepost_photos'][] = $latepost_photo;
-        }
-        $this->load->view('templates/user_navbar');
-        $this->load->view('user/berita/kabar_ranting/kabar_ranting', $data);
-        $this->load->view('templates/user_footer');
-    }
     // surat masuk admin
     public function kabar_ranting()
     {
@@ -1041,23 +951,6 @@ class Berita extends CI_Controller
     }
 
 
-
-
-    public function pengumuman_user()
-    {
-        // Load data surat_masuk from the backend
-        $data['pengumuman'] = $this->Pengumuman_Model->get_pengumuman(); // Gantilah dengan fungsi sesuai kebutuhan
-        foreach ($data['pengumuman'] as $pengumuman) {
-            // Misalnya, URL avatar foto pengumuman disimpan dalam indeks 'avatar'
-            $latepost_photo = array(
-                'url' => base_url('./uploads/' . $pengumuman['avatar'])
-            );
-            $data['latepost_photos'][] = $latepost_photo;
-        }
-        $this->load->view('templates/user_navbar');
-        $this->load->view('user/berita/pengumuman/pengumuman', $data);
-        $this->load->view('templates/user_footer');
-    }
     // surat masuk admin
     public function pengumuman()
     {
@@ -1242,25 +1135,6 @@ class Berita extends CI_Controller
 
 
 
-
-
-
-
-    public function slider_user()
-    {
-        // Load data surat_masuk from the backend
-        $data['slider'] = $this->Slider_Model->get_slider(); // Gantilah dengan fungsi sesuai kebutuhan
-        foreach ($data['slider'] as $slider) {
-            // Misalnya, URL avatar foto slider disimpan dalam indeks 'avatar'
-            $latepost_photo = array(
-                'url' => base_url('./uploads/' . $slider['avatar'])
-            );
-            $data['latepost_photos'][] = $latepost_photo;
-        }
-        $this->load->view('templates/user_navbar');
-        $this->load->view('user/berita/slider/slider', $data);
-        $this->load->view('templates/user_footer');
-    }
     // surat masuk admin
     public function slider()
     {
@@ -1447,21 +1321,6 @@ class Berita extends CI_Controller
 
 
 
-    public function suaramuhammadiyah_user()
-    {
-        // Load data surat_masuk from the backend
-        $data['suara_muhammadiyah'] = $this->Suaramuhammadiyah_Model->get_suaramuhammadiyah(); // Gantilah dengan fungsi sesuai kebutuhan
-        foreach ($data['suara_muhammadiyah'] as $suara_muhammadiyah) {
-            // Misalnya, URL avatar foto suara_muhammadiyah disimpan dalam indeks 'avatar'
-            $latepost_photo = array(
-                'url' => base_url('./uploads/' . $suara_muhammadiyah['avatar'])
-            );
-            $data['latepost_photos'][] = $latepost_photo;
-        }
-        $this->load->view('templates/user_navbar');
-        $this->load->view('user/berita/suara_muhammadiyah/suara_muhammadiyah', $data);
-        $this->load->view('templates/user_footer');
-    }
     // surat masuk admin
     public function suara_muhammadiyah()
     {
