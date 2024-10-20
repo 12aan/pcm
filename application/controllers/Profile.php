@@ -7,7 +7,7 @@ class Profile extends CI_Controller
 	public function __construct()
 	{
 		parent::__construct();
-		is_logged_in();
+
 		// Cek session expiration secara manual
 		$last_activity = $this->session->userdata('last_activity');
 		$timeout_duration = 43200; // 12 jam dalam detik
@@ -25,19 +25,11 @@ class Profile extends CI_Controller
 		if (!$user || !$user['is_active']) {
 			redirect('auth/blocked'); // Redirect ke halaman blocked jika tidak aktif
 		}
+
+		$this->load->model('Data_Admin');
 		$this->load->model('Profile_Model');
 	}
 
-
-	// surat masuk user
-	public function index()
-	{
-		// Load data surat_masuk from the backend
-		$data['profile'] = $this->Profile_Model->get_profile(); // Gantilah dengan fungsi sesuai kebutuhan
-		$this->load->view('templates/user_navbar');
-		$this->load->view('user/profile/profile', $data);
-		$this->load->view('templates/user_footer');
-	}
 	// Start Profile Administration
 	public function profile()
 	{

@@ -51,6 +51,7 @@ class Berita extends CI_Controller
         $this->load->view('admin/berita/berita/berita', $data);
         $this->load->view('templates/footer');
     }
+    
     public function tambah_data_berita()
     {
         $this->load->library('upload');

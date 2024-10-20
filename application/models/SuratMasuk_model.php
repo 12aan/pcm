@@ -22,11 +22,13 @@ class SuratMasuk_model extends CI_Model
             return array(); // Mengembalikan array kosong jika tidak ada data
         }
     }
+
     public function get_surat_masuk()
     {
         $this->db->order_by('tanggal', 'DESC');
         return $this->db->get('surat_masuk')->result_array();
     }
+    
     public function tambah_surat($data)
     {
         return $this->db->insert('surat_masuk', $data);

@@ -5,7 +5,7 @@
 	<meta charset="utf-8" />
 	<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
 	<meta http-equiv="X-UA-Compatible" content="ie=edge" />
-	<title>Home</title>
+	<title><?= $judul; ?></title>
 	<!-- CSS files -->
 	<link href="<?php echo base_url('/tabler/dist/css/tabler.min.css?1684106062') ?>" rel="stylesheet" />
 	<link href="<?php echo base_url('/tabler/dist/css/tabler-flags.min.css?1684106062') ?>" rel="stylesheet" />
@@ -46,6 +46,13 @@
 			/* Sesuaikan dengan posisi yang diinginkan */
 			z-index: 1000;
 			/* Pastikan nilai z-index lebih tinggi dari elemen lain */
+		}
+
+		.nav-item.active .nav-link {
+			border-bottom: 2px solid blue;
+			/* Garis bawah biru */
+			font-weight: bold;
+			/* Gaya tambahan, jika perlu */
 		}
 	</style>
 </head>
@@ -129,55 +136,46 @@
 							<ul class="navbar-nav">
 
 								<?php
-								// Get menu data
+								// Ambil data menu
 								$datamenu = $this->db->from('menu')->get()->result_array();
-								$current_page = basename($_SERVER['REQUEST_URI']);
+								$current_title = strtolower(trim($this->uri->segment(2))); // Ambil segment kedua dari URL
+								if (empty($current_title)) {
+									$current_title = 'home'; // Set default ke 'home' jika segment kedua kosong
+								}
 
-								// Function to determine if the link is active
-								function is_active($page_names, $current_page)
+								// Fungsi untuk membuat slug dari judul
+								function create_slug($string)
 								{
-									// Ensure $page_names is an array
-									if (!is_array($page_names)) {
-										$page_names = array($page_names);
-									}
-
-									// Check if the current page matches any of the page names
-									foreach ($page_names as $page_name) {
-										if ($page_name == $current_page) {
-											return 'active'; // Return 'active' class if page matches
-										}
-									}
-
-									// Check if any page names partially match the current page
-									foreach ($page_names as $page_name) {
-										if (!empty($page_name) && !empty($current_page) && strpos($current_page, $page_name) !== false) {
-											return 'active'; // Return 'active' class if page partially matches
-										}
-									}
-
-									return ''; // Return empty string if no match
+									// Ganti spasi dan garis miring dengan underscore, dan hilangkan karakter khusus
+									return strtolower(trim(preg_replace('/[\/\s]+/', '_', $string)));
 								}
 
 								// Process menu items
 								foreach ($datamenu as $menu) {
-									// Get submenu data for each menu
+									// Ambil data submenu untuk setiap menu
 									$datasubmenu = $this->db->from('submenu')
 										->where('idmenu', $menu['idmenu'])
 										->get()
 										->result_array();
 
-									// Check if the menu has submenus
+									// Normalisasi judul menu untuk perbandingan
+									$menu_slug = create_slug($menu['judul']); // Buat slug untuk judul menu
+
+									// Periksa apakah menu memiliki submenu
 									if (!empty($datasubmenu)) {
-										// Menu has submenus
+										// Menu memiliki submenu
 								?>
-										<li class="nav-item dropdown <?php echo is_active(array_column($datasubmenu, 'url'), $current_page) ? 'active' : ''; ?>">
+										<li class="nav-item dropdown <?php echo ($current_title === $menu_slug) ? 'active' : ''; ?>">
 											<a class="nav-link dropdown-toggle" href="#navbar-<?php echo $menu['idmenu']; ?>" data-bs-toggle="dropdown" data-bs-auto-close="outside" role="button" aria-expanded="false">
 												<span class="nav-link-title"><?php echo htmlspecialchars($menu['judul']); ?></span>
 											</a>
 											<ul class="dropdown-menu" aria-labelledby="navbar-<?php echo $menu['idmenu']; ?>">
-												<?php foreach ($datasubmenu as $submenu): ?>
+												<?php foreach ($datasubmenu as $submenu):
+													// Buat slug untuk judul submenu
+													$submenu_slug = create_slug($submenu['judul']);
+												?>
 													<li>
-														<a class="dropdown-item <?php echo is_active($submenu['url'], $current_page); ?>" href="<?php echo base_url($submenu['url']); ?>">
+														<a class="dropdown-item <?php echo ($current_title === $submenu_slug) ? 'active' : ''; ?>" href="<?php echo base_url($submenu['url']); ?>">
 															<?php echo htmlspecialchars($submenu['judul']); ?>
 														</a>
 													</li>
@@ -186,9 +184,9 @@
 										</li>
 									<?php
 									} else {
-										// Menu does not have submenus
+										// Menu tidak memiliki submenu
 									?>
-										<li class="nav-item <?php echo is_active($menu['url'], $current_page); ?>">
+										<li class="nav-item <?php echo ($current_title === $menu_slug) ? 'active' : ''; ?>">
 											<a class="nav-link" href="<?php echo base_url($menu['url']); ?>">
 												<span class="nav-link-title"><?php echo htmlspecialchars($menu['judul']); ?></span>
 											</a>
@@ -200,13 +198,13 @@
 
 							</ul>
 
-
-
 							<div class="my-2 my-md-0 flex-grow-1 flex-md-grow-0 order-first order-md-last">
-								
 							</div>
 						</div>
 					</div>
 				</div>
 			</header>
+
+
+
 		</div>
