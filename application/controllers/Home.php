@@ -63,6 +63,7 @@ class Home extends CI_Controller
 		$data['berita'] = $this->Berita_Model->get_berita();
 
 		$data['item'] = $this->Berita_Model->get_berita_by_id($id);
+		$data['komen'] = $this->db->where('idberita', $id)->get('comment')->result_array();
 		$data['latepost_photos'] = array();
 
 		foreach ($data['berita'] as $berita) {
@@ -76,6 +77,17 @@ class Home extends CI_Controller
 		$this->load->view('templates/user_navbar', $data);
 		$this->load->view('user/berita/berita/beritadetail', $data);
 		$this->load->view('templates/user_footer');
+	}
+	public function post_berita_comment($id)
+	{
+		$data = array(
+			'komentar' => $this->input->post('comment'),
+			'idberita' => $id,
+			'email'   => $this->input->post('email'),
+			'name'    => $this->input->post('name')
+		);
+		$this->db->insert('comment', $data);
+		redirect('home/beritadetail/' . $id);
 	}
 
 	// Tampilan untuk user 
@@ -102,6 +114,7 @@ class Home extends CI_Controller
 
 		// Mengambil data breaking news berdasarkan ID
 		$data['item'] = $this->BreakingNews_model->get_news_by_id($id);
+		$data['komen'] = $this->db->where('idbreakingnews', $id)->get('comment')->result_array();
 		$data['latepost_photos'] = array();
 
 		foreach ($data['breaking_news'] as $breaking_news) {
@@ -116,6 +129,17 @@ class Home extends CI_Controller
 		$this->load->view('templates/user_navbar', $data);
 		$this->load->view('user/berita/breaking_news/breakingnewsdetail', $data);
 		$this->load->view('templates/user_footer');
+	}
+	public function post_breaking_news_comment($id)
+	{
+		$data = array(
+			'komentar' => $this->input->post('comment'),
+			'idbreakingnews' => $id,
+			'email'   => $this->input->post('email'),
+			'name'    => $this->input->post('name')
+		);
+		$this->db->insert('comment', $data);
+		redirect('home/breakingnewsdetail/' . $id);
 	}
 
 	// Tampilan USER GALERI
@@ -140,6 +164,7 @@ class Home extends CI_Controller
 		$data['galeri'] = $this->Galeri_Model->get_galeri();
 
 		$data['item'] = $this->Galeri_Model->get_galeri_by_id($id);
+		$data['komen'] = $this->db->where('idgaleri', $id)->get('comment')->result_array();
 		$data['latepost_photos'] = array();
 
 		foreach ($data['galeri'] as $galeri) {
@@ -154,6 +179,18 @@ class Home extends CI_Controller
 		$this->load->view('user/berita/galeri/galeridetail', $data);
 		$this->load->view('templates/user_footer');
 	}
+	public function post_galeri_comment($id)
+	{
+		$data = array(
+			'komentar' => $this->input->post('comment'),
+			'idgaleri' => $id,
+			'email'   => $this->input->post('email'),
+			'name'    => $this->input->post('name')
+		);
+		$this->db->insert('comment', $data);
+		redirect('home/galeridetail/' . $id);
+	}
+
 
 	// TAMPILAH USER IBRAH
 	public function ibrah_user()
@@ -183,6 +220,7 @@ class Home extends CI_Controller
 
 		// Retrieve additional data if needed (e.g., related photos or similar items)
 		$data['ibrah'] = $this->Ibrah_Model->get_ibrah(); // Adjust as needed
+		$data['komen'] = $this->db->where('idibrah', $id)->get('comment')->result_array();
 		$data['latepost_photos'] = array();
 
 		foreach ($data['ibrah'] as $ibrah) {
@@ -197,6 +235,17 @@ class Home extends CI_Controller
 		$this->load->view('templates/user_navbar', $data);
 		$this->load->view('user/berita/ibrah/ibrahdetail', $data);
 		$this->load->view('templates/user_footer');
+	}
+	public function post_ibrah_comment($id)
+	{
+		$data = array(
+			'komentar' => $this->input->post('comment'),
+			'idibrah' => $id,
+			'email'   => $this->input->post('email'),
+			'name'    => $this->input->post('name')
+		);
+		$this->db->insert('comment', $data);
+		redirect('home/ibrahdetail/' . $id);
 	}
 
 	//kabar rating user
@@ -221,6 +270,7 @@ class Home extends CI_Controller
 		$data['kabar_ranting'] = $this->KabarRanting_Model->get_kabar_ranting();
 
 		$data['item'] = $this->KabarRanting_Model->get_kabar_ranting_by_id($id);
+		$data['komen'] = $this->db->where('idkabarranting', $id)->get('comment')->result_array();
 		$data['latepost_photos'] = array();
 
 		foreach ($data['kabar_ranting'] as $kabar_ranting) {
@@ -234,6 +284,17 @@ class Home extends CI_Controller
 		$this->load->view('templates/user_navbar', $data);
 		$this->load->view('user/berita/kabar_ranting/kabarrantingdetail', $data);
 		$this->load->view('templates/user_footer');
+	}
+	public function post_kabar_ranting_comment($id)
+	{
+		$data = array(
+			'komentar' => $this->input->post('comment'),
+			'idkabarranting' => $id,
+			'email'   => $this->input->post('email'),
+			'name'    => $this->input->post('name')
+		);
+		$this->db->insert('comment', $data);
+		redirect('home/kabarrantingdetail/' . $id);
 	}
 
 	//pengumuman user
@@ -258,6 +319,7 @@ class Home extends CI_Controller
 		$data['berita'] = $this->Berita_Model->get_berita();
 
 		$data['item'] = $this->Pengumuman_Model->get_pengumuman_by_id($id);
+		$data['komen'] = $this->db->where('idpengumuman', $id)->get('comment')->result_array();
 		$data['latepost_photos'] = array();
 		foreach ($data['berita'] as $berita) {
 			// Misalnya, URL avatar foto berita disimpan dalam indeks 'avatar'
@@ -270,6 +332,18 @@ class Home extends CI_Controller
 		$this->load->view('templates/user_navbar', $data);
 		$this->load->view('user/berita/pengumuman/pengumumandetail', $data);
 		$this->load->view('templates/user_footer');
+	}
+
+	public function post_pengumuman_comment($id)
+	{
+		$data = array(
+			'komentar' => $this->input->post('comment'),
+			'idpengumuman' => $id,
+			'email'   => $this->input->post('email'),
+			'name'    => $this->input->post('name')
+		);
+		$this->db->insert('comment', $data);
+		redirect('home/pengumumandetail/' . $id);
 	}
 
 	//slider user
@@ -294,6 +368,8 @@ class Home extends CI_Controller
 		$data['slider'] = $this->Slider_Model->get_slider();
 
 		$data['item'] = $this->Slider_Model->get_slider_by_id($id);
+		$data['komen'] = $this->db->where('idslider', $id)->get('comment')->result_array();
+
 		$data['latepost_photos'] = array();
 
 		foreach ($data['slider'] as $slider) {
@@ -307,6 +383,19 @@ class Home extends CI_Controller
 		$this->load->view('templates/user_navbar', $data);
 		$this->load->view('user/berita/slider/sliderdetail', $data);
 		$this->load->view('templates/user_footer');
+	}
+
+
+	public function post_slider_comment($id)
+	{
+		$data = array(
+			'komentar' => $this->input->post('comment'),
+			'idslider' => $id,
+			'email'   => $this->input->post('email'),
+			'name'    => $this->input->post('name')
+		);
+		$this->db->insert('comment', $data);
+		redirect('home/sliderdetail/' . $id);
 	}
 
 	//USUARA MUHAMMADIYA USER
@@ -331,6 +420,7 @@ class Home extends CI_Controller
 		// Retrieve data related to Suara Muhammadiyah
 		$data['suara_muhammadiyah'] = $this->Suaramuhammadiyah_Model->get_suaramuhammadiyah();
 		$data['item'] = $this->Suaramuhammadiyah_Model->get_suaramuhammadiyah_by_id($id);
+		$data['komen'] = $this->db->where('idsuaramuhammadiyah', $id)->get('comment')->result_array();
 		$data['latepost_photos'] = array();
 
 		foreach ($data['suara_muhammadiyah'] as $suara) {
@@ -346,9 +436,22 @@ class Home extends CI_Controller
 		$this->load->view('user/berita/suara_muhammadiyah/suaramuhammadiyah_detail', $data); // Ensure this view file exists
 		$this->load->view('templates/user_footer');
 	}
+	public function post_suara_muhammadiyah_comment($id)
+	{
+		$data = array(
+			'komentar' => $this->input->post('comment'),
+			'idsuaramuhammadiyah' => $id,
+			'email'   => $this->input->post('email'),
+			'name'    => $this->input->post('name')
+		);
+		$this->db->insert('comment', $data);
+		redirect('home/suara_muhammadiyahdetail/' . $id);
+	}
 
 
 
+
+	
 	// surat masuk user
 	public function profile()
 	{
@@ -357,6 +460,16 @@ class Home extends CI_Controller
 		$data['profile'] = $this->Profile_Model->get_profile(); // Gantilah dengan fungsi sesuai kebutuhan
 		$this->load->view('templates/user_navbar', $data);
 		$this->load->view('user/profile/profile', $data);
+		$this->load->view('templates/user_footer');
+	}
+	// surat masuk user
+	public function artikel()
+	{
+		$data['judul'] = 'artikel';
+		// Load data surat_masuk from the backend
+		$data['artikel'] = $this->Profile_Model->get_artikel(); // Gantilah dengan fungsi sesuai kebutuhan
+		$this->load->view('templates/user_navbar', $data);
+		$this->load->view('user/profile/artikel', $data);
 		$this->load->view('templates/user_footer');
 	}
 
@@ -369,6 +482,9 @@ class Home extends CI_Controller
 		$this->load->view('user/profile/kajian', $data);
 		$this->load->view('templates/user_footer');
 	}
+
+
+
 
 
 

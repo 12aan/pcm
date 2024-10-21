@@ -8,12 +8,11 @@
                 <div class="text-justify mt-2">
                     <div class="container">
                         <div class="mx-2 mt-4">
-                            <h1>ARTIKEL</h1>
+                            <?php foreach ($artikel as $a) : ?>
+                                <h1><?php echo $a['judul_artikel']; ?></h1>
+                                <p><?php echo $a['isi_artikel']; ?></p>
 
-
-                            <h5>ARTIKEL</h5>
-                            <p>ini nanti isinya dari artikel</p>
-
+                            <?php endforeach; ?>
                         </div>
                     </div>
 
@@ -22,5 +21,3 @@
         </div>
     </div>
 </div>
-
-<!-- END OF SUB SUB NAVBAR BAWAH -->
