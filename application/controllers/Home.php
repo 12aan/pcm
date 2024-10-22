@@ -37,7 +37,7 @@ class Home extends CI_Controller
 		$this->load->view('user/home', $data);
 		$this->load->view('templates/user_footer');
 	}
-	
+
 
 	//user
 	public function berita_user()
@@ -53,6 +53,7 @@ class Home extends CI_Controller
 			);
 			$data['latepost_photos'][] = $latepost_photo;
 		}
+		$data['judul'] = 'Berita';
 		$this->load->view('templates/user_navbar', $data);
 		$this->load->view('user/berita/berita/berita', $data);
 		$this->load->view('templates/user_footer');
@@ -73,7 +74,7 @@ class Home extends CI_Controller
 			);
 			$data['latepost_photos'][] = $latepost_photo;
 		}
-
+		$data['judul'] = 'Berita Detail';
 		$this->load->view('templates/user_navbar', $data);
 		$this->load->view('user/berita/berita/beritadetail', $data);
 		$this->load->view('templates/user_footer');
@@ -102,6 +103,7 @@ class Home extends CI_Controller
 			);
 			$data['latepost_photos'][] = $latepost_photo;
 		}
+		$data['judul'] = 'Breaking News';
 		$this->load->view('templates/user_navbar', $data);
 		$this->load->view('user/berita/breaking_news/breaking_news', $data);
 		$this->load->view('templates/user_footer');
@@ -126,6 +128,7 @@ class Home extends CI_Controller
 		}
 
 		// Memuat tampilan dengan data
+		$data['judul'] = 'Breaking News Detail';
 		$this->load->view('templates/user_navbar', $data);
 		$this->load->view('user/berita/breaking_news/breakingnewsdetail', $data);
 		$this->load->view('templates/user_footer');
@@ -154,6 +157,7 @@ class Home extends CI_Controller
 			);
 			$data['latepost_photos'][] = $latepost_photo;
 		}
+		$data['judul'] = 'Galeri';
 		$this->load->view('templates/user_navbar', $data);
 		$this->load->view('user/berita/galeri/galeri', $data);
 		$this->load->view('templates/user_footer');
@@ -174,7 +178,7 @@ class Home extends CI_Controller
 			);
 			$data['latepost_photos'][] = $latepost_photo;
 		}
-
+		$data['judul'] = 'Galeri Detail';
 		$this->load->view('templates/user_navbar', $data);
 		$this->load->view('user/berita/galeri/galeridetail', $data);
 		$this->load->view('templates/user_footer');
@@ -205,6 +209,7 @@ class Home extends CI_Controller
 			);
 			$data['latepost_photos'][] = $latepost_photo;
 		}
+		$data['judul'] = 'Ibrah';
 		$this->load->view('templates/user_navbar', $data);
 		$this->load->view('user/berita/ibrah/ibrah', $data);
 		$this->load->view('templates/user_footer');
@@ -232,6 +237,7 @@ class Home extends CI_Controller
 		}
 
 		// Load the views with the data
+		$data['judul'] = 'Ibrah Detail';
 		$this->load->view('templates/user_navbar', $data);
 		$this->load->view('user/berita/ibrah/ibrahdetail', $data);
 		$this->load->view('templates/user_footer');
@@ -260,6 +266,7 @@ class Home extends CI_Controller
 			);
 			$data['latepost_photos'][] = $latepost_photo;
 		}
+		$data['judul'] = 'Kabar Ranting';
 		$this->load->view('templates/user_navbar', $data);
 		$this->load->view('user/berita/kabar_ranting/kabar_ranting', $data);
 		$this->load->view('templates/user_footer');
@@ -280,7 +287,7 @@ class Home extends CI_Controller
 			);
 			$data['latepost_photos'][] = $latepost_photo;
 		}
-
+		$data['judul'] = 'Kabar Ranting Detail';
 		$this->load->view('templates/user_navbar', $data);
 		$this->load->view('user/berita/kabar_ranting/kabarrantingdetail', $data);
 		$this->load->view('templates/user_footer');
@@ -309,6 +316,7 @@ class Home extends CI_Controller
 			);
 			$data['latepost_photos'][] = $latepost_photo;
 		}
+		$data['judul'] = 'Pengumuman';
 		$this->load->view('templates/user_navbar', $data);
 		$this->load->view('user/berita/pengumuman/pengumuman', $data);
 		$this->load->view('templates/user_footer');
@@ -328,7 +336,7 @@ class Home extends CI_Controller
 			);
 			$data['latepost_photos'][] = $latepost_photo;
 		}
-
+		$data['judul'] = 'Pengumuman Detail';
 		$this->load->view('templates/user_navbar', $data);
 		$this->load->view('user/berita/pengumuman/pengumumandetail', $data);
 		$this->load->view('templates/user_footer');
@@ -358,6 +366,7 @@ class Home extends CI_Controller
 			);
 			$data['latepost_photos'][] = $latepost_photo;
 		}
+		$data['judul'] = 'Slider';
 		$this->load->view('templates/user_navbar', $data);
 		$this->load->view('user/berita/slider/slider', $data);
 		$this->load->view('templates/user_footer');
@@ -379,7 +388,7 @@ class Home extends CI_Controller
 			);
 			$data['latepost_photos'][] = $latepost_photo;
 		}
-
+		$data['judul'] = 'Slider Detail';
 		$this->load->view('templates/user_navbar', $data);
 		$this->load->view('user/berita/slider/sliderdetail', $data);
 		$this->load->view('templates/user_footer');
@@ -410,6 +419,7 @@ class Home extends CI_Controller
 			);
 			$data['latepost_photos'][] = $latepost_photo;
 		}
+		$data['judul'] = 'Suara MUhammadiyah';
 		$this->load->view('templates/user_navbar', $data);
 		$this->load->view('user/berita/suara_muhammadiyah/suara_muhammadiyah', $data);
 		$this->load->view('templates/user_footer');
@@ -430,7 +440,7 @@ class Home extends CI_Controller
 			);
 			$data['latepost_photos'][] = $latepost_photo;
 		}
-
+		$data['judul'] = 'Suara MUhammadiyah Detail';
 		// Load the necessary views
 		$this->load->view('templates/user_navbar', $data);
 		$this->load->view('user/berita/suara_muhammadiyah/suaramuhammadiyah_detail', $data); // Ensure this view file exists
@@ -451,7 +461,7 @@ class Home extends CI_Controller
 
 
 
-	
+
 	// surat masuk user
 	public function profile()
 	{
@@ -491,7 +501,7 @@ class Home extends CI_Controller
 	//USER AMAL USAHA
 	public function Amal_Usaha_rumah()
 	{
-		$data['judul'] = 'RUMAH YATIM & DHUAFA TIRTONIRMOLO TIMUR';
+		$data['judul'] = 'Rumah Yatim & Dhuafa Tritonirmolo Timur';
 		$this->load->view('templates/user_navbar', $data);
 		$this->load->view('user/amal_usaha/rumah_yatimduafa');
 		$this->load->view('templates/user_footer');
@@ -499,14 +509,14 @@ class Home extends CI_Controller
 
 	public function Amal_Usaha_masjid()
 	{
-		$data['judul'] = 'Amal Usaha';
+		$data['judul'] = 'Masjid Musyawarah Tegal Wangi Tamantirto';
 		$this->load->view('templates/user_navbar', $data);
 		$this->load->view('user/amal_usaha/masjid_musyawarah');
 		$this->load->view('templates/user_footer');
 	}
 	public function Amal_Usaha_Mushalla()
 	{
-		$data['judul'] = 'Amal Usaha';
+		$data['judul'] = 'Masjid / Mushola Wakaf Muhammadiyah';
 		$this->load->view('templates/user_navbar', $data);
 		$this->load->view('user/amal_usaha/masjid_mushalla');
 		$this->load->view('templates/user_footer');
@@ -515,74 +525,86 @@ class Home extends CI_Controller
 	//USER PRM
 	public function prm_tirto_utara()
 	{
-		$this->load->view('templates/user_navbar');
+		$data['judul'] = 'PRM Tirtonirmolo Utara';
+		$this->load->view('templates/user_navbar', $data);
 		$this->load->view('user/prm/prm_tirto_utara');
 		$this->load->view('templates/user_footer');
 	}
 
 	public function prm_tirto_barat()
 	{
-		$this->load->view('templates/user_navbar');
+		$data['judul'] = 'PRM Tirtonirmolo Barat';
+		$this->load->view('templates/user_navbar', $data);
 		$this->load->view('user/prm/prm_tirto_barat');
 		$this->load->view('templates/user_footer');
 	}
 	public function prm_tirto_tengah()
 	{
-		$this->load->view('templates/user_navbar');
+		$data['judul'] = 'PRM Tirtonirmolo Tengah';
+		$this->load->view('templates/user_navbar', $data);
 		$this->load->view('user/prm/prm_tirto_tengah');
 		$this->load->view('templates/user_footer');
 	}
 	public function prm_tirto_timur()
 	{
-		$this->load->view('templates/user_navbar');
+		$data['judul'] = 'PRM Tirtonirmolo Timur';
+		$this->load->view('templates/user_navbar', $data);
 		$this->load->view('user/prm/prm_tirto_timur');
 		$this->load->view('templates/user_footer');
 	}
 	public function prm_tirto_selatan()
 	{
-		$this->load->view('templates/user_navbar');
+		$data['judul'] = 'PRM Tirtonirmolo Selatan';
+		$this->load->view('templates/user_navbar', $data);
 		$this->load->view('user/prm/prm_tirto_selatan');
 		$this->load->view('templates/user_footer');
 	}
 	public function prm_ngesti_utara()
 	{
-		$this->load->view('templates/user_navbar');
+		$data['judul'] = 'PRM Ngestiharjo Utara';
+		$this->load->view('templates/user_navbar', $data);
 		$this->load->view('user/prm/prm_ngesti_utara');
 		$this->load->view('templates/user_footer');
 	}
 	public function prm_ngesti_tengah()
 	{
-		$this->load->view('templates/user_navbar');
+		$data['judul'] = 'PRM Ngestiharjo Tengah';
+		$this->load->view('templates/user_navbar', $data);
 		$this->load->view('user/prm/prm_ngesti_tengah');
 		$this->load->view('templates/user_footer');
 	}
 	public function prm_ngesti_selatan()
 	{
-		$this->load->view('templates/user_navbar');
+		$data['judul'] = 'PRM Ngestiharjo Selatan';
+		$this->load->view('templates/user_navbar', $data);
 		$this->load->view('user/prm/prm_ngesti_selatan');
 		$this->load->view('templates/user_footer');
 	}
 	public function prm_bangunjiwo_barat()
 	{
-		$this->load->view('templates/user_navbar');
+		$data['judul'] = 'PRM Bangunjiwo Barat';
+		$this->load->view('templates/user_navbar', $data);
 		$this->load->view('user/prm/prm_bangunjiwo_barat');
 		$this->load->view('templates/user_footer');
 	}
 	public function prm_bangunjiwo_timur()
 	{
-		$this->load->view('templates/user_navbar');
+		$data['judul'] = 'PRM Bangunjiwo Timur';
+		$this->load->view('templates/user_navbar', $data);
 		$this->load->view('user/prm/prm_bangunjiwo_timur');
 		$this->load->view('templates/user_footer');
 	}
 	public function prm_tamantirto_utara()
 	{
-		$this->load->view('templates/user_navbar');
+		$data['judul'] = 'PRM Tamantirto Utara';
+		$this->load->view('templates/user_navbar', $data);
 		$this->load->view('user/prm/prm_tamantirto_utara');
 		$this->load->view('templates/user_footer');
 	}
 	public function prm_tamantirto_selatan()
 	{
-		$this->load->view('templates/user_navbar');
+		$data['judul'] = 'PRM Tamantirto Selatan';
+		$this->load->view('templates/user_navbar', $data);
 		$this->load->view('user/prm/prm_tamantirto_selatan');
 		$this->load->view('templates/user_footer');
 	}
@@ -590,43 +612,50 @@ class Home extends CI_Controller
 	//USER ORTOM
 	public function pimpinan_cabang_aisyah()
 	{
-		$this->load->view('templates/user_navbar');
+		$data['judul'] = 'Ortom Pimpinan Cabang Aisyiah';
+		$this->load->view('templates/user_navbar', $data);
 		$this->load->view('user/ortom/pimpinan_cabang_aisyah');
 		$this->load->view('templates/user_footer');
 	}
 	public function pim_cab_pemuda_muhammadiyah()
 	{
-		$this->load->view('templates/user_navbar');
+		$data['judul'] = 'Ortom Pimpinan Cabang Pemuda Muhammadiyah';
+		$this->load->view('templates/user_navbar', $data);
 		$this->load->view('user/ortom/pim_cab_pemuda_muhammadiyah');
 		$this->load->view('templates/user_footer');
 	}
 	public function pim_cab_nasyiah()
 	{
-		$this->load->view('templates/user_navbar');
+		$data['judul'] = 'Ortom Pimpinan Cabang Nasyiah';
+		$this->load->view('templates/user_navbar', $data);
 		$this->load->view('user/ortom/pim_cab_nasyiah');
 		$this->load->view('templates/user_footer');
 	}
 	public function pim_cab_ipm()
 	{
-		$this->load->view('templates/user_navbar');
+		$data['judul'] = 'Ortom Pimpinan Cabang IMP';
+		$this->load->view('templates/user_navbar', $data);
 		$this->load->view('user/ortom/pim_cab_ipm');
 		$this->load->view('templates/user_footer');
 	}
 	public function kokam_kec_kasihan()
 	{
-		$this->load->view('templates/user_navbar');
+		$data['judul'] = 'Ortom Kokam Kecamatan Kasihan';
+		$this->load->view('templates/user_navbar', $data);
 		$this->load->view('user/ortom/kokam_kec_kasihan');
 		$this->load->view('templates/user_footer');
 	}
 	public function hw_kec_kasihan()
 	{
-		$this->load->view('templates/user_navbar');
+		$data['judul'] = 'Ortom HW Kecamatan Kashian';
+		$this->load->view('templates/user_navbar', $data);
 		$this->load->view('user/ortom/hw_kec_kasihan');
 		$this->load->view('templates/user_footer');
 	}
 	public function ts_kec_kasihan()
 	{
-		$this->load->view('templates/user_navbar');
+		$data['judul'] = 'Ortom TS Kecamatan Kasihan';
+		$this->load->view('templates/user_navbar', $data);
 		$this->load->view('user/ortom/ts_kec_kasihan');
 		$this->load->view('templates/user_footer');
 	}
@@ -634,31 +663,36 @@ class Home extends CI_Controller
 	//USER SEKOLAH
 	public function sd_mst()
 	{
-		$this->load->view('templates/user_navbar');
+		$data['judul'] = 'Sekolah SD Muhammadiyah Senggotan Tirtonirmolo';
+		$this->load->view('templates/user_navbar', $data);
 		$this->load->view('user/sekolah/sd_mst');
 		$this->load->view('templates/user_footer');
 	}
 	public function sd_mmt()
 	{
-		$this->load->view('templates/user_navbar');
+		$data['judul'] = 'Sekolah SD Muhammadiyah Mrisi Tirtonirmolo';
+		$this->load->view('templates/user_navbar', $data);
 		$this->load->view('user/sekolah/sd_mmt');
 		$this->load->view('templates/user_footer');
 	}
 	public function sd_msb()
 	{
-		$this->load->view('templates/user_navbar');
+		$data['judul'] = 'Sekolah SD Muhammadiyah Sambikerip Bangunjiwo';
+		$this->load->view('templates/user_navbar', $data);
 		$this->load->view('user/sekolah/sd_msb');
 		$this->load->view('templates/user_footer');
 	}
 	public function sd_mt()
 	{
-		$this->load->view('templates/user_navbar');
+		$data['judul'] = 'Sekolah SD Muhammadiyah Tamantirto';
+		$this->load->view('templates/user_navbar', $data);
 		$this->load->view('user/sekolah/sd_mt');
 		$this->load->view('templates/user_footer');
 	}
 	public function sd_mkt()
 	{
-		$this->load->view('templates/user_navbar');
+		$data['judul'] = 'Sekolah SD Muhammadiyah Kembaran Tamantirto';
+		$this->load->view('templates/user_navbar', $data);
 		$this->load->view('user/sekolah/sd_mkt');
 		$this->load->view('templates/user_footer');
 	}
@@ -679,7 +713,8 @@ class Home extends CI_Controller
 
 		// Kirim data ke view
 		$data['surat_masuk_by_agenda'] = $surat_masuk_by_agenda;
-		$this->load->view('templates/user_navbar');
+		$data['judul'] = 'Adminor Surat Masuk';
+		$this->load->view('templates/user_navbar', $data);
 		$this->load->view('user/adminor/surat_masuk', $data); // Ubah nama view dengan halaman user Anda
 		$this->load->view('templates/user_footer');
 	}
@@ -699,7 +734,8 @@ class Home extends CI_Controller
 
 		// Kirim data ke view
 		$data['surat_keluar_by_agenda'] = $surat_keluar_by_agenda;
-		$this->load->view('templates/user_navbar');
+		$data['judul'] = 'Adminor Surat Keluar';
+		$this->load->view('templates/user_navbar', $data);
 		$this->load->view('user/adminor/surat_keluar', $data); // Ubah nama view dengan halaman user Anda
 		$this->load->view('templates/user_footer');
 	}
@@ -707,7 +743,8 @@ class Home extends CI_Controller
 	//UNTUK SURAT TUGAS
 	public function surat_tugas()
 	{
-		$this->load->view('templates/user_navbar');
+		$data['judul'] = 'Adminor Surat Tugas';
+		$this->load->view('templates/user_navbar', $data);
 		$this->load->view('user/adminor/surat_tugas');
 		$this->load->view('templates/user_footer');
 	}
@@ -727,7 +764,8 @@ class Home extends CI_Controller
 
 		// Kirim data ke view
 		$data['surat_keputusan_by_agenda'] = $surat_keputusan_by_agenda;
-		$this->load->view('templates/user_navbar');
+		$data['judul'] = 'Adminor Surat Keputusan';
+		$this->load->view('templates/user_navbar', $data);
 		$this->load->view('user/adminor/surat_keputusan', $data); // Ubah nama view dengan halaman user Anda
 		$this->load->view('templates/user_footer');
 	}
@@ -747,7 +785,8 @@ class Home extends CI_Controller
 
 		// Kirim data ke view
 		$data['surat_notulensi_by_agenda'] = $surat_notulensi_by_agenda;
-		$this->load->view('templates/user_navbar');
+		$data['judul'] = 'Adminor Notulensi';
+		$this->load->view('templates/user_navbar', $data);
 		$this->load->view('user/adminor/notulensi', $data); // Ubah nama view dengan halaman user Anda
 		$this->load->view('templates/user_footer');
 	}
@@ -757,7 +796,8 @@ class Home extends CI_Controller
 	{
 		// Load data surat_masuk from the backend
 		$data['sertifikat_wakaf'] = $this->SuratMasuk_model->get_surat_wakaf(); // Gantilah dengan fungsi sesuai kebutuhan
-		$this->load->view('templates/user_navbar');
+		$data['judul'] = 'Adminor Daftar Sertifikat Wakaf';
+		$this->load->view('templates/user_navbar', $data);
 		$this->load->view('user/adminor/daftar_sertifikat_wakaf', $data);
 		$this->load->view('templates/user_footer');
 	}
@@ -828,8 +868,8 @@ class Home extends CI_Controller
 			}
 		}
 		// Load data surat_masuk from the backend
-		// $data['surat_keputusan'] = $this->SuratMasuk_model->get_surat_keputusan(); // Gantilah dengan fungsi sesuai kebutuhan
-		$this->load->view('templates/user_navbar');
+		$data['judul'] = 'Adminor Surat Aktif Organisasi'; // $data['surat_keputusan'] = $this->SuratMasuk_model->get_surat_keputusan(); // Gantilah dengan fungsi sesuai kebutuhan
+		$this->load->view('templates/user_navbar', $data);
 		$this->load->view('user/adminor/surat_aktif_org');
 		$this->load->view('templates/user_footer');
 	}
@@ -851,7 +891,7 @@ class Home extends CI_Controller
 	{
 		$data['judul'] = 'Perguruan paud/tk';
 		$this->load->view('templates/user_navbar', $data);
-		$this->load->view('user/perguruan/perguruan_paud' , $data);
+		$this->load->view('user/perguruan/perguruan_paud', $data);
 		$this->load->view('templates/user_footer');
 	}
 	public function perguruan_dasar()
