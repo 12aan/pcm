@@ -46,6 +46,13 @@ class Profile_Model extends CI_Model
         $this->db->order_by('date_created', 'DESC');
         return $this->db->get('artikel')->result_array();
     }
+    public function get_latest_artikel()
+    {
+        return $this->db->order_by('date_created', 'DESC')
+            ->limit(1)
+            ->get('artikel')
+            ->row_array();
+    }
     public function get_artikel_by_id($id_artikel)
     {
         return $this->db->get_where('artikel', ['id_artikel' => $id_artikel])->row_array();
@@ -55,6 +62,13 @@ class Profile_Model extends CI_Model
     public function get_kajian_hadist()
     {
         return $this->db->order_by('date_created', 'DESC')->get('Kajian_hadist')->result_array();
+    }
+    public function get_latest_kajian_hadist()
+    {
+        return $this->db->order_by('date_created', 'DESC')
+            ->limit(1)
+            ->get('Kajian_hadist')
+            ->row_array();
     }
     public function get_kajian_by_id($id_kajian)
     {

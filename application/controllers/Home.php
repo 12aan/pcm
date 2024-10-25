@@ -472,31 +472,30 @@ class Home extends CI_Controller
 		$this->load->view('user/profile/profile', $data);
 		$this->load->view('templates/user_footer');
 	}
+
+
 	// surat masuk user
 	public function artikel()
 	{
 		$data['judul'] = 'artikel';
 		// Load data surat_masuk from the backend
-		$data['artikel'] = $this->Profile_Model->get_artikel(); // Gantilah dengan fungsi sesuai kebutuhan
+		$data['artikel'] = $this->Profile_Model->get_latest_artikel(); // Gantilah dengan fungsi sesuai kebutuhan
 		$this->load->view('templates/user_navbar', $data);
 		$this->load->view('user/profile/artikel', $data);
 		$this->load->view('templates/user_footer');
 	}
 
+
+
 	public function kajian()
 	{
 		$data['judul'] = 'Kajian';
-		// Load data surat_masuk from the backend
-		$data['kajian_hadist'] = $this->Profile_Model->get_kajian_hadist(); // Gantilah dengan fungsi sesuai kebutuhan
+		// Mengambil satu data kajian hadist terbaru
+		$data['kajian_hadist'] = $this->Profile_Model->get_latest_kajian_hadist();
 		$this->load->view('templates/user_navbar', $data);
 		$this->load->view('user/profile/kajian', $data);
 		$this->load->view('templates/user_footer');
 	}
-
-
-
-
-
 
 	//USER AMAL USAHA
 	public function Amal_Usaha_rumah()

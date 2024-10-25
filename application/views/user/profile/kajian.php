@@ -8,10 +8,8 @@
                 <div class="text-justify mt-2">
                     <div class="container">
                         <div class="mx-2 mt-4">
-                            <?php foreach ($kajian_hadist as $k) : ?>
-                                <h1><?php echo $k['judul_kajian']; ?></h1>
-                                <p><?php echo $k['isi_kajian']; ?></p>
-                            <?php endforeach; ?>
+                            <h1><?php echo $kajian_hadist['judul_kajian']; ?></h1>
+                            <p><?php echo $kajian_hadist['isi_kajian']; ?></p>
                         </div>
                     </div>
 
