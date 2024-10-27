@@ -8,11 +8,8 @@
                 <div class="text-justify mt-2">
                     <div class="container">
                         <div class="mx-2 mt-4">
-                            <?php foreach ($artikel as $a) : ?>
-                                <h1><?php echo $a['judul_artikel']; ?></h1>
-                                <p><?php echo $a['isi_artikel']; ?></p>
-
-                            <?php endforeach; ?>
+                            <h1><?php echo $artikel['judul_artikel']; ?></h1>
+                            <p><?php echo $artikel['isi_artikel']; ?></p>
                         </div>
                     </div>
 
