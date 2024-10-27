@@ -134,10 +134,9 @@
 					<div class="navbar">
 						<div class="container-xl">
 							<ul class="navbar-nav">
-
 								<?php
-								// Ambil data menu
-								$datamenu = $this->db->from('menu')->get()->result_array();
+								// Ambil data menu aktif
+								$datamenu = $this->db->from('menu')->where('aktif', 1)->get()->result_array();
 								$current_title = strtolower(trim($this->uri->segment(2))); // Ambil segment kedua dari URL
 								if (empty($current_title)) {
 									$current_title = 'home'; // Set default ke 'home' jika segment kedua kosong
@@ -146,15 +145,15 @@
 								// Fungsi untuk membuat slug dari judul
 								function create_slug($string)
 								{
-									// Ganti spasi dan garis miring dengan underscore, dan hilangkan karakter khusus
 									return strtolower(trim(preg_replace('/[\/\s]+/', '_', $string)));
 								}
 
 								// Process menu items
 								foreach ($datamenu as $menu) {
-									// Ambil data submenu untuk setiap menu
+									// Ambil data submenu aktif untuk setiap menu
 									$datasubmenu = $this->db->from('submenu')
 										->where('idmenu', $menu['idmenu'])
+										->where('aktif', 1) // Hanya ambil submenu yang aktif
 										->get()
 										->result_array();
 
@@ -195,15 +194,13 @@
 									}
 								}
 								?>
-
 							</ul>
-
-							<div class="my-2 my-md-0 flex-grow-1 flex-md-grow-0 order-first order-md-last">
-							</div>
+							<div class="my-2 my-md-0 flex-grow-1 flex-md-grow-0 order-first order-md-last"></div>
 						</div>
 					</div>
 				</div>
 			</header>
+
 
 
 

@@ -35,9 +35,16 @@
 									<button class="btn btn-outline-secondary next-berita">&gt;&gt;</button>
 								</div>
 							</div>
+							<!-- Berita Utama -->
+							<div class="card-body">
+								<div class="berita-utama-container mb-4">
+									<!-- Berita utama akan dimasukkan di sini oleh JavaScript -->
+								</div>
+							</div>
+							<!-- Berita Lainnya -->
 							<div class="card-body">
 								<div class="divide-y berita-container">
-									<!-- Content will be injected here by JavaScript -->
+									<!-- Konten berita lainnya akan dimasukkan di sini oleh JavaScript -->
 								</div>
 							</div>
 						</div>
@@ -47,12 +54,28 @@
 
 			<script>
 				var beritaData = <?php echo json_encode($berita); ?>;
-				var beritaItemsPerPage = 5; // Set the number of items per page
-				var beritaTotalPages = Math.ceil(beritaData.length / beritaItemsPerPage);
+				var beritaItemsPerPage = 5; // Jumlah berita per halaman
+				var beritaTotalPages = Math.ceil((beritaData.length - 1) / beritaItemsPerPage);
 				var beritaCurrentPage = 1;
 
+				// Fungsi untuk menampilkan berita utama
+				function displayBeritaUtama() {
+					const beritaUtama = beritaData[0];
+					const container = document.querySelector('.berita-utama-container');
+					container.innerHTML = `
+			<div class="position-relative" style="height: 300px;">
+				<a href="<?php echo site_url('home/beritadetail/'); ?>${beritaUtama.id_berita}" class="text-decoration-none">
+					<img src="<?php echo base_url('./uploads/'); ?>${beritaUtama.avatar}" alt="Berita Utama" style="width: 100%; height: 100%; object-fit: cover;">
+					<div class="position-absolute bottom-0 start-0 p-3 text-white" style="background: rgba(0, 0, 0, 0.6); width: 100%;">
+						<h3>${beritaUtama.judul_berita}</h3>
+					</div>
+				</a>
+			</div>`;
+				}
+
+				// Fungsi untuk menampilkan berita lainnya
 				function displayBerita(page) {
-					const start = (page - 1) * beritaItemsPerPage;
+					const start = 1 + (page - 1) * beritaItemsPerPage;
 					const end = start + beritaItemsPerPage;
 					const beritaPage = beritaData.slice(start, end);
 
@@ -61,32 +84,32 @@
 
 					beritaPage.forEach(item => {
 						container.innerHTML += `
-							<div class="row mb-3 align-items-start">
-								<a href="<?php echo site_url('home/beritadetail/'); ?>${item.id_berita}" class="text-decoration-none text-dark-mode d-flex align-items-start">
-									<div class="col-auto">
-										<img src="<?php echo base_url('./uploads/'); ?>${item.avatar}" alt="Avatar ${item.id_berita}" class="avatar" style="width: 100px; height: 100px;">
-									</div>
-									<div class="col ms-3">
-										<h4 class="card-text text-muted">${item.judul_berita}</h4>
-										<ul class="list-unstyled mt-2">
-											<li class="d-inline-block me-2">
-												<small class="text-danger">&square;</small>
-												<small class="text-muted">Berita</small>
-											</li>
-											<li class="d-inline-block me-3">
-												<small class="text-muted text-dark-mode">${new Date(item.tanggal_upload).toLocaleDateString('id-ID')}</small>
-											</li>
-										</ul>
-									</div>
-								</a>
-							</div>`;
+				<div class="row mb-3 align-items-start">
+					<a href="<?php echo site_url('home/beritadetail/'); ?>${item.id_berita}" class="text-decoration-none text-dark-mode d-flex align-items-start">
+						<div class="col-auto">
+							<img src="<?php echo base_url('./uploads/'); ?>${item.avatar}" alt="Avatar ${item.id_berita}" class="avatar" style="width: 100px; height: 100px;">
+						</div>
+						<div class="col ms-3">
+							<h4 class="card-text text-muted">${item.judul_berita}</h4>
+							<ul class="list-unstyled mt-2">
+								<li class="d-inline-block me-2">
+									<small class="text-danger">&square;</small>
+									<small class="text-muted">Berita</small>
+								</li>
+								<li class="d-inline-block me-3">
+									<small class="text-muted text-dark-mode">${new Date(item.tanggal_upload).toLocaleDateString('id-ID')}</small>
+								</li>
+							</ul>
+						</div>
+					</a>
+				</div>`;
 					});
-
 
 					document.querySelector('.prev-berita').disabled = page === 1;
 					document.querySelector('.next-berita').disabled = page === beritaTotalPages;
 				}
 
+				// Event listener untuk navigasi
 				document.querySelector('.prev-berita').addEventListener('click', function() {
 					if (beritaCurrentPage > 1) {
 						beritaCurrentPage--;
@@ -101,8 +124,11 @@
 					}
 				});
 
+				// Panggil fungsi untuk menampilkan berita utama dan berita lainnya
+				displayBeritaUtama();
 				displayBerita(beritaCurrentPage);
 			</script>
+
 
 			<!-- END KABAR BERITA -->
 
@@ -129,7 +155,7 @@
 							</div>
 
 							<!-- DATA -->
-							<div class=" overflow-auto announcement-container" style="height: 450px;">
+							<div class=" overflow-auto announcement-container" style="height: 1124px;">
 								<!-- Content will be injected here by JavaScript -->
 							</div>
 							<!-- END DATA -->
@@ -141,7 +167,7 @@
 			<!-- END PENGUMUMAN -->
 			<?php
 			// Assuming $pengumuman is your data array
-			$items_per_page = 4; // Items per page
+			$items_per_page = 10; // Items per page
 			$total_items = count($pengumuman);
 			$total_pages = ceil($total_items / $items_per_page);
 			?>

@@ -522,7 +522,7 @@ class Home extends CI_Controller
 	}
 
 	//USER PRM
-	public function prm_tirto_utara()
+	public function prm_tirtonirmolo_utara()
 	{
 		$data['judul'] = 'PRM Tirtonirmolo Utara';
 		$this->load->view('templates/user_navbar', $data);
