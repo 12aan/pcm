@@ -5,7 +5,7 @@
                 <div class="text-justify mt-2">
                     <div class="container">
                         <div class="mx-2 mt-4">
-                            <h4>PRM BANGUNJIWO BARAT</h4>
+                            <h4>MAJLIS TABLIGH DAN TARJIH</h4>
                             <h4></h4>
                         </div>
                     </div>
