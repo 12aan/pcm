@@ -107,9 +107,22 @@
 							</div>`;
 					});
 
+					adjustContainerHeight(); // Sesuaikan tinggi container setelah berita dimuat
+
 					document.querySelector('.prev-berita').disabled = page === 1;
 					document.querySelector('.next-berita').disabled = page === beritaTotalPages;
 				}
+
+				function adjustContainerHeight() {
+					const container = document.querySelector('.berita-container');
+					const beritaCount = container.children.length;
+					const itemHeight = 142; // Perkiraan tinggi tiap item
+					const minHeight = beritaItemsPerPage * itemHeight; // Tinggi minimum untuk 5 data
+					const maxHeight = 800; // Tinggi maksimum container
+					const newHeight = Math.max(beritaCount * itemHeight, minHeight); // Pastikan minimal setara dengan minHeight
+					container.style.height = `${Math.min(newHeight, maxHeight)}px`;
+				}
+
 
 				// Event listener untuk navigasi
 				document.querySelector('.prev-berita').addEventListener('click', function() {
