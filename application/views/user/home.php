@@ -53,14 +53,9 @@
 			</div>
 
 			<script>
-<<<<<<< HEAD
 				var beritaData = <?php echo json_encode($konten); ?>;
-				var beritaItemsPerPage = 5; // Set the number of items per page
-=======
-				var beritaData = <?php echo json_encode($berita); ?>;
 				var beritaItemsPerPage = 5; // Jumlah berita per halaman
 				var beritaTotalPages = Math.ceil((beritaData.length - 1) / beritaItemsPerPage);
->>>>>>> 338dcc327fb90955f5d9e918b4a6135706353181
 				var beritaCurrentPage = 1;
 				var filteredBeritaData = beritaData.filter(item => item.nama_kategori === 'Berita');
 				var beritaTotalPages = Math.ceil(filteredBeritaData.length / beritaItemsPerPage);
@@ -70,14 +65,14 @@
 					const beritaUtama = beritaData[0];
 					const container = document.querySelector('.berita-utama-container');
 					container.innerHTML = `
-			<div class="position-relative" style="height: 300px;">
-				<a href="<?php echo site_url('home/beritadetail/'); ?>${beritaUtama.id_berita}" class="text-decoration-none">
-					<img src="<?php echo base_url('./uploads/'); ?>${beritaUtama.avatar}" alt="Berita Utama" style="width: 100%; height: 100%; object-fit: cover;">
-					<div class="position-absolute bottom-0 start-0 p-3 text-white" style="background: rgba(0, 0, 0, 0.6); width: 100%;">
-						<h3>${beritaUtama.judul_berita}</h3>
-					</div>
-				</a>
-			</div>`;
+						<div class="position-relative" style="height: 300px;">
+							<a href="<?php echo site_url('home/beritadetail/'); ?>${beritaUtama.id_konten}" class="text-decoration-none">
+								<img src="<?php echo base_url('./uploads/'); ?>${beritaUtama.gambar}" alt="Berita Utama" style="width: 100%; height: 100%; object-fit: cover;">
+								<div class="position-absolute bottom-0 start-0 p-3 text-white" style="background: rgba(0, 0, 0, 0.6); width: 100%;">
+									<h3>${beritaUtama.judul}</h3>
+								</div>
+							</a>
+						</div>`;
 				}
 
 				// Fungsi untuk menampilkan berita lainnya
@@ -91,7 +86,6 @@
 
 					beritaPage.forEach(item => {
 						container.innerHTML += `
-<<<<<<< HEAD
 							<div class="row mb-3 align-items-start">
 								<a href="<?php echo site_url('home/beritadetail/'); ?>${item.id_konten}" class="text-decoration-none text-dark-mode d-flex align-items-start">
 									<div class="col-auto">
@@ -111,27 +105,6 @@
 									</div>
 								</a>
 							</div>`;
-=======
-				<div class="row mb-3 align-items-start">
-					<a href="<?php echo site_url('home/beritadetail/'); ?>${item.id_berita}" class="text-decoration-none text-dark-mode d-flex align-items-start">
-						<div class="col-auto">
-							<img src="<?php echo base_url('./uploads/'); ?>${item.avatar}" alt="Avatar ${item.id_berita}" class="avatar" style="width: 100px; height: 100px;">
-						</div>
-						<div class="col ms-3">
-							<h4 class="card-text text-muted">${item.judul_berita}</h4>
-							<ul class="list-unstyled mt-2">
-								<li class="d-inline-block me-2">
-									<small class="text-danger">&square;</small>
-									<small class="text-muted">Berita</small>
-								</li>
-								<li class="d-inline-block me-3">
-									<small class="text-muted text-dark-mode">${new Date(item.tanggal_upload).toLocaleDateString('id-ID')}</small>
-								</li>
-							</ul>
-						</div>
-					</a>
-				</div>`;
->>>>>>> 338dcc327fb90955f5d9e918b4a6135706353181
 					});
 
 					document.querySelector('.prev-berita').disabled = page === 1;
@@ -196,13 +169,9 @@
 			<!-- END PENGUMUMAN -->
 			<?php
 			// Assuming $pengumuman is your data array
-<<<<<<< HEAD
 			$items_per_page = 4; // Items per page
 			$total_items = count($konten);
-=======
 			$items_per_page = 10; // Items per page
-			$total_items = count($pengumuman);
->>>>>>> 338dcc327fb90955f5d9e918b4a6135706353181
 			$total_pages = ceil($total_items / $items_per_page);
 			?>
 
