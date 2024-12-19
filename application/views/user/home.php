@@ -170,7 +170,7 @@
 							</div>
 
 							<!-- DATA -->
-							<div class=" overflow-auto announcement-container" style="height: 1124px;">
+							<div class=" overflow-auto announcement-container" style="height: 1120px;">
 								<!-- Content will be injected here by JavaScript -->
 							</div>
 							<!-- END DATA -->
