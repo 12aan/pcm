@@ -69,7 +69,7 @@
 						<span class="navbar-toggler-icon"></span>
 					</button>
 					<h1 class="navbar-brand pe-0 pe-md-1 me-8 mt-0">
-						<a href=".">
+						<a href="<?php echo base_url('home') ?>">
 							<img src="<?php echo base_url('/tabler/static/BANNER-removebg-preview.png') ?>" width="180" height="60" alt="Tabler" class="navbar-brand">
 						</a>
 					</h1>
