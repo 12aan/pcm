@@ -104,15 +104,16 @@
 
 <script>
 	// Breaking News Pagination
-	var breakingNewsData = <?php echo json_encode($breaking_news); ?>;
+	var breakingNewsData = <?php echo json_encode($konten); ?>;
 	var breakingNewsItemsPerPage = 5; // Set the number of breaking news items per page
-	var breakingNewsTotalPages = Math.ceil(breakingNewsData.length / breakingNewsItemsPerPage);
 	var breakingNewsCurrentPage = 1;
+	var filteredBreakingNewsData = breakingNewsData.filter(item => item.nama_kategori === 'Breaking News');
+	var breakingNewsTotalPages = Math.ceil(breakingNewsData.length / breakingNewsItemsPerPage);
 
 	function displayBreakingNews(page) {
 		const start = (page - 1) * breakingNewsItemsPerPage;
 		const end = start + breakingNewsItemsPerPage;
-		const breakingNewsPage = breakingNewsData.slice(start, end);
+		const breakingNewsPage = filteredBreakingNewsData.slice(start, end);
 
 		const container = document.querySelector('.berita-container');
 		container.innerHTML = ''; // Clear the existing content
@@ -120,19 +121,19 @@
 		breakingNewsPage.forEach(item => {
 			container.innerHTML += `
             <div class="row mb-3 align-items-start">
-                <a href="<?php echo site_url('home/breakingnewsdetail/'); ?>${item.id_news}" class="text-decoration-none text-dark d-flex align-items-start">
+                <a href="<?php echo site_url('home/breakingnewsdetail/'); ?>${item.id_konten}" class="text-decoration-none text-dark d-flex align-items-start">
                     <div class="col-auto mb-4">
-                        <img src="<?php echo base_url('./uploads/'); ?>${item.avatar}" alt="Avatar ${item.id_news}" class="avatar" style="width: 100px; height: 100px;">
+                        <img src="<?php echo base_url('./uploads/'); ?>${item.gambar}" alt="Avatar ${item.id_konten}" class="avatar" style="width: 100px; height: 100px;">
                     </div>
                     <div class="col ms-3">
-                        <h3 class="card-text text-muted">${item.judul_berita}</h3>
+                        <h3 class="card-text text-muted">${item.judul}</h3>
                         <ul class="list-unstyled mt-4">
                             <li class="d-inline-block me-2">
                                 <small class="text-danger">&square;</small>
-                                <small class="text-muted">Breaking News</small>
+                                <small class="text-muted">${item.nama_kategori}</small>
                             </li>/
                             <li class="d-inline-block me-3">
-                                <small class="text-muted">${new Date(item.tanggal_upload).toLocaleDateString('id-ID')}</small>
+                                <small class="text-muted">${new Date(item.tanggal_posting).toLocaleDateString('id-ID')}</small>
                             </li>
                         </ul>
                     </div>

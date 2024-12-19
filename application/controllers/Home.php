@@ -9,16 +9,10 @@ class Home extends CI_Controller
 	{
 		parent::__construct();
 		$this->load->model('Profile_Model');
-		$this->load->model('Berita_Model');
-		$this->load->model('BreakingNews_model');
-		$this->load->model('Galeri_Model');
-		$this->load->model('Ibrah_Model');
-		$this->load->model('KabarRanting_Model');
-		$this->load->model('Pengumuman_Model');
-		$this->load->model('Slider_Model');
-		$this->load->model('Suaramuhammadiyah_Model');
 		$this->load->model('SuratMasuk_model');
 		$this->load->model('Pustaka_Model');
+		$this->load->model('Comment_Model');
+		$this->load->model('Konten_Model');
 		$this->load->model('VisitModel'); // Load model visit
 
 	}
@@ -26,33 +20,31 @@ class Home extends CI_Controller
 	public function index()
 	{
 		$data['judul'] = 'home';
-		$data['berita'] = $this->Berita_Model->get_berita();
-		$data['breaking_news'] = $this->BreakingNews_model->get_breaking_news(); // Gantilah dengan fungsi sesuai kebutuhan
-		$data['pengumuman'] = $this->Pengumuman_Model->get_pengumuman(); // Gantilah dengan fungsi sesuai kebutuhan
-		$data['galeri'] = $this->Galeri_Model->get_galeri(); // Gantilah dengan fungsi sesuai kebutuhan
-		$data['kabar_ranting'] = $this->KabarRanting_Model->get_kabar_ranting(); // Gantilah dengan fungsi sesuai kebutuhan
-
+		$data['konten'] = $this->Konten_Model->get_konten(); // Ambil data konten dengan kategori
+		
 		$this->VisitModel->record_visit();
 		$this->load->view('templates/user_navbar', $data);
 		$this->load->view('user/home', $data);
 		$this->load->view('templates/user_footer');
 	}
 
-
 	//user
 	public function berita_user()
 	{
 		// Load data surat_masuk from the backend
-		$data['berita'] = $this->Berita_Model->get_berita(); // Gantilah dengan fungsi sesuai kebutuhan
+		$data['konten'] = $this->Konten_Model->get_konten(); // Gantilah dengan fungsi sesuai kebutuhan
 		// Persiapkan data latepost, menggunakan foto-foto berita yang sama
 		$data['latepost_photos'] = array();
-		foreach ($data['berita'] as $berita) {
-			// Misalnya, URL avatar foto berita disimpan dalam indeks 'avatar'
-			$latepost_photo = array(
-				'url' => base_url('./uploads/' . $berita['avatar'])
-			);
-			$data['latepost_photos'][] = $latepost_photo;
+
+		foreach ($data['konten'] as $konten) {
+			if ($konten['id_kategori'] == 1) { // Pastikan hanya menampilkan kategori berita (id_kategori = 1)
+				$latepost_photo = array(
+					'url' => base_url('./uploads/' . $konten['gambar'])
+				);
+				$data['latepost_photos'][] = $latepost_photo;
+			}
 		}
+
 		$data['judul'] = 'Berita';
 		$this->load->view('templates/user_navbar', $data);
 		$this->load->view('user/berita/berita/berita', $data);
@@ -61,47 +53,65 @@ class Home extends CI_Controller
 
 	public function beritadetail($id)
 	{
-		$data['berita'] = $this->Berita_Model->get_berita();
+		// Ambil konten terkait
+		$data['konten'] = $this->Konten_Model->get_konten();
 
-		$data['item'] = $this->Berita_Model->get_berita_by_id($id);
-		$data['komen'] = $this->db->where('idberita', $id)->get('comment')->result_array();
+		// Ambil data konten berdasarkan ID
+		$data['item'] = $this->Konten_Model->get_konten_by_id($id);
+
+		// Ambil komentar berdasarkan ID konten
+		$data['komentar'] = $this->db->where('id_konten', $id)->get('komentar')->result_array();
+
+		// Ambil foto-foto dari konten dengan kategori "berita"
 		$data['latepost_photos'] = array();
 
-		foreach ($data['berita'] as $berita) {
-			// Misalnya, URL avatar foto berita disimpan dalam indeks 'avatar'
-			$latepost_photo = array(
-				'url' => base_url('./uploads/' . $berita['avatar'])
-			);
-			$data['latepost_photos'][] = $latepost_photo;
+		foreach ($data['konten'] as $konten) {
+			if ($konten['id_kategori'] == 1) { // Pastikan hanya menampilkan kategori berita (id_kategori = 1)
+				$latepost_photo = array(
+					'url' => base_url('./uploads/' . $konten['gambar'])
+				);
+				$data['latepost_photos'][] = $latepost_photo;
+			}
 		}
+
 		$data['judul'] = 'Berita Detail';
 		$this->load->view('templates/user_navbar', $data);
 		$this->load->view('user/berita/berita/beritadetail', $data);
 		$this->load->view('templates/user_footer');
 	}
+
+
 	public function post_berita_comment($id)
 	{
+		$this->load->model('Comment_Model'); // Pastikan model sudah diload
+
 		$data = array(
-			'komentar' => $this->input->post('comment'),
-			'idberita' => $id,
-			'email'   => $this->input->post('email'),
-			'name'    => $this->input->post('name')
+			'isi_komentar' => $this->input->post('isi_komentar'),
+			'id_konten' => $id,
+			'email' => $this->input->post('email'),
+			'nama' => $this->input->post('nama')
 		);
-		$this->db->insert('comment', $data);
+
+		$this->Comment_Model->tambah_komentar($data);
 		redirect('home/beritadetail/' . $id);
 	}
+
 
 	// Tampilan untuk user 
 	public function breaking_user()
 	{
 		// Load data surat_masuk from the backend
-		$data['breaking_news'] = $this->BreakingNews_model->get_breaking_news(); // Gantilah dengan fungsi sesuai kebutuhan
-		foreach ($data['breaking_news'] as $breaking_news) {
-			// Misalnya, URL avatar foto breaking_news disimpan dalam indeks 'avatar'
-			$latepost_photo = array(
-				'url' => base_url('./uploads/' . $breaking_news['avatar'])
-			);
-			$data['latepost_photos'][] = $latepost_photo;
+		$data['konten'] = $this->Konten_Model->get_konten(); // Gantilah dengan fungsi sesuai kebutuhan
+		// Persiapkan data latepost, menggunakan foto-foto berita yang sama
+		$data['latepost_photos'] = array();
+
+		foreach ($data['konten'] as $konten) {
+			if ($konten['id_kategori'] == 2) { // Pastikan hanya menampilkan kategori berita (id_kategori = 1)
+				$latepost_photo = array(
+					'url' => base_url('./uploads/' . $konten['gambar'])
+				);
+				$data['latepost_photos'][] = $latepost_photo;
+			}
 		}
 		$data['judul'] = 'Breaking News';
 		$this->load->view('templates/user_navbar', $data);
@@ -111,23 +121,24 @@ class Home extends CI_Controller
 
 	public function breakingnewsdetail($id)
 	{
-		// Mengambil data breaking news
-		$data['breaking_news'] = $this->BreakingNews_model->get_breaking_news();
+		$data['konten'] = $this->Konten_Model->get_konten();
+		// Ambil data konten berdasarkan ID
+		$data['item'] = $this->Konten_Model->get_konten_by_id($id);
 
-		// Mengambil data breaking news berdasarkan ID
-		$data['item'] = $this->BreakingNews_model->get_news_by_id($id);
-		$data['komen'] = $this->db->where('idbreakingnews', $id)->get('comment')->result_array();
+		// Ambil komentar berdasarkan ID konten
+		$data['komentar'] = $this->db->where('id_konten', $id)->get('komentar')->result_array();
+
+		// Ambil foto-foto dari konten dengan kategori "berita"
 		$data['latepost_photos'] = array();
 
-		foreach ($data['breaking_news'] as $breaking_news) {
-			// Misalnya, URL avatar foto breaking news disimpan dalam indeks 'avatar'
-			$latepost_photo = array(
-				'url' => base_url('./uploads/' . $breaking_news['avatar'])
-			);
-			$data['latepost_photos'][] = $latepost_photo;
+		foreach ($data['konten'] as $konten) {
+			if ($konten['id_kategori'] == 2) { // Pastikan hanya menampilkan kategori berita (id_kategori = 1)
+				$latepost_photo = array(
+					'url' => base_url('./uploads/' . $konten['gambar'])
+				);
+				$data['latepost_photos'][] = $latepost_photo;
+			}
 		}
-
-		// Memuat tampilan dengan data
 		$data['judul'] = 'Breaking News Detail';
 		$this->load->view('templates/user_navbar', $data);
 		$this->load->view('user/berita/breaking_news/breakingnewsdetail', $data);
@@ -135,27 +146,35 @@ class Home extends CI_Controller
 	}
 	public function post_breaking_news_comment($id)
 	{
+		$this->load->model('Comment_Model'); // Pastikan model sudah diload
+
 		$data = array(
-			'komentar' => $this->input->post('comment'),
-			'idbreakingnews' => $id,
-			'email'   => $this->input->post('email'),
-			'name'    => $this->input->post('name')
+			'isi_komentar' => $this->input->post('isi_komentar'),
+			'id_konten' => $id,
+			'email' => $this->input->post('email'),
+			'nama' => $this->input->post('nama')
 		);
-		$this->db->insert('comment', $data);
+
+		$this->Comment_Model->tambah_komentar($data);
 		redirect('home/breakingnewsdetail/' . $id);
 	}
+
 
 	// Tampilan USER GALERI
 	public function galeri_user()
 	{
 		// Load data surat_masuk from the backend
-		$data['galeri'] = $this->Galeri_Model->get_galeri(); // Gantilah dengan fungsi sesuai kebutuhan
-		foreach ($data['galeri'] as $galeri) {
-			// Misalnya, URL avatar foto galeri disimpan dalam indeks 'avatar'
-			$latepost_photo = array(
-				'url' => base_url('./uploads/' . $galeri['avatar'])
-			);
-			$data['latepost_photos'][] = $latepost_photo;
+		$data['konten'] = $this->Konten_Model->get_konten(); // Gantilah dengan fungsi sesuai kebutuhan
+		// Persiapkan data latepost, menggunakan foto-foto berita yang sama
+		$data['latepost_photos'] = array();
+
+		foreach ($data['konten'] as $konten) {
+			if ($konten['id_kategori'] == 3) { // Pastikan hanya menampilkan kategori berita (id_kategori = 1)
+				$latepost_photo = array(
+					'url' => base_url('./uploads/' . $konten['gambar'])
+				);
+				$data['latepost_photos'][] = $latepost_photo;
+			}
 		}
 		$data['judul'] = 'Galeri';
 		$this->load->view('templates/user_navbar', $data);
@@ -165,18 +184,23 @@ class Home extends CI_Controller
 
 	public function galeridetail($id)
 	{
-		$data['galeri'] = $this->Galeri_Model->get_galeri();
+		$data['konten'] = $this->Konten_Model->get_konten();
+		// Ambil data konten berdasarkan ID
+		$data['item'] = $this->Konten_Model->get_konten_by_id($id);
 
-		$data['item'] = $this->Galeri_Model->get_galeri_by_id($id);
-		$data['komen'] = $this->db->where('idgaleri', $id)->get('comment')->result_array();
+		// Ambil komentar berdasarkan ID konten
+		$data['komentar'] = $this->db->where('id_konten', $id)->get('komentar')->result_array();
+
+		// Ambil foto-foto dari konten dengan kategori "berita"
 		$data['latepost_photos'] = array();
 
-		foreach ($data['galeri'] as $galeri) {
-			// Misalnya, URL avatar foto galeri disimpan dalam indeks 'avatar'
-			$latepost_photo = array(
-				'url' => base_url('./uploads/' . $galeri['avatar'])
-			);
-			$data['latepost_photos'][] = $latepost_photo;
+		foreach ($data['konten'] as $konten) {
+			if ($konten['id_kategori'] == 3) { // Pastikan hanya menampilkan kategori berita (id_kategori = 1)
+				$latepost_photo = array(
+					'url' => base_url('./uploads/' . $konten['gambar'])
+				);
+				$data['latepost_photos'][] = $latepost_photo;
+			}
 		}
 		$data['judul'] = 'Galeri Detail';
 		$this->load->view('templates/user_navbar', $data);
@@ -185,29 +209,36 @@ class Home extends CI_Controller
 	}
 	public function post_galeri_comment($id)
 	{
+		$this->load->model('Comment_Model'); // Pastikan model sudah diload
+
 		$data = array(
-			'komentar' => $this->input->post('comment'),
-			'idgaleri' => $id,
-			'email'   => $this->input->post('email'),
-			'name'    => $this->input->post('name')
+			'isi_komentar' => $this->input->post('isi_komentar'),
+			'id_konten' => $id,
+			'email' => $this->input->post('email'),
+			'nama' => $this->input->post('nama')
 		);
-		$this->db->insert('comment', $data);
+
+		$this->Comment_Model->tambah_komentar($data);
 		redirect('home/galeridetail/' . $id);
 	}
+
 
 
 	// TAMPILAH USER IBRAH
 	public function ibrah_user()
 	{
 		// Load data surat_masuk from the backend
-		$data['ibrah'] = $this->Ibrah_Model->get_ibrah(); // Gantilah dengan fungsi sesuai kebutuhan
+		$data['konten'] = $this->Konten_Model->get_konten(); // Gantilah dengan fungsi sesuai kebutuhan
+		// Persiapkan data latepost, menggunakan foto-foto berita yang sama
 		$data['latepost_photos'] = array();
-		foreach ($data['ibrah'] as $ibrah) {
-			// Misalnya, URL avatar foto ibrah disimpan dalam indeks 'avatar'
-			$latepost_photo = array(
-				'url' => base_url('./uploads/' . $ibrah['avatar'])
-			);
-			$data['latepost_photos'][] = $latepost_photo;
+
+		foreach ($data['konten'] as $konten) {
+			if ($konten['id_kategori'] == 4) { // Pastikan hanya menampilkan kategori berita (id_kategori = 1)
+				$latepost_photo = array(
+					'url' => base_url('./uploads/' . $konten['gambar'])
+				);
+				$data['latepost_photos'][] = $latepost_photo;
+			}
 		}
 		$data['judul'] = 'Ibrah';
 		$this->load->view('templates/user_navbar', $data);
@@ -217,23 +248,23 @@ class Home extends CI_Controller
 
 	public function ibrahdetail($id)
 	{
-		// Load the Ibrah model
-		$this->load->model('Ibrah_Model');
+		$data['konten'] = $this->Konten_Model->get_konten();
+		// Ambil data konten berdasarkan ID
+		$data['item'] = $this->Konten_Model->get_konten_by_id($id);
 
-		// Retrieve the details of the specific Ibrah item by its ID
-		$data['item'] = $this->Ibrah_Model->get_ibrah_by_id($id);
+		// Ambil komentar berdasarkan ID konten
+		$data['komentar'] = $this->db->where('id_konten', $id)->get('komentar')->result_array();
 
-		// Retrieve additional data if needed (e.g., related photos or similar items)
-		$data['ibrah'] = $this->Ibrah_Model->get_ibrah(); // Adjust as needed
-		$data['komen'] = $this->db->where('idibrah', $id)->get('comment')->result_array();
+		// Ambil foto-foto dari konten dengan kategori "berita"
 		$data['latepost_photos'] = array();
 
-		foreach ($data['ibrah'] as $ibrah) {
-			// Example: URL for each photo related to Ibrah
-			$latepost_photo = array(
-				'url' => base_url('./uploads/' . $ibrah['avatar'])
-			);
-			$data['latepost_photos'][] = $latepost_photo;
+		foreach ($data['konten'] as $konten) {
+			if ($konten['id_kategori'] == 4) { // Pastikan hanya menampilkan kategori berita (id_kategori = 1)
+				$latepost_photo = array(
+					'url' => base_url('./uploads/' . $konten['gambar'])
+				);
+				$data['latepost_photos'][] = $latepost_photo;
+			}
 		}
 
 		// Load the views with the data
@@ -244,27 +275,35 @@ class Home extends CI_Controller
 	}
 	public function post_ibrah_comment($id)
 	{
+		$this->load->model('Comment_Model'); // Pastikan model sudah diload
+
 		$data = array(
-			'komentar' => $this->input->post('comment'),
-			'idibrah' => $id,
-			'email'   => $this->input->post('email'),
-			'name'    => $this->input->post('name')
+			'isi_komentar' => $this->input->post('isi_komentar'),
+			'id_konten' => $id,
+			'email' => $this->input->post('email'),
+			'nama' => $this->input->post('nama')
 		);
-		$this->db->insert('comment', $data);
+
+		$this->Comment_Model->tambah_komentar($data);
 		redirect('home/ibrahdetail/' . $id);
 	}
+
 
 	//kabar rating user
 	public function kabarranting_user()
 	{
 		// Load data surat_masuk from the backend
-		$data['kabar_ranting'] = $this->KabarRanting_Model->get_kabar_ranting(); // Gantilah dengan fungsi sesuai kebutuhan
-		foreach ($data['kabar_ranting'] as $kabar_ranting) {
-			// Misalnya, URL avatar foto kabar_ranting disimpan dalam indeks 'avatar'
-			$latepost_photo = array(
-				'url' => base_url('./uploads/' . $kabar_ranting['avatar'])
-			);
-			$data['latepost_photos'][] = $latepost_photo;
+		$data['konten'] = $this->Konten_Model->get_konten(); // Gantilah dengan fungsi sesuai kebutuhan
+		// Persiapkan data latepost, menggunakan foto-foto berita yang sama
+		$data['latepost_photos'] = array();
+
+		foreach ($data['konten'] as $konten) {
+			if ($konten['id_kategori'] == 5) { // Pastikan hanya menampilkan kategori berita (id_kategori = 1)
+				$latepost_photo = array(
+					'url' => base_url('./uploads/' . $konten['gambar'])
+				);
+				$data['latepost_photos'][] = $latepost_photo;
+			}
 		}
 		$data['judul'] = 'Kabar Ranting';
 		$this->load->view('templates/user_navbar', $data);
@@ -274,19 +313,27 @@ class Home extends CI_Controller
 
 	public function kabarrantingdetail($id)
 	{
-		$data['kabar_ranting'] = $this->KabarRanting_Model->get_kabar_ranting();
+		// Ambil konten terkait
+		$data['konten'] = $this->Konten_Model->get_konten();
 
-		$data['item'] = $this->KabarRanting_Model->get_kabar_ranting_by_id($id);
-		$data['komen'] = $this->db->where('idkabarranting', $id)->get('comment')->result_array();
+		// Ambil data konten berdasarkan ID
+		$data['item'] = $this->Konten_Model->get_konten_by_id($id);
+
+		// Ambil komentar berdasarkan ID konten
+		$data['komentar'] = $this->db->where('id_konten', $id)->get('komentar')->result_array();
+
+		// Ambil foto-foto dari konten dengan kategori "berita"
 		$data['latepost_photos'] = array();
 
-		foreach ($data['kabar_ranting'] as $kabar_ranting) {
-			// Misalnya, URL avatar foto kabarranting disimpan dalam indeks 'avatar'
-			$latepost_photo = array(
-				'url' => base_url('./uploads/' . $kabar_ranting['avatar'])
-			);
-			$data['latepost_photos'][] = $latepost_photo;
+		foreach ($data['konten'] as $konten) {
+			if ($konten['id_kategori'] == 5) { // Pastikan hanya menampilkan kategori berita (id_kategori = 1)
+				$latepost_photo = array(
+					'url' => base_url('./uploads/' . $konten['gambar'])
+				);
+				$data['latepost_photos'][] = $latepost_photo;
+			}
 		}
+
 		$data['judul'] = 'Kabar Ranting Detail';
 		$this->load->view('templates/user_navbar', $data);
 		$this->load->view('user/berita/kabar_ranting/kabarrantingdetail', $data);
@@ -294,13 +341,16 @@ class Home extends CI_Controller
 	}
 	public function post_kabar_ranting_comment($id)
 	{
+		$this->load->model('Comment_Model'); // Pastikan model sudah diload
+
 		$data = array(
-			'komentar' => $this->input->post('comment'),
-			'idkabarranting' => $id,
-			'email'   => $this->input->post('email'),
-			'name'    => $this->input->post('name')
+			'isi_komentar' => $this->input->post('isi_komentar'),
+			'id_konten' => $id,
+			'email' => $this->input->post('email'),
+			'nama' => $this->input->post('nama')
 		);
-		$this->db->insert('comment', $data);
+
+		$this->Comment_Model->tambah_komentar($data);
 		redirect('home/kabarrantingdetail/' . $id);
 	}
 
@@ -308,33 +358,44 @@ class Home extends CI_Controller
 	public function pengumuman_user()
 	{
 		// Load data surat_masuk from the backend
-		$data['pengumuman'] = $this->Pengumuman_Model->get_pengumuman(); // Gantilah dengan fungsi sesuai kebutuhan
-		foreach ($data['pengumuman'] as $pengumuman) {
-			// Misalnya, URL avatar foto pengumuman disimpan dalam indeks 'avatar'
-			$latepost_photo = array(
-				'url' => base_url('./uploads/' . $pengumuman['avatar'])
-			);
-			$data['latepost_photos'][] = $latepost_photo;
+		$data['konten'] = $this->Konten_Model->get_konten(); // Gantilah dengan fungsi sesuai kebutuhan
+		$data['latepost_photos'] = array();
+
+		foreach ($data['konten'] as $konten) {
+			if ($konten['id_kategori'] == 6) { // Pastikan hanya menampilkan kategori berita (id_kategori = 1)
+				$latepost_photo = array(
+					'url' => base_url('./uploads/' . $konten['gambar'])
+				);
+				$data['latepost_photos'][] = $latepost_photo;
+			}
 		}
+
 		$data['judul'] = 'Pengumuman';
 		$this->load->view('templates/user_navbar', $data);
 		$this->load->view('user/berita/pengumuman/pengumuman', $data);
 		$this->load->view('templates/user_footer');
 	}
+		
 
 	public function pengumumandetail($id)
 	{
-		$data['berita'] = $this->Berita_Model->get_berita();
+		$data['konten'] = $this->Konten_Model->get_konten();
+		// Ambil data konten berdasarkan ID
+		$data['item'] = $this->Konten_Model->get_konten_by_id($id);
 
-		$data['item'] = $this->Pengumuman_Model->get_pengumuman_by_id($id);
-		$data['komen'] = $this->db->where('idpengumuman', $id)->get('comment')->result_array();
+		// Ambil komentar berdasarkan ID konten
+		$data['komentar'] = $this->db->where('id_konten', $id)->get('komentar')->result_array();
+
+		// Ambil foto-foto dari konten dengan kategori "berita"
 		$data['latepost_photos'] = array();
-		foreach ($data['berita'] as $berita) {
-			// Misalnya, URL avatar foto berita disimpan dalam indeks 'avatar'
-			$latepost_photo = array(
-				'url' => base_url('./uploads/' . $berita['avatar'])
-			);
-			$data['latepost_photos'][] = $latepost_photo;
+
+		foreach ($data['konten'] as $konten) {
+			if ($konten['id_kategori'] == 6) { // Pastikan hanya menampilkan kategori berita (id_kategori = 1)
+				$latepost_photo = array(
+					'url' => base_url('./uploads/' . $konten['gambar'])
+				);
+				$data['latepost_photos'][] = $latepost_photo;
+			}
 		}
 		$data['judul'] = 'Pengumuman Detail';
 		$this->load->view('templates/user_navbar', $data);
@@ -344,13 +405,16 @@ class Home extends CI_Controller
 
 	public function post_pengumuman_comment($id)
 	{
+		$this->load->model('Comment_Model'); // Pastikan model sudah diload
+
 		$data = array(
-			'komentar' => $this->input->post('comment'),
-			'idpengumuman' => $id,
-			'email'   => $this->input->post('email'),
-			'name'    => $this->input->post('name')
+			'isi_komentar' => $this->input->post('isi_komentar'),
+			'id_konten' => $id,
+			'email' => $this->input->post('email'),
+			'nama' => $this->input->post('nama')
 		);
-		$this->db->insert('comment', $data);
+
+		$this->Comment_Model->tambah_komentar($data);
 		redirect('home/pengumumandetail/' . $id);
 	}
 
@@ -358,13 +422,17 @@ class Home extends CI_Controller
 	public function slider_user()
 	{
 		// Load data surat_masuk from the backend
-		$data['slider'] = $this->Slider_Model->get_slider(); // Gantilah dengan fungsi sesuai kebutuhan
-		foreach ($data['slider'] as $slider) {
-			// Misalnya, URL avatar foto slider disimpan dalam indeks 'avatar'
-			$latepost_photo = array(
-				'url' => base_url('./uploads/' . $slider['avatar'])
-			);
-			$data['latepost_photos'][] = $latepost_photo;
+		$data['konten'] = $this->Konten_Model->get_konten(); // Gantilah dengan fungsi sesuai kebutuhan
+		// Persiapkan data latepost, menggunakan foto-foto berita yang sama
+		$data['latepost_photos'] = array();
+
+		foreach ($data['konten'] as $konten) {
+			if ($konten['id_kategori'] == 7) { // Pastikan hanya menampilkan kategori berita (id_kategori = 1)
+				$latepost_photo = array(
+					'url' => base_url('./uploads/' . $konten['gambar'])
+				);
+				$data['latepost_photos'][] = $latepost_photo;
+			}
 		}
 		$data['judul'] = 'Slider';
 		$this->load->view('templates/user_navbar', $data);
@@ -374,19 +442,23 @@ class Home extends CI_Controller
 
 	public function sliderdetail($id)
 	{
-		$data['slider'] = $this->Slider_Model->get_slider();
+		$data['konten'] = $this->Konten_Model->get_konten();
+		// Ambil data konten berdasarkan ID
+		$data['item'] = $this->Konten_Model->get_konten_by_id($id);
 
-		$data['item'] = $this->Slider_Model->get_slider_by_id($id);
-		$data['komen'] = $this->db->where('idslider', $id)->get('comment')->result_array();
+		// Ambil komentar berdasarkan ID konten
+		$data['komentar'] = $this->db->where('id_konten', $id)->get('komentar')->result_array();
 
+		// Ambil foto-foto dari konten dengan kategori "berita"
 		$data['latepost_photos'] = array();
 
-		foreach ($data['slider'] as $slider) {
-			// Misalnya, URL avatar foto slider disimpan dalam indeks 'avatar'
-			$latepost_photo = array(
-				'url' => base_url('./uploads/' . $slider['avatar'])
-			);
-			$data['latepost_photos'][] = $latepost_photo;
+		foreach ($data['konten'] as $konten) {
+			if ($konten['id_kategori'] == 7) { // Pastikan hanya menampilkan kategori berita (id_kategori = 1)
+				$latepost_photo = array(
+					'url' => base_url('./uploads/' . $konten['gambar'])
+				);
+				$data['latepost_photos'][] = $latepost_photo;
+			}
 		}
 		$data['judul'] = 'Slider Detail';
 		$this->load->view('templates/user_navbar', $data);
@@ -397,13 +469,16 @@ class Home extends CI_Controller
 
 	public function post_slider_comment($id)
 	{
+		$this->load->model('Comment_Model'); // Pastikan model sudah diload
+
 		$data = array(
-			'komentar' => $this->input->post('comment'),
-			'idslider' => $id,
-			'email'   => $this->input->post('email'),
-			'name'    => $this->input->post('name')
+			'isi_komentar' => $this->input->post('isi_komentar'),
+			'id_konten' => $id,
+			'email' => $this->input->post('email'),
+			'nama' => $this->input->post('nama')
 		);
-		$this->db->insert('comment', $data);
+
+		$this->Comment_Model->tambah_komentar($data);
 		redirect('home/sliderdetail/' . $id);
 	}
 
@@ -411,13 +486,17 @@ class Home extends CI_Controller
 	public function suaramuhammadiyah_user()
 	{
 		// Load data surat_masuk from the backend
-		$data['suara_muhammadiyah'] = $this->Suaramuhammadiyah_Model->get_suaramuhammadiyah(); // Gantilah dengan fungsi sesuai kebutuhan
-		foreach ($data['suara_muhammadiyah'] as $suara_muhammadiyah) {
-			// Misalnya, URL avatar foto suara_muhammadiyah disimpan dalam indeks 'avatar'
-			$latepost_photo = array(
-				'url' => base_url('./uploads/' . $suara_muhammadiyah['avatar'])
-			);
-			$data['latepost_photos'][] = $latepost_photo;
+		$data['konten'] = $this->Konten_Model->get_konten(); // Gantilah dengan fungsi sesuai kebutuhan
+		// Persiapkan data latepost, menggunakan foto-foto berita yang sama
+		$data['latepost_photos'] = array();
+
+		foreach ($data['konten'] as $konten) {
+			if ($konten['id_kategori'] == 8) { // Pastikan hanya menampilkan kategori berita (id_kategori = 1)
+				$latepost_photo = array(
+					'url' => base_url('./uploads/' . $konten['gambar'])
+				);
+				$data['latepost_photos'][] = $latepost_photo;
+			}
 		}
 		$data['judul'] = 'Suara MUhammadiyah';
 		$this->load->view('templates/user_navbar', $data);
@@ -427,18 +506,23 @@ class Home extends CI_Controller
 
 	public function suara_muhammadiyahdetail($id)
 	{
-		// Retrieve data related to Suara Muhammadiyah
-		$data['suara_muhammadiyah'] = $this->Suaramuhammadiyah_Model->get_suaramuhammadiyah();
-		$data['item'] = $this->Suaramuhammadiyah_Model->get_suaramuhammadiyah_by_id($id);
-		$data['komen'] = $this->db->where('idsuaramuhammadiyah', $id)->get('comment')->result_array();
+		$data['konten'] = $this->Konten_Model->get_konten();
+		// Ambil data konten berdasarkan ID
+		$data['item'] = $this->Konten_Model->get_konten_by_id($id);
+
+		// Ambil komentar berdasarkan ID konten
+		$data['komentar'] = $this->db->where('id_konten', $id)->get('komentar')->result_array();
+
+		// Ambil foto-foto dari konten dengan kategori "berita"
 		$data['latepost_photos'] = array();
 
-		foreach ($data['suara_muhammadiyah'] as $suara) {
-			// Misalnya, URL avatar foto Suara Muhammadiyah disimpan dalam indeks 'avatar'
-			$latepost_photo = array(
-				'url' => base_url('./uploads/' . $suara['avatar'])
-			);
-			$data['latepost_photos'][] = $latepost_photo;
+		foreach ($data['konten'] as $konten) {
+			if ($konten['id_kategori'] == 8) { // Pastikan hanya menampilkan kategori berita (id_kategori = 1)
+				$latepost_photo = array(
+					'url' => base_url('./uploads/' . $konten['gambar'])
+				);
+				$data['latepost_photos'][] = $latepost_photo;
+			}
 		}
 		$data['judul'] = 'Suara MUhammadiyah Detail';
 		// Load the necessary views
@@ -448,13 +532,16 @@ class Home extends CI_Controller
 	}
 	public function post_suara_muhammadiyah_comment($id)
 	{
+		$this->load->model('Comment_Model'); // Pastikan model sudah diload
+
 		$data = array(
-			'komentar' => $this->input->post('comment'),
-			'idsuaramuhammadiyah' => $id,
-			'email'   => $this->input->post('email'),
-			'name'    => $this->input->post('name')
+			'isi_komentar' => $this->input->post('isi_komentar'),
+			'id_konten' => $id,
+			'email' => $this->input->post('email'),
+			'nama' => $this->input->post('nama')
 		);
-		$this->db->insert('comment', $data);
+
+		$this->Comment_Model->tambah_komentar($data);
 		redirect('home/suara_muhammadiyahdetail/' . $id);
 	}
 

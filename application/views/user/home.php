@@ -46,15 +46,16 @@
 			</div>
 
 			<script>
-				var beritaData = <?php echo json_encode($berita); ?>;
+				var beritaData = <?php echo json_encode($konten); ?>;
 				var beritaItemsPerPage = 5; // Set the number of items per page
-				var beritaTotalPages = Math.ceil(beritaData.length / beritaItemsPerPage);
 				var beritaCurrentPage = 1;
+				var filteredBeritaData = beritaData.filter(item => item.nama_kategori === 'Berita');
+				var beritaTotalPages = Math.ceil(filteredBeritaData.length / beritaItemsPerPage);
 
 				function displayBerita(page) {
 					const start = (page - 1) * beritaItemsPerPage;
 					const end = start + beritaItemsPerPage;
-					const beritaPage = beritaData.slice(start, end);
+					const beritaPage = filteredBeritaData.slice(start, end);
 
 					const container = document.querySelector('.berita-container');
 					container.innerHTML = '';
@@ -62,20 +63,20 @@
 					beritaPage.forEach(item => {
 						container.innerHTML += `
 							<div class="row mb-3 align-items-start">
-								<a href="<?php echo site_url('home/beritadetail/'); ?>${item.id_berita}" class="text-decoration-none text-dark-mode d-flex align-items-start">
+								<a href="<?php echo site_url('home/beritadetail/'); ?>${item.id_konten}" class="text-decoration-none text-dark-mode d-flex align-items-start">
 									<div class="col-auto">
-										<img src="<?php echo base_url('./uploads/'); ?>${item.avatar}" alt="Avatar ${item.id_berita}" class="avatar" style="width: 100px; height: 100px;">
+										<img src="<?php echo base_url('./uploads/'); ?>${item.gambar}" alt="Avatar ${item.id_konten}" class="avatar" style="width: 100px; height: 100px;">
 									</div>
 									<div class="col ms-3">
-										<h4 class="card-text text-muted">${item.judul_berita}</h4>
+										<h4 class="card-text text-muted">${item.judul}</h4>
 										<ul class="list-unstyled mt-2">
 											<li class="d-inline-block me-2">
 												<small class="text-danger">&square;</small>
-												<small class="text-muted">Berita</small>
+												<small class="text-muted">${item.nama_kategori}</small>
 											</li>
 											<li class="d-inline-block me-3">
-												<small class="text-muted text-dark-mode">${new Date(item.tanggal_upload).toLocaleDateString('id-ID')}</small>
-											</li>
+                               					<small class="text-muted text-dark-mode">${new Date(item.tanggal_posting).toLocaleDateString('id-ID')}</small>
+                           					</li>
 										</ul>
 									</div>
 								</a>
@@ -142,54 +143,55 @@
 			<?php
 			// Assuming $pengumuman is your data array
 			$items_per_page = 4; // Items per page
-			$total_items = count($pengumuman);
+			$total_items = count($konten);
 			$total_pages = ceil($total_items / $items_per_page);
 			?>
 
 			<script>
-				var pengumumanData = <?php echo json_encode($pengumuman); ?>;
+				var pengumumanData = <?php echo json_encode($konten); ?>;
+				var filteredPengumumanData = pengumumanData.filter(item => item.nama_kategori === 'Pengumuman');
 				var itemsPerPage = <?php echo $items_per_page; ?>;
-				var totalPages = <?php echo $total_pages; ?>;
+				var totalPages = Math.ceil(filteredPengumumanData.length / itemsPerPage);
 				var currentPage = 1;
-			</script>
-			<script>
+
 				function displayPengumuman(page) {
 					const start = (page - 1) * itemsPerPage;
 					const end = start + itemsPerPage;
-					const pengumumanPage = pengumumanData.slice(start, end);
+					const pengumumanPage = filteredPengumumanData.slice(start, end);
 
 					const container = document.querySelector('.announcement-container');
 					container.innerHTML = ''; // Clear the existing content
 
 					pengumumanPage.forEach(item => {
 						// Pisahkan judul menjadi array kata-kata
-						let words = item.judul_berita.split(' ');
+						let words = item.judul.split(' ');
 						// Ambil hanya 5 kata pertama
 						let limitedTitle = words.slice(0, 9).join(' ');
 						// Tambahkan "..." jika ada lebih dari 5 kata
-						if (words.length > 5) {
+						if (words.length > 9) {
 							limitedTitle += '......';
 						}
 						container.innerHTML += `
 							<div class="card-body">
-								<a href="home/pengumumandetail/${item.id_pengumuman}" class="text-decoration-none">
+								<a href="home/pengumumandetail/${item.id_konten}" class="text-decoration-none">
 									<div class="">
-										<h4 class="card-text text-muted" data-toggle="tooltip" title="${item.judul_berita}">${limitedTitle}</h4>
+										<h4 class="card-text text-muted" data-toggle="tooltip" title="${item.judul}">${limitedTitle}</h4>
 									</div>
 									<div class="col">
 										<ul class="list-unstyled mt-2">
 											<li class="d-inline-block me-2">
 												<small class="text-danger">&square;</small>
-												<small class="text-muted">Berita</small>
+												<small class="text-muted">${item.nama_kategori}</small>
 											</li>
 											<li class="d-inline-block me-3">
-												<small class="text-muted">${new Date(item.tanggal_upload).toLocaleDateString('id-ID')}</small>
+												<small class="text-muted">${new Date(item.tanggal_posting).toLocaleDateString('id-ID')}</small>
 											</li>
 										</ul>
 									</div>
 								</a>
 							</div>`;
 					});
+
 					// Update the state of pagination buttons
 					document.querySelector('.prev-page').disabled = page === 1;
 					document.querySelector('.next-page').disabled = page === totalPages;
@@ -213,6 +215,7 @@
 				// Initial call to display the first page
 				displayPengumuman(currentPage);
 			</script>
+
 
 			<!-- KABAR RANTING -->
 			<div class="col-lg-8">
@@ -239,17 +242,16 @@
 			</div>
 
 			<script>
-				var kabarData = <?php echo json_encode($kabar_ranting); ?>;
-				console.log(kabarData);
-
+				var kabarData = <?php echo json_encode($konten); ?>;
 				var kabarItemsPerPage = 5;
-				var kabarTotalPages = Math.ceil(kabarData.length / kabarItemsPerPage);
 				var kabarCurrentPage = 1;
+				var filteredKabarData = kabarData.filter(item => item.nama_kategori === 'Kabar Ranting');
+				var kabarTotalPages = Math.ceil(filteredKabarData.length / kabarItemsPerPage);
 
 				function displayKabar(page) {
 					const start = (page - 1) * kabarItemsPerPage;
 					const end = start + kabarItemsPerPage;
-					const kabarPage = kabarData.slice(start, end);
+					const kabarPage = filteredKabarData.slice(start, end);
 
 					const container = document.querySelector('.kabar-container');
 					container.innerHTML = '';
@@ -257,19 +259,19 @@
 					kabarPage.forEach(item => {
 						container.innerHTML += `
 							<div class="row mb-3 align-items-start">
-								<a href="<?php echo base_url('home/kabarrantingdetail/'); ?>${item.id_kabar_ranting}" class="text-decoration-none text-dark d-flex align-items-start" >
+								<a href="<?php echo base_url('home/kabarrantingdetail/'); ?>${item.id_konten}" class="text-decoration-none text-dark d-flex align-items-start" >
 									<div class="col-auto">
-										<img src="<?php echo base_url('./uploads/'); ?>${item.avatar}" alt="Avatar ${item.id_kabar_ranting}" class="avatar" style="width: 100px; height: 100px;">
+										<img src="<?php echo base_url('./uploads/'); ?>${item.gambar}" alt="Avatar ${item.id_konten}" class="avatar" style="width: 100px; height: 100px;">
 									</div>
 									<div class="col ms-3">
-										<h4 class="card-text text-muted">${item.judul_berita}</h4>
+										<h4 class="card-text text-muted">${item.judul}</h4>
 									
 										<ul class="list-unstyled mt-2">
 											<li class="d-inline-block me-2">
 												<small class="text-danger">&square;</small>
-												<small class="text-muted">Berita</small>
+												<small class="text-muted">${item.nama_kategori}</small>
 											</li>
-											<li class="d-inline-block me-3"><small class="text-muted">${new Date(item.tanggal_upload).toLocaleDateString('id-ID')}</small></li>
+											<li class="d-inline-block me-3"><small class="text-muted">${new Date(item.tanggal_posting).toLocaleDateString('id-ID')}</small></li>
 										</ul>
 									</div>
 								</a>
@@ -355,26 +357,27 @@
 			</div>
 
 			<script>
-				var galleryData = <?php echo json_encode($galeri); ?>;
+				var galleryData = <?php echo json_encode($konten); ?>;
 				var galleryItemsPerPage = 6; // Set the number of images per page
-				var galleryTotalPages = Math.ceil(galleryData.length / galleryItemsPerPage);
 				var galleryCurrentPage = 1;
+				var filteredGalleryData = galleryData.filter(item => item.nama_kategori === 'Galeri')
+				var galleryTotalPages = Math.ceil(filteredGalleryData.length / galleryItemsPerPage);
 
 				function displayGallery(page) {
 					const start = (page - 1) * galleryItemsPerPage;
 					const end = start + galleryItemsPerPage;
-					const galleryPage = galleryData.slice(start, end);
+					const galleryPage = filteredGalleryData.slice(start, end);
 
 					const container = document.querySelector('.gallery-container');
 					container.innerHTML = ''; // Clear previous images
 
 					galleryPage.forEach(item => {
 						container.innerHTML += `
-                <div class="col-lg-2">
-					<a href="<?php echo base_url('home/galeridetail/'); ?>${item.id_galeri}">
-						<img src="<?php echo base_url('./uploads/'); ?>${item.avatar}" alt="Gallery Image" class="w-100" style="height: 200px; object-fit: cover;" data-toggle="tooltip" title="${item.judul_berita}" />
-					</a>
-                </div>`;
+						<div class="col-lg-2">
+							<a href="<?php echo base_url('home/galeridetail/'); ?>${item.id_konten}">
+								<img src="<?php echo base_url('./uploads/'); ?>${item.gambar}" alt="Gallery Image" class="w-100" style="height: 200px; object-fit: cover;" data-toggle="tooltip" title="${item.judul}" />
+							</a>
+						</div>`;
 					});
 
 					document.querySelector('.prev-gallery').disabled = page === 1;

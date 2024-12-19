@@ -65,7 +65,7 @@
 			<div class="col-lg-3">
 				<div class="row row-cards">
 					<div class="col-100">
-						<div class="card" style="position: sticky; top: 20px;">
+						<div class="card" style="height: 15rem; position: sticky; top: 20px;">
 							<div class="card-body d-flex justify-content-between align-items-center">
 								<h2 class="m-0">Latepost</h2>
 								<div class="d-flex align-items-center">
@@ -87,6 +87,12 @@
 								<!-- Content will be injected here by JavaScript -->
 							</div>
 							<!-- END DATA -->
+
+							<!-- Pagination Controls -->
+							<!-- <div class="d-flex justify-content-between align-items-center mt-3">
+								<button class="btn btn-outline-secondary prev-latepost">&lt;&lt; Previous</button>
+								<button class="btn btn-outline-secondary next-latepost">Next &gt;&gt;</button>
+							</div> -->
 						</div>
 					</div>
 				</div>
@@ -98,15 +104,16 @@
 
 <script>
 	// Galeri Pagination
-	var galeriData = <?php echo json_encode($galeri); ?>;
+	var galeriData = <?php echo json_encode($konten); ?>;
 	var galeriItemsPerPage = 5; // Set the number of galeri items per page
-	var galeriTotalPages = Math.ceil(galeriData.length / galeriItemsPerPage);
 	var galeriCurrentPage = 1;
+	var filteredGaleriData = galeriData.filter(item => item.nama_kategori === 'Galeri')
+	var galeriTotalPages = Math.ceil(filteredGaleriData.length / galeriItemsPerPage);
 
 	function displayGaleri(page) {
 		const start = (page - 1) * galeriItemsPerPage;
 		const end = start + galeriItemsPerPage;
-		const galeriPage = galeriData.slice(start, end);
+		const galeriPage = filteredGaleriData.slice(start, end);
 
 		const container = document.querySelector('.galeri-container');
 		container.innerHTML = ''; // Clear the existing content
@@ -114,19 +121,19 @@
 		galeriPage.forEach(item => {
 			container.innerHTML += `
             <div class="row mb-4 align-items-start">
-                <a href="<?php echo site_url('home/galeridetail/'); ?>${item.id_galeri}" class="text-decoration-none text-dark d-flex align-items-start">
+                <a href="<?php echo site_url('home/galeridetail/'); ?>${item.id_konten}" class="text-decoration-none text-dark d-flex align-items-start">
                     <div class="col-auto mb-4">
-                        <img src="<?php echo base_url('./uploads/'); ?>${item.avatar}" alt="Avatar ${item.id_galeri}" class="avatar" style="width: 100px; height: 100px;">
+                        <img src="<?php echo base_url('./uploads/'); ?>${item.gambar}" alt="Avatar ${item.id_konten}" class="avatar" style="width: 100px; height: 100px;">
                     </div>
                     <div class="col ms-3">
-                        <h4 class="card-text text-muted">${item.judul_berita}</h4>
+                        <h4 class="card-text text-muted">${item.judul}</h4>
                         <ul class="list-unstyled mt-2">
                             <li class="d-inline-block me-2">
                                 <small class="text-danger">&square;</small>
-                                <small class="text-muted">Galeri</small>
+                                <small class="text-muted">${item.nama_kategori}</small>
                             </li>/
                             <li class="d-inline-block me-3">
-                                <small class="text-muted">${new Date(item.tanggal_upload).toLocaleDateString('id-ID')}</small>
+                                <small class="text-muted">${new Date(item.tanggal_posting).toLocaleDateString('id-ID')}</small>
                             </li>
                         </ul>
                     </div>

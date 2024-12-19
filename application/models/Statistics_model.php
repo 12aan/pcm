@@ -18,6 +18,6 @@ class Statistics_Model extends CI_Model
     // Mendapatkan total komentar
     public function get_total_comments()
     {
-        return $this->db->count_all('comment');
+        return $this->db->count_all('komentar');
     }
 }

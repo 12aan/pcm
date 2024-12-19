@@ -2,7 +2,7 @@
 <div class="container-fluid">
 
     <!-- Page Heading -->
-    <h1 class="h3 mb-2 text-gray-800">Data Admin</h1>
+    <h1 class="h3 mb-2 text-gray-800">menu management</h1>
 
     <!-- DataTales Example -->
     <div class="row">

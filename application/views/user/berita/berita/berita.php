@@ -112,35 +112,36 @@
 
 <script>
 	// Berita Pagination
-	var beritaData = <?php echo json_encode($berita); ?>;
+	var beritaData = <?php echo json_encode($konten); ?>;
 	var beritaItemsPerPage = 5; // Set the number of berita items per page
-	var beritaTotalPages = Math.ceil(beritaData.length / beritaItemsPerPage);
 	var beritaCurrentPage = 1;
+	var filteredBeritaData = beritaData.filter(item => item.nama_kategori === 'Berita');
+	var beritaTotalPages = Math.ceil(filteredBeritaData.length / beritaItemsPerPage);
 
 	function displayBerita(page) {
 		const start = (page - 1) * beritaItemsPerPage;
 		const end = start + beritaItemsPerPage;
-		const beritaPage = beritaData.slice(start, end);
+		const beritaPage = filteredBeritaData.slice(start, end);
 
 		const container = document.querySelector('.berita-container');
 		container.innerHTML = ''; // Clear the existing content
 
 		beritaPage.forEach(item => {
 			container.innerHTML += `
-			<div class="row mb-3 align-items-start"> <!-- Ubah align-items-center ke align-items-start -->
-				<a href="<?php echo site_url('home/beritadetail/'); ?>${item.id_berita}" class="text-decoration-none text-dark d-flex align-items-start">
+			<div class="row mb-3 align-items-start">
+				<a href="<?php echo site_url('home/beritadetail/'); ?>${item.id_konten}" class="text-decoration-none text-dark d-flex align-items-start">
 					<div class="col-auto mb-4">
-						<img src="<?php echo base_url('./uploads/'); ?>${item.avatar}" alt="Avatar ${item.id_berita}" class="avatar" style="width: 100px; height: 100px;">
+						<img src="<?php echo base_url('./uploads/'); ?>${item.gambar}" alt="gambar ${item.id_konten}" class="gambar" style="width: 100px; height: 100px;">
 					</div>
 					<div class="col ms-3">
-						<h4 class="card-text text-muted">${item.judul_berita}</h4>
+						<h4 class="card-text text-muted">${item.judul}</h4>
 						<ul class="list-unstyled mt-2">
 							<li class="d-inline-block me-2">
 								<small class="text-danger">&square;</small>
-								<small class="text-muted">Berita</small>
+								<small class="text-muted">${item.nama_kategori}</small>
 							</li>
 							<li class="d-inline-block me-3">
-								<small class="text-muted">${new Date(item.tanggal_upload).toLocaleDateString('id-ID')}</small>
+								<small class="text-muted">${new Date(item.tanggal_posting).toLocaleDateString('id-ID')}</small>
 							</li>
 						</ul>
 					</div>

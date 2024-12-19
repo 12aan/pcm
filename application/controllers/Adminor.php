@@ -7,11 +7,9 @@ class Adminor extends CI_Controller
     {
         parent::__construct();
         is_logged_in();
-
         // Cek session expiration secara manual
         $last_activity = $this->session->userdata('last_activity');
         $timeout_duration = 43200; // 12 jam dalam detik
-
         if ($last_activity && (time() - $last_activity > $timeout_duration)) {
             $this->session->sess_destroy(); // Hapus session jika expired
             redirect('auth/login'); // Redirect ke halaman login
@@ -19,24 +17,20 @@ class Adminor extends CI_Controller
             // Update waktu aktivitas terakhir jika belum expired
             $this->session->set_userdata('last_activity', time());
         }
-
         // Cek apakah pengguna aktif
         $user = $this->db->get_where('user', ['email' => $this->session->userdata('email')])->row_array();
         if (!$user || !$user['is_active']) {
             redirect('auth/blocked'); // Redirect ke halaman blocked jika tidak aktif
         }
-
         $this->load->model('Data_Admin');
         $this->load->model('SuratMasuk_model');
     }
-
     // surat masuk admin
     public function surat()
     {
         $data['title'] = 'Surat Masuk';
         $data['user'] = $this->db->get_where('user', ['email' => $this->session->userdata('email')])->row_array();
         $data['surat_masuk'] = $this->SuratMasuk_model->get_surat_masuk();
-
         $this->load->view('templates/header', $data);
         $this->load->view('templates/sidebar', $data);
         $this->load->view('templates/topbar', $data);
@@ -46,13 +40,10 @@ class Adminor extends CI_Controller
     public function tambah_surat_masuk()
     {
         $this->load->library('upload');
-
         $config['upload_path'] = './uploads/';
         $config['allowed_types'] = 'jpg|jpeg|png|pdf|pptx|gif|docx';
         $config['max_size'] = 999999999; // ukuran dalam KB, sesuaikan dengan kebutuhan
-
         $this->upload->initialize($config);
-
         $data = array(
             'agenda' => $this->input->post('agenda'),
             'file_path' => ''
@@ -78,7 +69,6 @@ class Adminor extends CI_Controller
             // Jika tidak diisi, berikan nilai default
             $data['nama_surat'] = 'Belum ada nama surat';
         }
-
         // Pastikan data agenda tidak kosong sebelum menyisipkan ke dalam database
         if (!empty($data['agenda'])) {
             $result = $this->SuratMasuk_model->tambah_surat($data);
@@ -107,19 +97,15 @@ class Adminor extends CI_Controller
     public function tambah_surat_masuk_agenda()
     {
         $this->load->library('upload');
-
         $config['upload_path'] = './uploads/';
         $config['allowed_types'] = 'jpg|jpeg|png|pdf|pptx|gif|docx';
         $config['max_size'] = 999999999; // Ukuran dalam KB
-
         $this->upload->initialize($config);
-
         $data = array(
             'agenda' => $this->input->post('agenda'), // Menyimpan agenda
             'nama_surat' => $this->input->post('nama_surat'),
             'file_path' => ''
         );
-
         // Periksa apakah sebuah file dipilih untuk diunggah
         if (!empty($_FILES['file_path']['name'])) {
             // Lakukan upload file
@@ -150,46 +136,35 @@ class Adminor extends CI_Controller
         $data['agenda_list'] = $this->SuratMasuk_model->get_agenda_list_surat_masuk();
         $data['title'] = 'Tambah Surat Masuk Agenda';
         $data['user'] = $this->db->get_where('user', ['email' => $this->session->userdata('email')])->row_array();
-
         $this->load->view('templates/header', $data);
         $this->load->view('templates/sidebar', $data);
         $this->load->view('templates/topbar', $data);
         $this->load->view('admin/adminor/surat_masuk/tambah_surat_masuk_agenda', $data);
         $this->load->view('templates/footer');
     }
-
     public function edit_data_surat_masuk($id_masuk)
     {
         date_default_timezone_set('Asia/Jakarta');
-
         // Memuat library upload
         $this->load->library('upload');
-
         // Ambil data surat masuk berdasarkan ID
         $surat_masuk = $this->SuratMasuk_model->get_data_by_id($id_masuk);
-
         if (!$surat_masuk) {
             // Tampilkan pesan jika surat masuk tidak ditemukan
             show_error('Surat Masuk tidak ditemukan!');
         }
-
         // Proses pengiriman form
         if ($this->input->post()) {
-
             $current_datetime = date('Y-m-d H:i:s');
-
             // Konfigurasi library upload
             $config['upload_path'] = './uploads/';
             $config['allowed_types'] = 'jpg|jpeg|png|gif|pdf|docx|doc|pptx';
             $config['max_size'] = 999999999; // Ukuran maksimal file
             $config['encrypt_name'] = TRUE;
-
             // Inisialisasi library upload dengan konfigurasi
             $this->upload->initialize($config);
-
             // Kondisi apakah ada perubahan data
             $data_changed = false;
-
             // Periksa apakah sebuah file dipilih untuk diunggah
             if (!empty($_FILES['gambarBerita']['name'])) {
                 // Lakukan unggah file jika ada
@@ -210,17 +185,14 @@ class Adminor extends CI_Controller
                     return;
                 }
             }
-
             // Ambil data dari form
             $data['agenda'] = $this->input->post('agenda');
             $data['nama_surat'] = $this->input->post('nama_surat');
             $data['tanggal'] = $current_datetime;
-
             // Cek apakah ada perubahan di data form (teks)
             if ($surat_masuk['agenda'] != $data['agenda'] || $surat_masuk['nama_surat'] != $data['nama_surat']) {
                 $data_changed = true;
             }
-
             // Jika ada perubahan, update data
             if ($data_changed) {
                 $this->SuratMasuk_model->edit_data_surat_masuk($id_masuk, $data);
@@ -228,7 +200,6 @@ class Adminor extends CI_Controller
             } else {
                 $this->session->set_flashdata('message', '<div class="alert alert-info" role="alert">Tidak ada perubahan data</div>');
             }
-
             // Redirect ke halaman yang sesuai
             redirect('adminor/surat/' . $id_masuk);
         } else {
@@ -244,8 +215,6 @@ class Adminor extends CI_Controller
             $this->load->view('templates/footer');
         }
     }
-
-
     // HAPUS DATA SURAT MASUK
     public function hapus_data($id_masuk)
     {
@@ -278,7 +247,6 @@ class Adminor extends CI_Controller
     //surat keluar untuk admin
     public function surat_kel()
     {
-
         $data['title'] = 'Surat Keluar';
         $data['user'] = $this->db->get_where('user', ['email' => $this->session->userdata('email')])->row_array();
         $data['surat_keluar'] = $this->SuratMasuk_model->get_surat_keluar();
@@ -289,23 +257,18 @@ class Adminor extends CI_Controller
         $this->load->view('admin/adminor/surat_keluar/surat_keluar', $data);
         $this->load->view('templates/footer');
     }
-
     public function tambah_surat_keluar()
     {
         $this->load->library('upload');
-
         $config['upload_path'] = './uploads/';
         $config['allowed_types'] = 'jpg|jpeg|png|pdf|pptx|gif|docx';
         $config['max_size'] = 9999999999; // ukuran dalam KB, sesuaikan dengan kebutuhan
         $config['encrypt_name'] = TRUE;
-
         $this->upload->initialize($config);
-
         $upload_failed = false;
         $file_path_surat = '';
         $file_path_undangan = '';
         $file_path_photo = '';
-
         // Upload file surat
         if (isset($_FILES['file_path_surat']) && $_FILES['file_path_surat']['size'] > 0) {
             if (!$this->upload->do_upload('file_path_surat')) {
@@ -317,7 +280,6 @@ class Adminor extends CI_Controller
                 $file_path_surat = $upload_data['file_name'];
             }
         }
-
         // Upload file undangan
         if (isset($_FILES['file_path_undangan']) && $_FILES['file_path_undangan']['size'] > 0) {
             if (!$this->upload->do_upload('file_path_undangan')) {
@@ -329,7 +291,6 @@ class Adminor extends CI_Controller
                 $file_path_undangan = $upload_data['file_name'];
             }
         }
-
         // Upload file photo
         if (isset($_FILES['file_path_photo']) && $_FILES['file_path_photo']['size'] > 0) {
             if (!$this->upload->do_upload('file_path_photo')) {
@@ -341,7 +302,6 @@ class Adminor extends CI_Controller
                 $file_path_photo = $upload_data['file_name'];
             }
         }
-
         if (!$upload_failed) {
             $data = array(
                 'agenda' => $this->input->post('agenda'),
@@ -350,7 +310,6 @@ class Adminor extends CI_Controller
                 'file_path_undangan' => $file_path_undangan,
                 'file_path_photo' => $file_path_photo
             );
-
             if (!empty($data['agenda']) && !empty($data['nama_surat'])) {
                 $result = $this->SuratMasuk_model->tambah_surat_keluar($data);
                 if ($result) {
@@ -364,7 +323,6 @@ class Adminor extends CI_Controller
 
         $data['title'] = 'Tambah Surat Keluar';
         $data['user'] = $this->db->get_where('user', ['email' => $this->session->userdata('email')])->row_array();
-
         $this->load->view('templates/header', $data);
         $this->load->view('templates/sidebar', $data);
         $this->load->view('templates/topbar', $data);
@@ -376,29 +334,24 @@ class Adminor extends CI_Controller
     {
         // Load library 'upload' untuk mengelola file upload
         $this->load->library('upload');
-
         // Konfigurasi upload file
         $config['upload_path'] = './uploads/';
         $config['allowed_types'] = 'jpg|jpeg|png|pdf|pptx|gif|docx';
         $config['max_size'] = 9999999999; // Sesuaikan ukuran file maksimum (dalam KB)
         $config['encrypt_name'] = TRUE; // Enkripsi nama file agar unik
-
         // Inisialisasi upload
         $this->upload->initialize($config);
-
         // Ambil data dari input form
         $data = array(
             'agenda' => $this->input->post('agenda'), // Menyimpan agenda yang dipilih
             'nama_surat' => $this->input->post('nama_surat'),
             'file_path' => ''
         );
-
         // Variabel untuk menyimpan status file upload
         $upload_failed = false;
         $file_path_surat = '';
         $file_path_undangan = '';
         $file_path_photo = '';
-
         // Upload file surat
         if (isset($_FILES['file_path_surat']) && $_FILES['file_path_surat']['size'] > 0) {
             if (!$this->upload->do_upload('file_path_surat')) {
@@ -410,7 +363,6 @@ class Adminor extends CI_Controller
                 $file_path_surat = $upload_data['file_name'];
             }
         }
-
         // Upload file undangan
         if (isset($_FILES['file_path_undangan']) && $_FILES['file_path_undangan']['size'] > 0) {
             if (!$this->upload->do_upload('file_path_undangan')) {
@@ -422,7 +374,6 @@ class Adminor extends CI_Controller
                 $file_path_undangan = $upload_data['file_name'];
             }
         }
-
         // Upload file photo
         if (isset($_FILES['file_path_photo']) && $_FILES['file_path_photo']['size'] > 0) {
             if (!$this->upload->do_upload('file_path_photo')) {
@@ -434,7 +385,6 @@ class Adminor extends CI_Controller
                 $file_path_photo = $upload_data['file_name'];
             }
         }
-
         // Jika semua file berhasil diupload, simpan data ke database
         if (!$upload_failed) {
             $data = array(
@@ -444,7 +394,6 @@ class Adminor extends CI_Controller
                 'file_path_undangan' => $file_path_undangan,
                 'file_path_photo' => $file_path_photo
             );
-
             // Pastikan data agenda dan nama surat tidak kosong
             if (!empty($data['agenda']) && !empty($data['nama_surat'])) {
                 // Simpan data surat keluar ke dalam database
@@ -457,12 +406,10 @@ class Adminor extends CI_Controller
                 }
             }
         }
-
         // Load agenda untuk ditampilkan di form tambah surat keluar
         $data['agenda_list'] = $this->SuratMasuk_model->get_agenda_list_surat_keluar();
         $data['title'] = 'Tambah Surat Keluar Agenda';
         $data['user'] = $this->db->get_where('user', ['email' => $this->session->userdata('email')])->row_array();
-
         // Load view
         $this->load->view('templates/header', $data);
         $this->load->view('templates/sidebar', $data);
@@ -470,14 +417,11 @@ class Adminor extends CI_Controller
         $this->load->view('admin/adminor/surat_keluar/tambah_surat_keluar_agenda', $data);
         $this->load->view('templates/footer');
     }
-
     public function edit_data_keluar($id_keluar)
     {
         date_default_timezone_set('Asia/Jakarta');
-
         // Memuat library upload
         $this->load->library('upload');
-
         // Ambil data surat keluar berdasarkan ID
         $surat_keluar = $this->SuratMasuk_model->data_out_by_id($id_keluar);
 
@@ -485,24 +429,18 @@ class Adminor extends CI_Controller
             // Tampilkan pesan jika surat keluar tidak ditemukan
             show_error('Surat Keluar tidak ditemukan!');
         }
-
         // Proses pengiriman form
         if ($this->input->post()) {
-
             $current_datetime = date('Y-m-d H:i:s');
-
             // Konfigurasi library upload
             $config['upload_path'] = './uploads/';
             $config['allowed_types'] = 'jpg|jpeg|png|gif|pdf|docx|doc|pptx';
             $config['max_size'] = 99999999; // 2MB
             $config['encrypt_name'] = TRUE;
-
             // Inisialisasi library upload dengan konfigurasi
             $this->upload->initialize($config);
-
             // Kondisi apakah data berubah
             $data_changed = false;
-
             // Periksa apakah ada file yang diunggah
             if (!empty($_FILES['file_path_surat']['name'])) {
                 // Lakukan unggah file surat
@@ -518,7 +456,6 @@ class Adminor extends CI_Controller
                     return;
                 }
             }
-
             if (!empty($_FILES['file_path_undangan']['name'])) {
                 // Lakukan unggah file undangan
                 if ($this->upload->do_upload('file_path_undangan')) {
@@ -532,7 +469,6 @@ class Adminor extends CI_Controller
                     return;
                 }
             }
-
             if (!empty($_FILES['file_path_photo']['name'])) {
                 // Lakukan unggah file photo
                 if ($this->upload->do_upload('file_path_photo')) {
@@ -546,17 +482,14 @@ class Adminor extends CI_Controller
                     return;
                 }
             }
-
             // Ambil data dari form
             $data['agenda'] = $this->input->post('agenda');
             $data['nama_surat'] = $this->input->post('nama_surat');
             $data['tanggal'] = $current_datetime;
-
             // Cek apakah ada perubahan di data form (text)
             if ($surat_keluar['agenda'] != $data['agenda'] || $surat_keluar['nama_surat'] != $data['nama_surat']) {
                 $data_changed = true;
             }
-
             // Jika ada perubahan, update data
             if ($data_changed) {
                 $this->SuratMasuk_model->edit_data_surat_keluar($id_keluar, $data);
@@ -564,7 +497,6 @@ class Adminor extends CI_Controller
             } else {
                 $this->session->set_flashdata('message', '<div class="alert alert-info" role="alert">Tidak ada perubahan data</div>');
             }
-
             // Redirect ke halaman yang sesuai
             redirect('adminor/surat_kel/' . $id_keluar);
         } else {
@@ -572,7 +504,6 @@ class Adminor extends CI_Controller
             $data['title'] = 'Edit Surat Keluar';
             $data['user'] = $this->db->get_where('user', ['email' => $this->session->userdata('email')])->row_array();
             $data['surat_keluar'] = $surat_keluar;
-
             $this->load->view('templates/header', $data);
             $this->load->view('templates/sidebar', $data);
             $this->load->view('templates/topbar', $data);
@@ -580,17 +511,14 @@ class Adminor extends CI_Controller
             $this->load->view('templates/footer');
         }
     }
-
     public function hapus_data_keluar($id_keluar)
     {
         // Pastikan ID tidak kosong dan merupakan angka
         if (!empty($id_keluar) && is_numeric($id_keluar)) {
             // Panggil model atau lapisan lain yang berhubungan dengan manipulasi database
             $this->load->model('SuratMasuk_model'); // Gantilah 'nama_model' sesuai dengan nama model Anda
-
             // Panggil fungsi dalam model untuk menghapus data berdasarkan ID
             $result = $this->SuratMasuk_model->hapus_data_keluar($id_keluar);
-
             if ($result) {
                 $this->session->set_flashdata('message', '<div class="alert alert-success" role="alert">Data berhasil dihapus!</div>');
             } else {
@@ -638,8 +566,6 @@ class Adminor extends CI_Controller
             'nama_surat' => $this->input->post('nama_surat'),
             'file_path' => ''
         );
-
-
         // Periksa apakah sebuah file dipilih untuk diunggah
         if (!empty($_FILES['file_path']['name'])) {
             // Lakukan unggah jika ada file yang dipilih
@@ -653,7 +579,6 @@ class Adminor extends CI_Controller
                 redirect('adminor/surat_kep/');
             }
         }
-
         // Pastikan data nama_surat_wakaf dan nama_masjid tidak kosong sebelum menyisipkan ke dalam database
         if (!empty($data['agenda']) && !empty($data['nama_surat'])) {
             $result = $this->SuratMasuk_model->tambah_surat_keputusan($data);
@@ -670,10 +595,8 @@ class Adminor extends CI_Controller
             // Tampilkan pesan error bahwa data tidak lengkap
             $this->session->set_flashdata('message', '<div class="alert alert-danger" role="alert">Semua File Harus DIisi!</div>');
         }
-
         $data['title'] = 'Tambah Surat Keputusan';
         $data['user'] = $this->db->get_where('user', ['email' => $this->session->userdata('email')])->row_array();
-
         $this->load->view('templates/header', $data);
         $this->load->view('templates/sidebar', $data);
         $this->load->view('templates/topbar', $data);
@@ -683,19 +606,15 @@ class Adminor extends CI_Controller
     public function tambah_surat_keputusan_agenda()
     {
         $this->load->library('upload');
-
         $config['upload_path'] = './uploads/';
         $config['allowed_types'] = 'jpg|jpeg|png|pdf|pptx|gif|docx';
         $config['max_size'] = 999999999; // ukuran dalam KB, sesuaikan dengan kebutuhan
-
         $this->upload->initialize($config);
-
         $data = array(
             'agenda' => $this->input->post('agenda'), // Menyimpan ID agenda
             'nama_surat' => $this->input->post('nama_surat'),
             'file_path' => ''
         );
-
         // Periksa apakah sebuah file dipilih untuk diunggah
         if (!empty($_FILES['file_path']['name'])) {
             // Lakukan unggah jika ada file yang dipilih
@@ -709,7 +628,6 @@ class Adminor extends CI_Controller
                 redirect('adminor/surat_kep/');
             }
         }
-
         // Pastikan data agenda dan nama_surat tidak kosong sebelum menyisipkan ke dalam database
         if (!empty($data['agenda']) && !empty($data['nama_surat'])) {
             $result = $this->SuratMasuk_model->tambah_surat_keputusan($data);
@@ -726,7 +644,6 @@ class Adminor extends CI_Controller
             // Tampilkan pesan error bahwa data tidak lengkap
             $this->session->set_flashdata('message', '<div class="alert alert-danger" role="alert">Semua file harus diisi!.</div>');
         }
-
         // Load view setelah proses selesai
         $data['agenda_list'] = $this->SuratMasuk_model->get_agenda_list();
         $data['title'] = 'Tambah Surat Keputusan Agenda';
@@ -741,47 +658,36 @@ class Adminor extends CI_Controller
     public function edit_data_keputusan($id_keputusan)
     {
         date_default_timezone_set('Asia/Jakarta');
-
         // Memuat library upload
         $this->load->library('upload');
-
         // Ambil data surat masuk berdasarkan ID
         $surat_keputusan = $this->SuratMasuk_model->data_by_id($id_keputusan);
-
         if (!$surat_keputusan) {
             // Tampilkan pesan jika surat masuk tidak ditemukan
             show_error('Surat Masuk tidak ditemukan!');
         }
-
         // Proses pengiriman form
         if ($this->input->post()) {
-
             $current_datetime = date('Y-m-d H:i:s');
-
             // Ambil data dari form
             $data = array(
                 'agenda' => $this->input->post('agenda'),
                 'nama_surat' => $this->input->post('nama_surat'),
                 'tanggal' => $current_datetime // Perbarui tanggal dengan waktu saat ini
             );
-
             // Kondisi apakah data berubah
             $data_changed = false;
-
             // Periksa apakah ada perubahan di data text (agenda, nama_surat)
             if ($surat_keputusan['agenda'] != $data['agenda'] || $surat_keputusan['nama_surat'] != $data['nama_surat']) {
                 $data_changed = true;
             }
-
             // Konfigurasi library upload
             $config['upload_path'] = './uploads/';
             $config['allowed_types'] = 'jpg|jpeg|png|gif|pdf|docx|doc|pptx';
             $config['max_size'] = 999999999; // 2MB
             $config['encrypt_name'] = TRUE;
-
             // Inisialisasi library upload dengan konfigurasi
             $this->upload->initialize($config);
-
             // Periksa apakah sebuah file dipilih untuk diunggah
             if (!empty($_FILES['gambarBerita']['name'])) {
                 // Lakukan unggah jika ada file yang dipilih
@@ -805,7 +711,6 @@ class Adminor extends CI_Controller
                     return;
                 }
             }
-
             // Jika ada perubahan data atau file, lakukan update
             if ($data_changed) {
                 $this->SuratMasuk_model->edit_data_keputusan($id_keputusan, $data);
@@ -813,7 +718,6 @@ class Adminor extends CI_Controller
             } else {
                 $this->session->set_flashdata('message', '<div class="alert alert-info" role="alert">Tidak ada perubahan data</div>');
             }
-
             // Redirect ke halaman yang sesuai
             redirect('adminor/surat_kep/' . $id_keputusan);
         } else {
@@ -821,7 +725,6 @@ class Adminor extends CI_Controller
             $data['surat_keputusan'] = $surat_keputusan;
             $data['title'] = 'Edit Surat Keputusan';
             $data['user'] = $this->db->get_where('user', ['email' => $this->session->userdata('email')])->row_array();
-
             $this->load->view('templates/header', $data);
             $this->load->view('templates/sidebar', $data);
             $this->load->view('templates/topbar', $data);
@@ -860,11 +763,9 @@ class Adminor extends CI_Controller
     //UNTUK ADMIN
     public function notulensi()
     {
-
         $data['title'] = 'Notulensi';
         $data['user'] = $this->db->get_where('user', ['email' => $this->session->userdata('email')])->row_array();
         $data['notulensi'] = $this->SuratMasuk_model->get_surat_notulensi();
-
         $this->load->view('templates/header', $data);
         $this->load->view('templates/sidebar', $data);
         $this->load->view('templates/topbar', $data);
@@ -874,18 +775,14 @@ class Adminor extends CI_Controller
     public function tambah_surat_notulensi()
     {
         $this->load->library('upload');
-
         $config['upload_path'] = './uploads/';
         $config['allowed_types'] = 'jpg|jpeg|png|pdf|pptx|gif|docx';
         $config['max_size'] = 9999999999; // ukuran dalam KB, sesuaikan dengan kebutuhan
         $config['encrypt_name'] = TRUE;
-
         $this->upload->initialize($config);
-
         $upload_failed = false;
         $file_path_undangan = '';
         $file_path_notulensi = '';
-
         // Upload file undangan
         if (isset($_FILES['file_path_undangan']) && $_FILES['file_path_undangan']['size'] > 0) {
             if (!$this->upload->do_upload('file_path_undangan')) {
@@ -897,7 +794,6 @@ class Adminor extends CI_Controller
                 $file_path_undangan = $upload_data['file_name'];
             }
         }
-
         // Upload file photo
         if (isset($_FILES['file_path_notulensi']) && $_FILES['file_path_notulensi']['size'] > 0) {
             if (!$this->upload->do_upload('file_path_notulensi')) {
@@ -909,7 +805,6 @@ class Adminor extends CI_Controller
                 $file_path_notulensi = $upload_data['file_name'];
             }
         }
-
         if (!$upload_failed) {
             $data = array(
                 'agenda' => $this->input->post('agenda'),
@@ -917,7 +812,6 @@ class Adminor extends CI_Controller
                 'file_path_undangan' => $file_path_undangan,
                 'file_path_notulensi' => $file_path_notulensi
             );
-
             if (!empty($data['agenda']) && !empty($data['nama_surat'])) {
                 $result = $this->SuratMasuk_model->tambah_surat_notulensi($data);
                 if ($result) {
@@ -928,10 +822,8 @@ class Adminor extends CI_Controller
                 }
             }
         }
-
         $data['title'] = 'Tambah Notulensi';
         $data['user'] = $this->db->get_where('user', ['email' => $this->session->userdata('email')])->row_array();
-
         $this->load->view('templates/header', $data);
         $this->load->view('templates/sidebar', $data);
         $this->load->view('templates/topbar', $data);
@@ -941,18 +833,14 @@ class Adminor extends CI_Controller
     public function tambah_surat_notulensi_agenda()
     {
         $this->load->library('upload');
-
         $config['upload_path'] = './uploads/';
         $config['allowed_types'] = 'jpg|jpeg|png|pdf|pptx|gif|docx';
         $config['max_size'] = 9999999999; // ukuran dalam KB, sesuaikan dengan kebutuhan
         $config['encrypt_name'] = TRUE;
-
         $this->upload->initialize($config);
-
         $upload_failed = false;
         $file_path_undangan = '';
         $file_path_notulensi = '';
-
         // Upload file undangan
         if (isset($_FILES['file_path_undangan']) && $_FILES['file_path_undangan']['size'] > 0) {
             if (!$this->upload->do_upload('file_path_undangan')) {
@@ -964,7 +852,6 @@ class Adminor extends CI_Controller
                 $file_path_undangan = $upload_data['file_name'];
             }
         }
-
         // Upload file photo
         if (isset($_FILES['file_path_notulensi']) && $_FILES['file_path_notulensi']['size'] > 0) {
             if (!$this->upload->do_upload('file_path_notulensi')) {
@@ -976,7 +863,6 @@ class Adminor extends CI_Controller
                 $file_path_notulensi = $upload_data['file_name'];
             }
         }
-
         if (!$upload_failed) {
             $data = array(
                 'agenda' => $this->input->post('agenda'),
@@ -984,7 +870,6 @@ class Adminor extends CI_Controller
                 'file_path_undangan' => $file_path_undangan,
                 'file_path_notulensi' => $file_path_notulensi
             );
-
             if (!empty($data['agenda']) && !empty($data['nama_surat'])) {
                 $result = $this->SuratMasuk_model->tambah_surat_notulensi($data);
                 if ($result) {
@@ -995,12 +880,10 @@ class Adminor extends CI_Controller
                 }
             }
         }
-
         // Load view setelah proses selesai
         $data['agenda_list'] = $this->SuratMasuk_model->get_agenda_list_surat_notulensi();
         $data['title'] = 'Tambah Notulensi Agenda';
         $data['user'] = $this->db->get_where('user', ['email' => $this->session->userdata('email')])->row_array();
-
         $this->load->view('templates/header', $data);
         $this->load->view('templates/sidebar', $data);
         $this->load->view('templates/topbar', $data);
@@ -1010,47 +893,36 @@ class Adminor extends CI_Controller
     public function edit_data_notulensi($id_notulensi)
     {
         date_default_timezone_set('Asia/Jakarta');
-
         // Memuat library upload
         $this->load->library('upload');
-
         // Ambil data notulensi berdasarkan ID
         $notulensi = $this->SuratMasuk_model->data_notulensi_by_id($id_notulensi);
-
         if (!$notulensi) {
             // Tampilkan pesan jika notulensi tidak ditemukan
             show_error('Notulensi tidak ditemukan!');
         }
-
         // Proses pengiriman form
         if ($this->input->post()) {
-
             $current_datetime = date('Y-m-d H:i:s');
-
             // Ambil data dari form
             $data = array(
                 'agenda' => $this->input->post('agenda'),
                 'nama_surat' => $this->input->post('nama_surat'),
                 'tanggal' =>  $current_datetime // Perbarui tanggal dengan waktu saat ini
             );
-
             // Kondisi apakah data berubah
             $data_changed = false;
-
             // Periksa apakah ada perubahan di data text (agenda, nama_surat)
             if ($notulensi['agenda'] != $data['agenda'] || $notulensi['nama_surat'] != $data['nama_surat']) {
                 $data_changed = true;
             }
-
             // Konfigurasi library upload
             $config['upload_path'] = './uploads/';
             $config['allowed_types'] = 'jpg|jpeg|png|gif|pdf|docx|doc|pptx';
             $config['max_size'] = 99999999; // 2MB
             $config['encrypt_name'] = TRUE;
-
             // Inisialisasi library upload dengan konfigurasi
             $this->upload->initialize($config);
-
             // Periksa apakah file undangan diunggah
             $file_path_undangan = $notulensi['file_path_undangan'];
             if (!empty($_FILES['file_path_undangan']['name'])) {
@@ -1064,7 +936,6 @@ class Adminor extends CI_Controller
                     return;
                 }
             }
-
             // Periksa apakah file notulensi diunggah
             $file_path_notulensi = $notulensi['file_path_notulensi'];
             if (!empty($_FILES['file_path_notulensi']['name'])) {
@@ -1078,17 +949,14 @@ class Adminor extends CI_Controller
                     return;
                 }
             }
-
             // Update path file jika ada perubahan file undangan
             if ($file_path_undangan != $notulensi['file_path_undangan']) {
                 $data['file_path_undangan'] = $file_path_undangan;
             }
-
             // Update path file jika ada perubahan file notulensi
             if ($file_path_notulensi != $notulensi['file_path_notulensi']) {
                 $data['file_path_notulensi'] = $file_path_notulensi;
             }
-
             // Jika ada perubahan data atau file, lakukan update
             if ($data_changed) {
                 $this->SuratMasuk_model->edit_data_surat_notulensi($id_notulensi, $data);
@@ -1096,16 +964,13 @@ class Adminor extends CI_Controller
             } else {
                 $this->session->set_flashdata('message', '<div class="alert alert-info" role="alert">Tidak ada perubahan data</div>');
             }
-
             // Redirect ke halaman yang sesuai
             redirect('adminor/notulensi/' . $id_notulensi);
         } else {
             // Load view untuk form edit notulensi
             $data['notulensi'] = $notulensi;
-
             $data['title'] = 'Edit Notulensi';
             $data['user'] = $this->db->get_where('user', ['email' => $this->session->userdata('email')])->row_array();
-
             $this->load->view('templates/header', $data);
             $this->load->view('templates/sidebar', $data);
             $this->load->view('templates/topbar', $data);
@@ -1119,10 +984,8 @@ class Adminor extends CI_Controller
         if (!empty($id_notulensi) && is_numeric($id_notulensi)) {
             // Panggil model atau lapisan lain yang berhubungan dengan manipulasi database
             $this->load->model('SuratMasuk_model'); // Gantilah 'nama_model' sesuai dengan nama model Anda
-
             // Panggil fungsi dalam model untuk menghapus data berdasarkan ID
             $result = $this->SuratMasuk_model->hapus_data_notulensi($id_notulensi);
-
             if ($result) {
                 $this->session->set_flashdata('message', '<div class="alert alert-success" role="alert">Data berhasil dihapus!</div>');
             } else {
@@ -1143,11 +1006,9 @@ class Adminor extends CI_Controller
     //UNTUK ADMIN
     public function wakaf()
     {
-
         $data['title'] = 'Daftar Dan Sertifikat Wakaf';
         $data['user'] = $this->db->get_where('user', ['email' => $this->session->userdata('email')])->row_array();
         $data['sertifikat_wakaf'] = $this->SuratMasuk_model->get_surat_wakaf();
-
         $this->load->view('templates/header', $data);
         $this->load->view('templates/sidebar', $data);
         $this->load->view('templates/topbar', $data);
@@ -1157,19 +1018,15 @@ class Adminor extends CI_Controller
     public function tambah_surat_wakaf()
     {
         $this->load->library('upload');
-
         $config['upload_path'] = './uploads/';
         $config['allowed_types'] = 'jpg|jpeg|png|pdf|pptx|gif|docx';
         $config['max_size'] = 999999999; // ukuran dalam KB, sesuaikan dengan kebutuhan
-
         $this->upload->initialize($config);
-
         $data = array(
             'nama_surat_wakaf' => $this->input->post('nama_surat_wakaf'),
             'nama_masjid' => $this->input->post('nama_masjid'),
             'file_path_sertifikat_wakaf' => ''
         );
-
         // Periksa apakah sebuah file dipilih untuk diunggah
         if (!empty($_FILES['file_path_sertifikat_wakaf']['name'])) {
             // Lakukan unggah jika ada file yang dipilih
@@ -1183,15 +1040,12 @@ class Adminor extends CI_Controller
                 redirect('adminor/wakaf');
             }
         }
-
         // Pastikan data nama_surat_wakaf dan nama_masjid tidak kosong sebelum menyisipkan ke dalam database
         if (!empty($data['nama_surat_wakaf']) && !empty($data['nama_masjid'])) {
             $result = $this->SuratMasuk_model->tambah_surat_wakaf($data);
-
             if ($result) {
                 // Redirect ke halaman surat_masuk
                 $this->session->set_flashdata('message', '<div class="alert alert-success" role="alert">Berhasil Menambahkan Data</div>');
-
                 redirect('adminor/wakaf/');
             } else {
                 // Tampilkan pesan error
@@ -1201,7 +1055,6 @@ class Adminor extends CI_Controller
             // Tampilkan pesan error bahwa data tidak lengkap
             $this->session->set_flashdata('error', 'Semua field harus diisi.');
         }
-
         $data['title'] = 'Tambah Surat Wakaf';
         $data['user'] = $this->db->get_where('user', ['email' => $this->session->userdata('email')])->row_array();
 
@@ -1214,29 +1067,23 @@ class Adminor extends CI_Controller
     public function edit_data_wakaf($id_wakaf)
     {
         date_default_timezone_set('Asia/Jakarta');
-
         // Memuat library upload
         $this->load->library('upload');
-
         // Ambil data surat masuk berdasarkan ID
         $sertifikat_wakaf = $this->SuratMasuk_model->data_wakaf_by_id($id_wakaf);
-
         if (!$sertifikat_wakaf) {
             // Tampilkan pesan jika surat masuk tidak ditemukan
             show_error('Surat Wakaf tidak ditemukan!');
         }
-
         // Proses pengiriman form
         if ($this->input->post()) {
             $current_datetime = date('Y-m-d H:i:s');
-
             // Ambil data dari form
             $data_input = array(
                 'nama_surat_wakaf' => $this->input->post('nama_surat_wakaf'),
                 'nama_masjid' => $this->input->post('nama_masjid'),
                 'tanggal' => $current_datetime
             );
-
             // Periksa apakah ada perubahan data
             if (
                 $data_input['nama_surat_wakaf'] == $sertifikat_wakaf['nama_surat_wakaf'] &&
@@ -1252,9 +1099,7 @@ class Adminor extends CI_Controller
                 $config['allowed_types'] = 'jpg|jpeg|png|gif|pdf|docx|doc|pptx';
                 $config['max_size'] = 999999999; // 2MB
                 $config['encrypt_name'] = TRUE;
-
                 $this->upload->initialize($config);
-
                 // Periksa apakah sebuah file dipilih untuk diunggah
                 if (!empty($_FILES['gambarBerita']['name'])) {
                     // Lakukan unggah jika ada file yang dipilih
@@ -1262,10 +1107,8 @@ class Adminor extends CI_Controller
                         // Ambil informasi file yang diunggah
                         $upload_data = $this->upload->data();
                         $file_path_sertifikat_wakaf = $upload_data['full_path'];
-
                         // Perbarui path file avatar
                         $this->SuratMasuk_model->update_file_path_wakaf($id_wakaf, $file_path_sertifikat_wakaf, $sertifikat_wakaf['file_path_sertifikat_wakaf']);
-
                         // Hapus gambar lama jika ada
                         if (!empty($sertifikat_wakaf['file_path_sertifikat_wakaf'])) {
                             unlink('./uploads/' . $sertifikat_wakaf['file_path_sertifikat_wakaf']);
@@ -1276,10 +1119,8 @@ class Adminor extends CI_Controller
                         echo $error;
                     }
                 }
-
                 // Perbarui data teks surat masuk
                 $this->SuratMasuk_model->edit_data_wakaf($id_wakaf, $data_input);
-
                 // Tampilkan pesan sukses
                 $this->session->set_flashdata('message', '<div class="alert alert-success" role="alert">Berhasil Mengedit Data</div>');
                 redirect('adminor/wakaf/' . $id_wakaf);
@@ -1289,7 +1130,6 @@ class Adminor extends CI_Controller
             $data['sertifikat_wakaf'] = $sertifikat_wakaf;
             $data['title'] = 'Edit Surat Wakaf';
             $data['user'] = $this->db->get_where('user', ['email' => $this->session->userdata('email')])->row_array();
-
             $this->load->view('templates/header', $data);
             $this->load->view('templates/sidebar', $data);
             $this->load->view('templates/topbar', $data);
@@ -1304,10 +1144,8 @@ class Adminor extends CI_Controller
         if (!empty($id_wakaf) && is_numeric($id_wakaf)) {
             // Panggil model atau lapisan lain yang berhubungan dengan manipulasi database
             $this->load->model('SuratMasuk_model'); // Gantilah 'nama_model' sesuai dengan nama model Anda
-
             // Panggil fungsi dalam model untuk menghapus data berdasarkan ID
             $result = $this->SuratMasuk_model->hapus_data_wakaf($id_wakaf);
-
             if ($result) {
                 // Redirect atau tampilkan pesan sukses jika data berhasil dihapus
                 $this->session->set_flashdata('message', '<div class="alert alert-success" role="alert">Data berhasil dihapus!</div>');
@@ -1327,18 +1165,14 @@ class Adminor extends CI_Controller
     public function surat_aktif_org()
     {
         $this->load->library('upload');
-
         $config['upload_path'] = './uploads/';
         $config['allowed_types'] = 'jpg|jpeg|png|pdf|pptx|gif|docx';
         $config['max_size'] = 9999999999; // ukuran dalam KB, sesuaikan dengan kebutuhan
         $config['encrypt_name'] = TRUE;
-
         $this->upload->initialize($config);
-
         $upload_failed = false;
         $file_path_kartu_tanda_anggota = '';
         $file_path_bukti_keaktifan = '';
-
         // Upload file undangan
         if (isset($_FILES['file_path_kartu_tanda_anggota']) && $_FILES['file_path_kartu_tanda_anggota']['size'] > 0) {
             if (!$this->upload->do_upload('file_path_kartu_tanda_anggota')) {
@@ -1350,7 +1184,6 @@ class Adminor extends CI_Controller
                 $file_path_kartu_tanda_anggota = $upload_data['file_name'];
             }
         }
-
         // Upload file photo
         if (isset($_FILES['file_path_bukti_keaktifan']) && $_FILES['file_path_bukti_keaktifan']['size'] > 0) {
             if (!$this->upload->do_upload('file_path_bukti_keaktifan')) {
@@ -1362,7 +1195,6 @@ class Adminor extends CI_Controller
                 $file_path_bukti_keaktifan = $upload_data['file_name'];
             }
         }
-
         if (!$upload_failed) {
             $data = array(
                 'email' => $this->input->post('email'),
@@ -1377,7 +1209,6 @@ class Adminor extends CI_Controller
                 'file_path_bukti_keaktifan' => $file_path_bukti_keaktifan,
                 'tempat_lahir' => $this->input->post('tempat_lahir'),
             );
-
             if (!empty($data['email']) && !empty($data['nama_lengkap']) && !empty($data['tanggal_lahir']) && !empty($data['alamat_tinggal']) && !empty($data['no_hp']) && !empty($data['instansi_kerja']) && !empty($data['alamat_instansi_kerja']) && !empty($data['telepon_kantor_kerja']) && !empty($data['tempat_lahir'])) {
                 $result = $this->SuratMasuk_model->tambah_surat_aktif_organisasi($data);
                 if ($result) {
@@ -1397,7 +1228,6 @@ class Adminor extends CI_Controller
     //UNTUK BAGIAN ADMIN
     public function surat_aktif_organisasi()
     {
-
         $data['title'] = 'Surat Aktif Organisasi';
         $data['user'] = $this->db->get_where('user', ['email' => $this->session->userdata('email')])->row_array();
         $data['surat_aktif_organisasi'] = $this->SuratMasuk_model->get_surat_aktif_organisasi();
@@ -1409,7 +1239,6 @@ class Adminor extends CI_Controller
         $this->load->view('templates/footer');
         // Load data surat_masuk from the backend
     }
-
     public function tambah_surat_aktif_organisasi()
     {
         $this->load->library('upload');
@@ -1478,7 +1307,6 @@ class Adminor extends CI_Controller
 
         $data['title'] = 'Tambah Surat Aktif Organisasi';
         $data['user'] = $this->db->get_where('user', ['email' => $this->session->userdata('email')])->row_array();
-
         $this->load->view('templates/header', $data);
         $this->load->view('templates/sidebar', $data);
         $this->load->view('templates/topbar', $data);
@@ -1493,7 +1321,6 @@ class Adminor extends CI_Controller
         $data['title'] = 'Tambah Surat Aktif Organisasi';
         $data['user'] = $this->db->get_where('user', ['email' => $this->session->userdata('email')])->row_array();
         $data['surat_aktif_organisasi'] = $this->SuratMasuk_model->data_aktif_organisasi_by_id($id);
-
         $this->load->view('templates/header', $data);
         $this->load->view('templates/sidebar', $data);
         $this->load->view('templates/topbar', $data);
@@ -1508,10 +1335,8 @@ class Adminor extends CI_Controller
         if (!empty($id_aktif) && is_numeric($id_aktif)) {
             // Panggil model atau lapisan lain yang berhubungan dengan manipulasi database
             $this->load->model('SuratMasuk_model'); // Gantilah 'nama_model' sesuai dengan nama model Anda
-
             // Panggil fungsi dalam model untuk menghapus data berdasarkan ID
             $result = $this->SuratMasuk_model->hapus_data_surat_organisasi($id_aktif);
-
             if ($result) {
                 // Redirect atau tampilkan pesan sukses jika data berhasil dihapus
                 $this->session->set_flashdata('message', '<div class="alert alert-success" role="alert">Data berhasil dihapus!</div>');

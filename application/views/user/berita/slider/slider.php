@@ -104,15 +104,16 @@
 
 <script>
 	// slider Pagination
-	var sliderData = <?php echo json_encode($slider); ?>;
+	var sliderData = <?php echo json_encode($konten); ?>;
 	var sliderItemsPerPage = 5; // Set the number of slider items per page
-	var sliderTotalPages = Math.ceil(sliderData.length / sliderItemsPerPage);
 	var sliderCurrentPage = 1;
+	var filteredSliderData = sliderData.filter(item => item.nama_kategori === 'Slider');
+	var sliderTotalPages = Math.ceil(filteredSliderData.length / sliderItemsPerPage);
 
 	function displayslider(page) {
 		const start = (page - 1) * sliderItemsPerPage;
 		const end = start + sliderItemsPerPage;
-		const sliderPage = sliderData.slice(start, end);
+		const sliderPage = filteredSliderData.slice(start, end);
 
 		const container = document.querySelector('.slider-container');
 		container.innerHTML = ''; // Clear the existing content
@@ -120,19 +121,19 @@
 		sliderPage.forEach(item => {
 			container.innerHTML += `
 				<div class="row mb-3 align-items-start">
-					<a href="<?php echo site_url('home/sliderdetail/'); ?>${item.id_slider}" class="text-decoration-none text-dark d-flex align-items-start">
+					<a href="<?php echo site_url('home/sliderdetail/'); ?>${item.id_konten}" class="text-decoration-none text-dark d-flex align-items-start">
 						<div class="col-auto mb-4">
-							<img src="<?php echo base_url('./uploads/'); ?>${item.avatar}" alt="Avatar ${item.id_slider}" class="avatar" style="width: 100px; height: 100px;">
+							<img src="<?php echo base_url('./uploads/'); ?>${item.gambar}" alt="Avatar ${item.id_konten}" class="avatar" style="width: 100px; height: 100px;">
 						</div>
 						<div class="col ms-3">
-							<h4 class="card-text text-muted">${item.judul_berita}</h4>
+							<h4 class="card-text text-muted">${item.judul}</h4>
 							<ul class="list-unstyled mt-2">
 								<li class="d-inline-block me-2">
 									<small class="text-danger">&square;</small>
-									<small class="text-muted">slider</small>
+									<small class="text-muted">${item.nama_kategori}</small>
 								</li>/
 								<li class="d-inline-block me-3">
-									<small class="text-muted">${new Date(item.tanggal_upload).toLocaleDateString('id-ID')}</small>
+									<small class="text-muted">${new Date(item.tanggal_posting).toLocaleDateString('id-ID')}</small>
 								</li>
 							</ul>
 						</div>

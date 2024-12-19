@@ -4,7 +4,7 @@
 			<div class="col-lg-9">
 				<div class="card">
 					<div class="card-header">
-						<h1 class=""><?php echo $item['judul_berita']; ?></h1>
+						<h1 class=""><?php echo $item['judul']; ?></h1>
 					</div>
 					<!-- Social Media Sharing Buttons -->
 					<div class="mt-4" style="margin-left: 40px;">
@@ -13,31 +13,31 @@
 							<a href="https://www.facebook.com/sharer/sharer.php?u=<?php echo urlencode(current_url()); ?>" target="_blank" class="btn btn-primary d-flex align-items-center">
 								<i class="bi bi-facebook me-2"></i> Facebook
 							</a>
-							<a href="https://twitter.com/intent/tweet?url=<?php echo urlencode(current_url()); ?>&text=<?php echo urlencode($item['judul_berita']); ?>" target="_blank" class="btn btn-info d-flex align-items-center">
+							<a href="https://twitter.com/intent/tweet?url=<?php echo urlencode(current_url()); ?>&text=<?php echo urlencode($item['judul']); ?>" target="_blank" class="btn btn-info d-flex align-items-center">
 								<i class="bi bi-twitter me-2"></i> Twitter
 							</a>
 							<a href="https://plus.google.com/share?url=<?php echo urlencode(current_url()); ?>" target="_blank" class="btn btn-danger d-flex align-items-center">
 								<i class="bi bi-google me-2"></i> Google+
 							</a>
-							<a href="mailto:?subject=<?php echo urlencode($item['judul_berita']); ?>&body=<?php echo urlencode(current_url()); ?>" class="btn btn-secondary d-flex align-items-center">
+							<a href="mailto:?subject=<?php echo urlencode($item['judul']); ?>&body=<?php echo urlencode(current_url()); ?>" class="btn btn-secondary d-flex align-items-center">
 								<i class="bi bi-envelope me-2"></i> Email
 							</a>
 						</div>
 					</div>
 					<div class="card-body">
-						<img src="<?php echo base_url('./uploads/' . $item['avatar']); ?>" alt="Avatar <?php echo $item['id_ibrah']; ?>" class="img-fluid mb-4">
-						<p class="text-muted"><?= date('d-m-Y', strtotime($item['tanggal_upload'])); ?></p>
+						<img src="<?php echo base_url('./uploads/' . $item['gambar']); ?>" alt="Avatar <?php echo $item['id_konten']; ?>" class="img-fluid mb-4">
+						<p class="text-muted"><?= date('d-m-Y', strtotime($item['tanggal_posting'])); ?></p>
 						<div class="card-text" style="line-height: 2; text-align: justify;">
-							<?php echo $item['isi_content']; ?>
+							<?php echo $item['isi_pesan']; ?>
 						</div>
 
 						<div class="mt-4">
 							<h5>Comments:</h5>
-							<?php if (!empty($komen)): ?>
-								<?php foreach ($komen as $comment): ?>
+							<?php if (!empty($komentar)): ?>
+								<?php foreach ($komentar as $comment): ?>
 									<div class="border p-3 mb-3">
-										<p><strong><?php echo htmlspecialchars($comment['name']); ?></strong> (<?php echo htmlspecialchars($comment['email']); ?>):</p>
-										<p><?php echo htmlspecialchars($comment['komentar']); ?></p>
+										<p><strong><?php echo htmlspecialchars($comment['nama']); ?></strong> (<?php echo htmlspecialchars($comment['email']); ?>):</p>
+										<p><?php echo htmlspecialchars($comment['isi_komentar']); ?></p>
 									</div>
 								<?php endforeach; ?>
 							<?php else: ?>
@@ -48,18 +48,18 @@
 						<!-- Comment Form -->
 						<div class="mt-4">
 							<h5>Leave a Comment:</h5>
-							<form action="<?php echo site_url('home/post_ibrah_comment/' . $item['id_ibrah']); ?>" method="post">
+							<form action="<?php echo isset($item['id_konten']) ? site_url('home/post_ibrah_comment/' . $item['id_konten']) : '#'; ?>" method="post">
 								<div class="mb-3">
-									<label for="comment" class="form-label">Comment</label>
-									<textarea id="comment" name="comment" class="form-control" rows="4" required></textarea>
+									<label for="isi_komentar" class="form-label">Comment</label>
+									<textarea id="isi_komentar" name="isi_komentar" class="form-control" rows="4" required></textarea>
 								</div>
 								<div class="mb-3">
 									<label for="email" class="form-label">Email</label>
 									<input type="email" id="email" name="email" class="form-control" required>
 								</div>
 								<div class="mb-3">
-									<label for="name" class="form-label">Name</label>
-									<input type="text" id="name" name="name" class="form-control" required>
+									<label for="nama" class="form-label">Name</label>
+									<input type="text" id="nama" name="nama" class="form-control" required>
 								</div>
 								<button type="submit" class="btn btn-primary">Submit Comment</button>
 							</form>

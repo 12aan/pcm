@@ -62,10 +62,11 @@
 			</div>
 
 			<!-- Latepost Section -->
+			<!-- Latepost Section -->
 			<div class="col-lg-3">
 				<div class="row row-cards">
 					<div class="col-100">
-						<div class="card" style="position: sticky; top: 20px;">
+						<div class="card" style="height: 15rem; position: sticky; top: 20px;">
 							<div class="card-body d-flex justify-content-between align-items-center">
 								<h2 class="m-0">Latepost</h2>
 								<div class="d-flex align-items-center">
@@ -96,23 +97,24 @@
 						</div>
 					</div>
 				</div>
+				<!-- END LATEPOST -->
 			</div>
-			<!-- END LATEPOST -->
 		</div>
 	</div>
 </div>
 
 <script>
 	// Pengumuman Pagination
-	var pengumumanData = <?php echo json_encode($pengumuman); ?>;
+	var pengumumanData = <?php echo json_encode($konten); ?>;
 	var pengumumanItemsPerPage = 5; // Set the number of pengumuman items per page
-	var pengumumanTotalPages = Math.ceil(pengumumanData.length / pengumumanItemsPerPage);
 	var pengumumanCurrentPage = 1;
+	var filteredPengumumanData = pengumumanData.filter(item => item.nama_kategori === 'Pengumuman');
+	var totalPages = Math.ceil(filteredPengumumanData.length / pengumumanItemsPerPage);
 
 	function displayPengumuman(page) {
 		const start = (page - 1) * pengumumanItemsPerPage;
 		const end = start + pengumumanItemsPerPage;
-		const pengumumanPage = pengumumanData.slice(start, end);
+		const pengumumanPage = filteredPengumumanData.slice(start, end);
 
 		const container = document.querySelector('.pengumuman-container');
 		container.innerHTML = ''; // Clear the existing content
@@ -120,19 +122,19 @@
 		pengumumanPage.forEach(item => {
 			container.innerHTML += `
 				<div class="row mb-3 align-items-start">
-					<a href="<?php echo site_url('home/pengumumandetail/'); ?>${item.id_pengumuman}" class="text-decoration-none text-dark d-flex align-items-start">
+					<a href="<?php echo site_url('home/pengumumandetail/'); ?>${item.id_konten}" class="text-decoration-none text-dark d-flex align-items-start">
 						<div class="col-auto mb-4">
-							<img src="<?php echo base_url('./uploads/'); ?>${item.avatar}" alt="Avatar ${item.id_pengumuman}" class="avatar" style="width: 100px; height: 100px;">
+							<img src="<?php echo base_url('./uploads/'); ?>${item.gambar}" alt="gambar ${item.id_konten}" class="gambar" style="width: 100px; height: 100px;">
 						</div>
 						<div class="col ms-3">
-							<h3 class="card-text text-muted">${item.judul_berita}</h3>
+							<h3 class="card-text text-muted">${item.judul}</h3>
 							<ul class="list-unstyled mt-2">
 								<li class="d-inline-block me-2">
 									<small class="text-danger">&square;</small>
-									<small class="text-muted">Pengumuman</small>
-								</li>/
+									 <small class="text-muted">${item.nama_kategori}</small>
+								</li>
 								<li class="d-inline-block me-3">
-									<small class="text-muted">${new Date(item.tanggal_upload).toLocaleDateString('id-ID')}</small>
+									<small class="text-muted">${new Date(item.tanggal_posting).toLocaleDateString('id-ID')}</small>
 								</li>
 							</ul>
 						</div>
@@ -141,7 +143,7 @@
 		});
 
 		document.querySelector('.prev-pengumuman').disabled = page === 1;
-		document.querySelector('.next-pengumuman').disabled = page === pengumumanTotalPages;
+		document.querySelector('.next-pengumuman').disabled = page === totalPages;
 	}
 
 	document.querySelector('.prev-pengumuman').addEventListener('click', function() {
@@ -152,13 +154,11 @@
 	});
 
 	document.querySelector('.next-pengumuman').addEventListener('click', function() {
-		if (pengumumanCurrentPage < pengumumanTotalPages) {
+		if (pengumumanCurrentPage < totalPages) {
 			pengumumanCurrentPage++;
 			displayPengumuman(pengumumanCurrentPage);
 		}
 	});
-
-	displayPengumuman(pengumumanCurrentPage);
 
 	// Latepost Pagination
 	var latepostData = <?php echo json_encode($latepost_photos); ?>;
@@ -199,8 +199,11 @@
 		}
 	});
 
+	// Initial page load for both Pengumuman and Latepost
+	displayPengumuman(pengumumanCurrentPage);
 	displayLatepost(latepostCurrentPage);
 </script>
+
 
 <style>
 	/* Make the Latepost section sticky */

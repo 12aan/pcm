@@ -104,15 +104,16 @@
 
 <script>
 	// Ibrah Pagination
-	var ibrahData = <?php echo json_encode($ibrah); ?>;
+	var ibrahData = <?php echo json_encode($konten); ?>;
 	var ibrahItemsPerPage = 5; // Set the number of ibrah items per page
-	var ibrahTotalPages = Math.ceil(ibrahData.length / ibrahItemsPerPage);
 	var ibrahCurrentPage = 1;
+	var filteredIbrahData = ibrahData.filter(item => item.nama_kategori === 'Ibrah')
+	var ibrahTotalPages = Math.ceil(filteredIbrahData.length / ibrahItemsPerPage);
 
 	function displayIbrah(page) {
 		const start = (page - 1) * ibrahItemsPerPage;
 		const end = start + ibrahItemsPerPage;
-		const ibrahPage = ibrahData.slice(start, end);
+		const ibrahPage = filteredIbrahData.slice(start, end);
 
 		const container = document.querySelector('.ibrah-container');
 		container.innerHTML = ''; // Clear the existing content
@@ -120,19 +121,19 @@
 		ibrahPage.forEach(item => {
 			container.innerHTML += `
             <div class="row mb-3 align-items-start">
-				<a href="<?php echo site_url('home/ibrahdetail/'); ?>${item.id_ibrah}" class="text-decoration-none text-dark d-flex align-items-start">
+				<a href="<?php echo site_url('home/ibrahdetail/'); ?>${item.id_konten}" class="text-decoration-none text-dark d-flex align-items-start">
                     <div class="col-auto mb-4">
-                        <img src="<?php echo base_url('./uploads/'); ?>${item.avatar}" alt="Avatar ${item.id_ibrah}" class="avatar" style="width: 100px; height: 100px;">
+                        <img src="<?php echo base_url('./uploads/'); ?>${item.gambar}" alt="Avatar ${item.id_konten}" class="avatar" style="width: 100px; height: 100px;">
 					</div>
 					<div class="col ms-3">
-						<h4 class="card-text text-muted">${item.judul_berita}</h4>
+						<h4 class="card-text text-muted">${item.judul}</h4>
 						<ul class="list-unstyled mt-2">
 							<li class="d-inline-block me-2">
 								<small class="text-danger">&square;</small>
-								<small class="text-muted">Berita</small>
+								<small class="text-muted">${item.nama_kategori}</small>
 							</li>
 							<li class="d-inline-block me-3">
-								<small class="text-muted">${new Date(item.tanggal_upload).toLocaleDateString('id-ID')}</small>
+								<small class="text-muted">${new Date(item.tanggal_posting).toLocaleDateString('id-ID')}</small>
 							</li>
 						</ul>
 					</div>
