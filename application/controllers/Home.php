@@ -21,7 +21,7 @@ class Home extends CI_Controller
 	{
 		$data['judul'] = 'home';
 		$data['konten'] = $this->Konten_Model->get_konten(); // Ambil data konten dengan kategori
-		
+
 		$this->VisitModel->record_visit();
 		$this->load->view('templates/user_navbar', $data);
 		$this->load->view('user/home', $data);
@@ -375,7 +375,7 @@ class Home extends CI_Controller
 		$this->load->view('user/berita/pengumuman/pengumuman', $data);
 		$this->load->view('templates/user_footer');
 	}
-		
+
 
 	public function pengumumandetail($id)
 	{
@@ -605,6 +605,79 @@ class Home extends CI_Controller
 		$data['judul'] = 'Masjid / Mushola Wakaf Muhammadiyah';
 		$this->load->view('templates/user_navbar', $data);
 		$this->load->view('user/amal_usaha/masjid_mushalla');
+		$this->load->view('templates/user_footer');
+	}
+
+	//USER MAJELIS DAN LEMBAGA
+	public function lembaga_amil_zakat_infaq_dan_shadaqah()
+	{
+		$data['judul'] = 'LEMBAGA AMIL ZAKAT INFAQ DAN SHADAQAH';
+		$this->load->view('templates/user_navbar', $data);
+		$this->load->view('user/majlis_lembaga/lazis');
+		$this->load->view('templates/user_footer');
+	}
+
+	public function lembaga_penanggulangan_bencana()
+	{
+		$data['judul'] = 'LEMBAGA PENANGGULANGAN BENCANA';
+		$this->load->view('templates/user_navbar', $data);
+		$this->load->view('user/majlis_lembaga/lpb');
+		$this->load->view('templates/user_footer');
+	}
+
+	public function lembaga_pengembangan_ranting_masjid_dan_mushalla()
+	{
+		$data['judul'] = 'LEMBAGA PENGEMBANGAN RANTING MASJID DAN MUSHALLA';
+		$this->load->view('templates/user_navbar', $data);
+		$this->load->view('user/majlis_lembaga/lprmm');
+		$this->load->view('templates/user_footer');
+	}
+
+	public function majlis_dikdasmen()
+	{
+		$data['judul'] = 'MAJLIS DIKDASMEN';
+		$this->load->view('templates/user_navbar', $data);
+		$this->load->view('user/majlis_lembaga/md');
+		$this->load->view('templates/user_footer');
+	}
+
+	public function majlis_pustaka_dan_informasi()
+	{
+		$data['judul'] = 'MAJLIS PUSTAKA DAN INFORMASI';
+		$this->load->view('templates/user_navbar', $data);
+		$this->load->view('user/majlis_lembaga/mpi');
+		$this->load->view('templates/user_footer');
+	}
+
+	public function majlis_pendidikan_kader()
+	{
+		$data['judul'] = 'MAJLIS PENDIDIKAN KADER';
+		$this->load->view('templates/user_navbar', $data);
+		$this->load->view('user/majlis_lembaga/mpk');
+		$this->load->view('templates/user_footer');
+	}
+
+	public function majlis_pemberdaya_masyarakat()
+	{
+		$data['judul'] = 'MAJLIS PEMBERDAYA MASYARAKAT';
+		$this->load->view('templates/user_navbar', $data);
+		$this->load->view('user/majlis_lembaga/mpm');
+		$this->load->view('templates/user_footer');
+	}
+
+	public function majlis_tabligh_dan_tarjih()
+	{
+		$data['judul'] = 'MAJLIS TABLIGH DAN TARJIH';
+		$this->load->view('templates/user_navbar', $data);
+		$this->load->view('user/majlis_lembaga/mtt');
+		$this->load->view('templates/user_footer');
+	}
+
+	public function majlis_wakaf_dan_kekayaan()
+	{
+		$data['judul'] = 'MAJLIS WAKAF DAN KEKAYAAN';
+		$this->load->view('templates/user_navbar', $data);
+		$this->load->view('user/majlis_lembaga/mwk');
 		$this->load->view('templates/user_footer');
 	}
 
@@ -946,17 +1019,17 @@ class Home extends CI_Controller
 			if (!empty($data['email']) && !empty($data['nama_lengkap']) && !empty($data['tanggal_lahir']) && !empty($data['alamat_tinggal']) && !empty($data['no_hp']) && !empty($data['instansi_kerja']) && !empty($data['alamat_instansi_kerja']) && !empty($data['telepon_kantor_kerja']) && !empty($data['tempat_lahir'])) {
 				$result = $this->SuratMasuk_model->tambah_surat_aktif_organisasi($data);
 				if ($result) {
-					echo '<div class="alert alert-success" role="alert">Berhasil Menambahkan Data.</div>';
-					redirect('adminor/surat_aktif_org');
+					$this->session->set_flashdata('message', '<div class="alert alert-success" role="alert">Data berhasil ditambahkan!</div>');
+					redirect('home/surat_aktif_organisasi');
 				} else {
-					echo '<div class="alert alert-danger" role="alert">Gagal menambahkan surat. Silakan coba lagi.</div>';
+					$this->session->set_flashdata('message', '<div class="alert alert-warning" role="alert">Data gagal dimasukan!</div>');
 				}
 			}
 		}
 		// Load data surat_masuk from the backend
 		$data['judul'] = 'Adminor Surat Aktif Organisasi'; // $data['surat_keputusan'] = $this->SuratMasuk_model->get_surat_keputusan(); // Gantilah dengan fungsi sesuai kebutuhan
 		$this->load->view('templates/user_navbar', $data);
-		$this->load->view('user/adminor/surat_aktif_org');
+		$this->load->view('user/adminor/surat_aktif_org', $data);
 		$this->load->view('templates/user_footer');
 	}
 
@@ -992,14 +1065,6 @@ class Home extends CI_Controller
 		$data['judul'] = 'Perguruan atas';
 		$this->load->view('templates/user_navbar', $data);
 		$this->load->view('user/perguruan/perguruan_atas');
-		$this->load->view('templates/user_footer');
-	}
-
-	public function majlis_tabligh_dan_tarjih()
-	{
-		$data['judul'] = 'Majlis Tabligh dan Tarjih';
-		$this->load->view('templates/user_navbar', $data);
-		$this->load->view('user/majelis_lembaga/mtt');
 		$this->load->view('templates/user_footer');
 	}
 }

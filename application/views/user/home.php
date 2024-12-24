@@ -55,24 +55,27 @@
 			<script>
 				var beritaData = <?php echo json_encode($konten); ?>;
 				var beritaItemsPerPage = 5; // Jumlah berita per halaman
+				var filteredBeritaData = beritaData.filter(item => item.nama_kategori === 'Berita');
 				var beritaTotalPages = Math.ceil((beritaData.length - 1) / beritaItemsPerPage);
 				var beritaCurrentPage = 1;
-				var filteredBeritaData = beritaData.filter(item => item.nama_kategori === 'Berita');
+
 				var beritaTotalPages = Math.ceil(filteredBeritaData.length / beritaItemsPerPage);
 
 				// Fungsi untuk menampilkan berita utama
 				function displayBeritaUtama() {
-					const beritaUtama = beritaData[0];
-					const container = document.querySelector('.berita-utama-container');
-					container.innerHTML = `
-						<div class="position-relative" style="height: 300px;">
-							<a href="<?php echo site_url('home/beritadetail/'); ?>${beritaUtama.id_konten}" class="text-decoration-none">
-								<img src="<?php echo base_url('./uploads/'); ?>${beritaUtama.gambar}" alt="Berita Utama" style="width: 100%; height: 100%; object-fit: cover;">
-								<div class="position-absolute bottom-0 start-0 p-3 text-white" style="background: rgba(0, 0, 0, 0.6); width: 100%;">
-									<h3>${beritaUtama.judul}</h3>
-								</div>
-							</a>
-						</div>`;
+					if (filteredBeritaData.length > 0) {
+						const beritaUtama = filteredBeritaData[0];
+						const container = document.querySelector('.berita-utama-container');
+						container.innerHTML = `
+			<div class="position-relative" style="height: 300px;">
+				<a href="<?php echo site_url('home/beritadetail/'); ?>${beritaUtama.id_konten}" class="text-decoration-none">
+					<img src="<?php echo base_url('./uploads/'); ?>${beritaUtama.gambar}" alt="Berita Utama" style="width: 100%; height: 100%; object-fit: cover;">
+					<div class="position-absolute bottom-0 start-0 p-3 text-white" style="background: rgba(0, 0, 0, 0.6); width: 100%; border-radius: 8px">
+						<h3>${beritaUtama.judul}</h3>
+					</div>
+				</a>
+			</div>`;
+					}
 				}
 
 				// Fungsi untuk menampilkan berita lainnya
@@ -184,7 +187,7 @@
 			// Assuming $pengumuman is your data array
 			$items_per_page = 4; // Items per page
 			$total_items = count($konten);
-			$items_per_page = 10; // Items per page
+			$items_per_page = 9; // Items per page
 			$total_pages = ceil($total_items / $items_per_page);
 			?>
 
@@ -318,8 +321,21 @@
 								</a>
 							</div>`;
 					});
+
+					adjustContainerHeight(); // Sesuaikan tinggi container setelah berita dimuat
+
 					document.querySelector('.prev-kabar').disabled = page === 1;
 					document.querySelector('.next-kabar').disabled = page === kabarTotalPages;
+				}
+
+				function adjustContainerHeight() {
+					const container = document.querySelector('.kabar-container');
+					const beritaCount = container.children.length;
+					const itemHeight = 142; // Perkiraan tinggi tiap item
+					const minHeight = beritaItemsPerPage * itemHeight; // Tinggi minimum untuk 5 data
+					const maxHeight = 800; // Tinggi maksimum container
+					const newHeight = Math.max(beritaCount * itemHeight, minHeight); // Pastikan minimal setara dengan minHeight
+					container.style.height = `${Math.min(newHeight, maxHeight)}px`;
 				}
 
 				document.querySelector('.prev-kabar').addEventListener('click', function() {
@@ -353,8 +369,9 @@
 					</div>
 				</div>
 			</div>
-
 			<script async defer crossorigin="anonymous" src="https://connect.facebook.net/en_US/sdk.js#xfbml=1&version=v14.0"></script>
+
+
 
 
 			<div class="col-lg-8">
