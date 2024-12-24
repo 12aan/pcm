@@ -203,6 +203,4 @@ class Konten extends CI_Controller
         // Redirect ke halaman yang dituju
         redirect('konten/derita');
     }
-
 }
-

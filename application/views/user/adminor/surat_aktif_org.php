@@ -35,19 +35,11 @@
                                         <h4 class="text-center">FORMULIR SURAT AKTIF ORGANISASI</h4>
                                         <hr class="mt-2">
 
-                                        <?php if ($this->session->flashdata('success')): ?>
-                                            <div class="alert alert-success">
-                                                <?php echo $this->session->flashdata('success'); ?>
-                                            </div>
-                                        <?php endif; ?>
+                                        <div class="col-lg-8 mt-3">
+                                            <?= $this->session->flashdata('message'); ?>
+                                        </div>
 
-                                        <?php if ($this->session->flashdata('error')): ?>
-                                            <div class="alert alert-danger">
-                                                <?php echo $this->session->flashdata('error'); ?>
-                                            </div>
-                                        <?php endif; ?>
-
-                                        <form enctype="multipart/form-data" action="<?php echo site_url('adminor/surat_aktif_org'); ?>" method="post">
+                                        <form enctype="multipart/form-data" action="<?php echo site_url('home/surat_aktif_organisasi'); ?>" method="post">
                                             <!-- Form elements -->
                                             <div class="mb-3">
                                                 <label for="nama_lengkap" class="form-label">Nama</label>
