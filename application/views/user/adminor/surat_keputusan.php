@@ -24,8 +24,6 @@
                                 </ul>
                             <?php endforeach; ?>
 
-
-
                             <?php if (empty($surat_keputusan_agenda)) : ?>
                                 <p>Tidak ada data surat masuk.</p>
                             <?php endif; ?>

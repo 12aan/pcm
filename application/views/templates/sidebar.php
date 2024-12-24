@@ -2,7 +2,11 @@
     <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
 
         <!-- Sidebar - Brand -->
-        <a class="sidebar-brand d-flex align-items-center justify-content-center" href="<?php echo base_url('admin') ?>">
+        <?php
+        // Ambil role_id dari session
+        $role_id = $this->session->userdata('role_id');
+        ?>
+        <a class="sidebar-brand d-flex align-items-center justify-content-center" href="<?php echo ($role_id == 1) ? base_url('admin') : base_url('user'); ?>">
             <div class="sidebar-brand-icon rotate-n-15">
                 <i class="fas fa-code"></i>
             </div>
@@ -44,7 +48,7 @@
             $subMenu = $this->db->query($querySubMenu)->result_array();
             ?>
 
-            
+
 
             <?php foreach ($subMenu as $sm) : ?>
                 <?php if ($title == $sm['title']) : ?>

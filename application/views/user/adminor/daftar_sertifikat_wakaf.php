@@ -9,9 +9,16 @@
                         <h4>DAFTAR DAN SERTIFIKAT WAKAF</h4>
                         <?php foreach ($sertifikat_wakaf as $row) : ?>
                             <ul>
-                                <li><?php echo $row['nama_surat_wakaf']; ?> <a href="<?php echo base_url('./uploads/' . $row['file_path_sertifikat_wakaf']); ?>"><?php echo $row['nama_masjid']; ?></a></li>
+                                <li><?php echo $row['nama_surat_wakaf']; ?>
+                                    <?php if (!empty($row['file_path_sertifikat_wakaf']) && file_exists('./uploads/' . $row['file_path_sertifikat_wakaf'])) : ?>
+                                        <a href="<?php echo base_url('./uploads/' . $row['file_path_sertifikat_wakaf']); ?>" target="_blank"><?php echo $row['nama_masjid']; ?></a>
+                                    <?php else : ?>
+                                        <a href="<?php echo base_url('not_found_file.txt'); ?>" target="_blank"><?php echo $row['nama_masjid']; ?></a>
+                                    <?php endif; ?>
+                                </li>
                             </ul>
                         <?php endforeach; ?>
+
                         <?php if (empty($sertifikat_wakaf)) : ?>
                             <p>Tidak ada data surat masuk.</p>
                         <?php endif; ?>
